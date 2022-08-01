@@ -5,6 +5,7 @@ import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domain.Planning;
 
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.StringJoiner;
 
 public class Presenter {
 
@@ -45,11 +46,11 @@ public class Presenter {
     private String formatPriorJobs(Iterator<Job> jobs){
         if(!jobs.hasNext()) return "-";
         Job job;
-        StringBuilder sb = new StringBuilder();
+        StringJoiner sj = new StringJoiner(",");
         while(jobs.hasNext()){
             job = jobs.next();
-            sb.append(job.getName());
+            sj.add(job.getName());
         }
-        return sb.toString();
+        return sj.toString();
     }
 }

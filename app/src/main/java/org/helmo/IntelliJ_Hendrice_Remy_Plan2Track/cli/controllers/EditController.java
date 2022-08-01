@@ -53,10 +53,13 @@ public class EditController extends Controller{
         switch(choice){
             case 1:
                 editName();
+                break;
             case 2:
                 addJob();
+                break;
             case 3:
                 removeJob();
+                break;
             case exitNum:
                 break;
             default:

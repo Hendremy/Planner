@@ -1,23 +1,25 @@
 package org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.cli;
 
 import java.io.*;
+import java.util.Locale;
 import java.util.Scanner;
 
 public class Console implements Closeable {
 
-    private final PrintStream OUT = System.out;
-    private final Scanner IN;
+    private final PrintStream out = System.out;
+    private final Scanner in;
+    private final String yesNo = "\n(O)ui/(N)on";
 
     public Console(){
-        IN = new Scanner(System.in);
+        in = new Scanner(System.in);
     }
 
     public void print(String str){
-        OUT.print(str);
+        out.print(str);
     }
 
     public void println(String str){
-        OUT.println(str);
+        out.println(str);
     }
 
     public String askString(String question){
@@ -30,13 +32,21 @@ public class Console implements Closeable {
         return readInt();
     }
 
+    public boolean askYesNo(String question){
+        String response = "";
+        while(!response.equalsIgnoreCase("O") && !response.equalsIgnoreCase("N")){
+            response = askString(String.format("%s%s", question, yesNo));
+        }
+        return response.equalsIgnoreCase("O");
+    }
+
     @Override
     public void close() throws IOException {
-        IN.close();
+        in.close();
     }
 
     private String readLine(){
-        return IN.nextLine();
+        return in.nextLine();
     }
 
     private int readInt(){

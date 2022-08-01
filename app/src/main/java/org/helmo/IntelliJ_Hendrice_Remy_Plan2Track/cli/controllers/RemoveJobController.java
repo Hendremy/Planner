@@ -11,16 +11,33 @@ public class RemoveJobController extends Controller{
     }
 
     public void removeJob(Planning planning){
-        String name = console.askString("Nom de la tâche à modifier ?");
+        String name = null;
+        while(name == null || !name.isBlank()){
+            name = console.askString("Nom de la tâche à modifier ? (Enter pour annuler)");
+            deleteJob(planning, name);
+        }
+    }
+
+    private void deleteJob(Planning planning, String name){
         Job job = planning.getJobByName(name);
         if(job != null){
-            int occ = planning.countPriorJob(job);
-            console.println(String.format("%s est requise pour %d autre(s) tâche(s)", job.getName(), occ));
-            String choice = console.askString("\nVoulez-vous vraiment la supprimer ? (O/N)");
+            confirmDelete(planning, job);
         }
         else{
             console.println("Ce nom de tâche n'existe pas");
         }
+    }
 
+    private void confirmDelete(Planning planning, Job job){
+        if(job != null){
+            int occ = planning.countPriorJob(job);
+            console.println(String.format("%s est requise pour %d autre(s) tâche(s)", job.getName(), occ));
+            if(console.askYesNo("Voulez-vous vraiment la supprimer ?")){
+                planning.removeJob(job);
+            }
+        }
+        else{
+            console.println("Ce nom de tâche n'existe pas");
+        }
     }
 }

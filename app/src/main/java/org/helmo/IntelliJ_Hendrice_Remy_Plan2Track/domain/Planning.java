@@ -30,8 +30,11 @@ public class Planning {
         jobs.put(job.getName(), job);
     }
 
-    public void removeJob(String name){
-        jobs.remove(name);
+    public void removeJob(Job job){
+        for (Job otherJob : jobs.values()) {
+            otherJob.removePrior(job);
+        }
+        jobs.remove(job.getName());
     }
 
     public int countPriorJob(Job prior){

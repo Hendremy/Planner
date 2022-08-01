@@ -46,4 +46,14 @@ public class Job {
     public boolean hasPrior(String name){
         return priorJobs.containsKey(name);
     }
+
+    public boolean hasPrior(Job job){
+        return hasPrior(job.getName());
+    }
+
+    public void removePrior(Job job){
+        if(hasPrior(job)){
+            priorJobs.remove(job.getName());
+        }
+    }
 }

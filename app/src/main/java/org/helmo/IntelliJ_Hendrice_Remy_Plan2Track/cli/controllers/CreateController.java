@@ -12,21 +12,15 @@ public class CreateController extends Controller{
 
     public Planning create(Planning existingPlanning){
         if(existingPlanning != null){
-            if(askWantsOverride().equals("N")){
+            if(!wantsOverride()){
                 return existingPlanning;
             }
         }
         return createNewPlanning();
     }
 
-    private String askWantsOverride(){
-        String choice = "";
-        while(!choice.equals("O") && !choice.equals("N")){
-            choice = console.askString(
-                    "Un planning est en cours de création, voulez-vous l'écraser ?" +
-                    "\n (O)ui / (N)on");
-        }
-        return choice;
+    private boolean wantsOverride(){
+        return console.askYesNo("Un planning est en cours de création, voulez-vous l'écraser ?");
     }
 
     private Planning createNewPlanning(){
