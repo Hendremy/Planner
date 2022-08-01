@@ -14,7 +14,9 @@ public class RemoveJobController extends Controller{
         String name = console.askString("Nom de la tâche à modifier ?");
         Job job = planning.getJobByName(name);
         if(job != null){
-
+            int occ = planning.countPriorJob(job);
+            console.println(String.format("%s est requise pour %d autre(s) tâche(s)", job.getName(), occ));
+            String choice = console.askString("\nVoulez-vous vraiment la supprimer ? (O/N)");
         }
         else{
             console.println("Ce nom de tâche n'existe pas");
