@@ -36,6 +36,7 @@ public class MainController extends Controller{
 
     private void displayMenu(){
         console.println("1. Créer un montage");
+        console.println("2. Modifier le montage");
         console.println("0. Quitter");
     }
 
@@ -43,6 +44,9 @@ public class MainController extends Controller{
         switch (choice) {
             case 1:
                 createPlanning();
+                break;
+            case 2:
+                editPlanning();
                 break;
             case exitNum:
                 break;
@@ -55,5 +59,9 @@ public class MainController extends Controller{
     private void createPlanning(){
         var newPlanning = createController.create(planning);
         if(newPlanning != null) planning = newPlanning;
+    }
+
+    private void editPlanning(){
+        editController.edit(planning);
     }
 }
