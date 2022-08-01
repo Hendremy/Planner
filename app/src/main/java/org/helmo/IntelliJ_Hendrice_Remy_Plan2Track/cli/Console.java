@@ -20,11 +20,26 @@ public class Console implements Closeable {
         OUT.println(str);
     }
 
-    public String readLine(){
+    public String askString(String question){
+        println(question);
+        return readLine();
+    }
+
+    public int askPosInt(String question){
+        println(question);
+        return readInt();
+    }
+
+    @Override
+    public void close() throws IOException {
+        IN.close();
+    }
+
+    private String readLine(){
         return IN.nextLine();
     }
 
-    public int readInt(){
+    private int readInt(){
         int choice;
         try{
             String response = this.readLine();
@@ -35,8 +50,4 @@ public class Console implements Closeable {
         return choice;
     }
 
-    @Override
-    public void close() throws IOException {
-        IN.close();
-    }
 }

@@ -11,7 +11,7 @@ public class Presenter {
     public String presentPlanning(Planning planning){
         String name = planning.getName();
         String jobs = listJobs(planning.getJobs());
-        return String.format("%s\n%s", name, jobs);
+        return String.format("%5s%s\n%5s%s"," ",name," ", jobs);
     }
 
     private String listJobs(Collection<Job> jobs){

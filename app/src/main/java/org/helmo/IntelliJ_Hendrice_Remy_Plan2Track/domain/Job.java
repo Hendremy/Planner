@@ -1,14 +1,16 @@
 package org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domain;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 
 public class Job {
 
-    private String name;
-    private String description;
-    private int duration;
-    private Collection<Job> priorJobs;
+    private final String name;
+    private final String description;
+    private final int duration;
+    private final List<Job> priorJobs;
 
     public String getName(){
         return name;
@@ -24,5 +26,16 @@ public class Job {
 
     public Iterator<Job> getPriorJobs(){
         return priorJobs.iterator();
+    }
+
+    public Job(String name, String description, int duration, List<Job> priorJobs){
+        this.name = name;
+        this.description = description;
+        this.duration = duration;
+        this.priorJobs = new ArrayList<>(priorJobs);
+    }
+
+    public Job(String name){
+        this(name, "",1,new ArrayList<>());
     }
 }

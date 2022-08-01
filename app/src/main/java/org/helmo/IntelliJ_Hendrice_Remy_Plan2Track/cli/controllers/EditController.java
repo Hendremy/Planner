@@ -7,6 +7,9 @@ import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domain.Planning;
 public class EditController extends Controller{
 
     private final int exitNum = 0;
+    private final EditNameController editNameController = new EditNameController(console, presenter);
+    private final AddJobController addJobController = new AddJobController(console, presenter);
+    private final RemoveJobController removeJobController = new RemoveJobController(console, presenter);
     private Planning planning;
 
     public EditController(Console console, Presenter presenter) {
@@ -17,20 +20,28 @@ public class EditController extends Controller{
         if(planning != null){
             this.planning = planning;
             loop();
+        }else{
+            console.println("Erreur - Aucun montage en cours");
         }
     }
 
     private void loop(){
         int choice = -1;
         while(choice != exitNum){
-            displayMenu();
-            choice = console.readInt();
+            displayPlanning();
+            choice = askMenu();
             handleChoice(choice);
         }
     }
 
-    private void displayMenu(){
-        console.println(
+    private void displayPlanning(){
+        if(planning != null){
+            console.println(presenter.presentPlanning(planning));
+        }
+    }
+
+    private int askMenu(){
+        return console.askPosInt(
                     "1. Modifier le nom du montage"
                 + "\n2. Ajouter une nouvelle tâche"
                 + "\n3. Supprimer une tâche existante"
@@ -55,11 +66,11 @@ public class EditController extends Controller{
     }
 
     private void editName(){
-
+        editNameController.editName(planning);
     }
 
     private void addJob(){
-
+        addJobController.addJob(planning);
     }
 
     private void removeJob(){

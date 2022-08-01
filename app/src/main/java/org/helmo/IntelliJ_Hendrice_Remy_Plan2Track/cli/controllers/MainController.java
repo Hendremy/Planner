@@ -22,8 +22,7 @@ public class MainController extends Controller{
         int choice = -1;
         while(choice != exitNum){
             displayPlanning();
-            displayMenu();
-            choice = this.console.readInt();
+            choice = askMenu();
             handleChoice(choice);
         }
     }
@@ -34,9 +33,9 @@ public class MainController extends Controller{
         }
     }
 
-    private void displayMenu(){
-        console.println(
-                    "1. Créer un montage"
+    private int askMenu(){
+        return console.askPosInt(
+                "1. Créer un montage"
                 + "\n2. Modifier le montage"
                 + "\n0. Quitter"
         );
