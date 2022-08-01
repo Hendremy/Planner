@@ -74,6 +74,6 @@ public class EditController extends Controller{
     }
 
     private void removeJob(){
-
+        removeJobController.removeJob(planning);
     }
 }

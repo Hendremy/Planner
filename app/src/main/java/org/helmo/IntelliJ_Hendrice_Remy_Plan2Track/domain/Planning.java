@@ -33,4 +33,14 @@ public class Planning {
     public void removeJob(String name){
         jobs.remove(name);
     }
+
+    public int countPriorJob(Job prior){
+        int occ = 0;
+        for (Job job : this.jobs.values()) {
+            if(job.hasPrior(prior.getName())){
+                occ++;
+            }
+        }
+        return occ;
+    }
 }
