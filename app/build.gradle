@@ -9,6 +9,10 @@
 plugins {
     // Apply the application plugin to add support for building a CLI application in Java.
     id 'application'
+    id 'pmd'
+    id 'jacoco'
+
+    id 'org.openjfx.javafxplugin' version '0.0.10'
 }
 
 repositories {
@@ -19,6 +23,7 @@ repositories {
 dependencies {
     // Use JUnit Jupiter for testing.
     testImplementation 'org.junit.jupiter:junit-jupiter:5.7.1'
+    testImplementation 'org.assertj:assertj-core:3.20.2'
 
     // This dependency is used by the application.
     implementation 'com.google.guava:guava:30.1-jre'
@@ -32,4 +37,14 @@ application {
 tasks.named('test') {
     // Use JUnit Platform for unit tests.
     useJUnitPlatform()
+}
+
+pmd {
+    ruleSetFiles = files("config/pmd/b2-ruleset.xml")
+    maxFailures = 10
+}
+
+javafx {
+    version = "17"
+    modules = ['javafx.controls']
 }
