@@ -35,9 +35,11 @@ public class MainController extends Controller{
     }
 
     private void displayMenu(){
-        console.println("1. Créer un montage");
-        console.println("2. Modifier le montage");
-        console.println("0. Quitter");
+        console.println(
+                    "1. Créer un montage"
+                + "\n2. Modifier le montage"
+                + "\n0. Quitter"
+        );
     }
 
     private void handleChoice(int choice) {
