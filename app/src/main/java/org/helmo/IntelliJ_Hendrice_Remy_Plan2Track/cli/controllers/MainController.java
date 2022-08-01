@@ -53,6 +53,7 @@ public class MainController extends Controller{
     }
 
     private void createPlanning(){
-        planning = createController.create();
+        var newPlanning = createController.create(planning);
+        if(newPlanning != null) planning = newPlanning;
     }
 }
