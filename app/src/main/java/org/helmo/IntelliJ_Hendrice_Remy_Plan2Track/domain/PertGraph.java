@@ -1,32 +1,46 @@
 package org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domain;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class PertGraph {
     private List<PertNode> nodes;
-    private Set<PertEdge> edges;
+    private List<Set<PertEdge>> edgeLevels;
 
     public PertGraph(Iterable<Job> jobs){
-        edges = new HashSet<>();
-        calcEdgeLevels(jobs);
-
+        edgeLevels = new ArrayList<>();
+        List<Job> jobList = new ArrayList<>();
+        jobs.forEach(jobList::add);
+        calcEdgeLevels(jobList);
     }
 
-    private void calcEdgeLevels(Iterable<Job> jobs){
-        initialLoop(jobs);
-
-    }
-
-    private void initialLoop(Iterable<Job> jobs){
-        for(Job job : jobs){
-            PertEdge jobEdge = new PertEdge(job);
-            if(!job.hasPriorJobs()){
-                jobEdge.setLevel(0);
-            }
-            edges.add(jobEdge);
+    private void calcEdgeLevels(List<Job> jobs){
+        var priorMatrix = initPriorMatrix(jobs);
+        int[] levels = new int[jobs.size()];
+        for (int i = 0; i < jobs.size(); ++i) {
+            levels[i] = sum(priorMatrix[i]);
         }
+
     }
+
+    private int sum(int[] row){
+        return Arrays.stream(row).sum();
+    }
+
+    private int[][] initPriorMatrix(List<Job> jobs){
+        int dim = jobs.size();
+        int[][] priorMatrix = new int[dim][dim];
+        for(int[] row : priorMatrix){
+            Arrays.fill(row, 0);
+        }
+        for(int prior = 0; prior < dim; ++prior ){
+            for(int after = 0; after < dim; ++after){
+                if(jobs.get(after).hasPrior(jobs.get(prior))){
+                    priorMatrix[after][prior] = 1;
+                }
+            }
+        }
+        return priorMatrix;
+    }
+
+
 }

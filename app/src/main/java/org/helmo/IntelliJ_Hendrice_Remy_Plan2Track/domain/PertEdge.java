@@ -9,9 +9,10 @@ public class PertEdge {
     private int level;
     private Set<PertEdge> priorEdges;
 
-    public PertEdge(Job job){
+    public PertEdge(Job job, int level){
         this.job = job;
         weight = job.getDuration();
+        this.level = level;
         priorEdges = new HashSet<>();
     }
 
