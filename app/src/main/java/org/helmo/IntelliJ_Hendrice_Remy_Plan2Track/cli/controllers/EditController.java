@@ -12,6 +12,7 @@ public class EditController extends Controller{
     private final AddJobController addJobController = new AddJobController(console, presenter, repository);
     private final RemoveJobController removeJobController = new RemoveJobController(console, presenter, repository);
     private final AssignJobsController assignJobsController = new AssignJobsController(console, presenter, repository);
+    private final CriticalJobsController criticalJobsController = new CriticalJobsController(console, presenter, repository);
     private Planning planning;
 
     public EditController(Console console, Presenter presenter, PlanningRepository repository) {
@@ -48,6 +49,7 @@ public class EditController extends Controller{
                 + "\n2. Ajouter une nouvelle tâche"
                 + "\n3. Supprimer une tâche existante"
                 + "\n4. Assigner des tâches"
+                + "\n5. Trouver les tâches critiques"
                 + "\n0. Arrêter la modification"
         );
     }
@@ -65,6 +67,9 @@ public class EditController extends Controller{
                 break;
             case 4:
                 assignJobs();
+                break;
+            case 5:
+                findCriticalJobs();
                 break;
             case exitNum:
                 break;
@@ -86,5 +91,7 @@ public class EditController extends Controller{
         removeJobController.removeJob(planning);
     }
 
-    private void assignJobs() {assignJobsController.assignJobs(planning);}
+    private void assignJobs() { assignJobsController.assignJobs(planning);}
+
+    private void findCriticalJobs() { criticalJobsController.findCriticalJobs(planning);}
 }

@@ -48,6 +48,9 @@ public class Job {
         return new ArrayList<>(priorJobs.values());
     }
 
+    public boolean hasPriorJobs(){
+        return priorJobs.size() > 0;
+    }
 
     public boolean hasPrior(String name){
         return priorJobs.containsKey(name);

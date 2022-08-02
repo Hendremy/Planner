@@ -13,7 +13,7 @@ public class Presenter {
     public String presentPlanning(Planning planning){
         String name = planning.getName();
         String jobs = listJobs(planning.getJobs());
-        return String.format("%5s%s\n%5s%s"," ",name," ", jobs);
+        return String.format("\n%5s%s\n%5s%s"," ",name," ", jobs);
     }
 
     public String listJobs(Iterable<Job> jobs){
