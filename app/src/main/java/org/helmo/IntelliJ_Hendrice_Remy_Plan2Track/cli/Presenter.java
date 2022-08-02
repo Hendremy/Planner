@@ -57,8 +57,21 @@ public class Presenter {
         int count = 1;
         StringBuilder sb = new StringBuilder();
         for(Technician tech : technicians){
-            sb.append(String.format("%d. %s\n", count, tech.getFullName()));
+            sb.append(String.format("%5s%d. %s\n"," ", count, tech.getFullName()));
             count++;
+        }
+        sb.append("\n");
+        return sb.toString();
+    }
+
+    public String displayAssignedJobs(Iterable<Job> jobs){
+        StringBuilder sb = new StringBuilder();
+        for(Job job : jobs){
+            String assignedTo = job.getTechnicianName();
+            if(assignedTo == null){
+                assignedTo = "tâche non assignée";
+            }
+            sb.append(String.format("%5s%s: %s\n"," ", job.getName(), assignedTo));
         }
         return sb.toString();
     }

@@ -47,6 +47,7 @@ public class EditController extends Controller{
                     "1. Modifier le nom du montage"
                 + "\n2. Ajouter une nouvelle tâche"
                 + "\n3. Supprimer une tâche existante"
+                + "\n4. Assigner des tâches"
                 + "\n0. Arrêter la modification"
         );
     }
