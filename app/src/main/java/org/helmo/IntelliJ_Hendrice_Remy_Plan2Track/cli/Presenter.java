@@ -4,8 +4,6 @@ import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domain.Job;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domain.Planning;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domain.Technician;
 
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.StringJoiner;
 
 public class Presenter {
@@ -30,7 +28,7 @@ public class Presenter {
         String name = job.getName();
         String description = formatDescription(job.getDescription());
         String duration = String.format("%dj",job.getDuration());
-        String priorJobs = formatPriorJobs(job.getPriorJobs());
+        String priorJobs = formatPriorJobs(job.getPredecessors());
         return String.format("%s : %s %s Requis : %s", name, description, duration, priorJobs);
     }
 

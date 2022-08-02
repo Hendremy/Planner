@@ -32,7 +32,7 @@ public class Planning {
 
     public void removeJob(Job job){
         for (Job otherJob : jobs.values()) {
-            otherJob.removePrior(job);
+            otherJob.removePredecessor(job);
         }
         jobs.remove(job.getName());
     }
@@ -40,7 +40,7 @@ public class Planning {
     public int countPriorJob(Job prior){
         int occ = 0;
         for (Job job : this.jobs.values()) {
-            if(job.hasPrior(prior.getName())){
+            if(job.hasPredecessor(prior)){
                 occ++;
             }
         }

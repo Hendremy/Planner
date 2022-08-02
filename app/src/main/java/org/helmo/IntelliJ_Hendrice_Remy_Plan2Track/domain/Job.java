@@ -1,10 +1,12 @@
 package org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domain;
 
+import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.algo.PertCandidate;
+
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.HashMap;
 
-public class Job {
+public class Job implements PertCandidate<Job> {
 
     private final String name;
     private final String description;
@@ -44,31 +46,39 @@ public class Job {
         this.technician = technician;
     }
 
-    public Iterable<Job> getPriorJobs(){
-        return new ArrayList<>(priorJobs.values());
+
+    @Override
+    public boolean hasPredecessor(Job job){
+        return hasPredecessor(job.getName());
     }
 
-    public boolean hasPriorJobs(){
-        return priorJobs.size() > 0;
-    }
-
-    public boolean hasPrior(String name){
+    private boolean hasPredecessor(String name){
         return priorJobs.containsKey(name);
     }
 
-    public boolean hasPrior(Job job){
-        return hasPrior(job.getName());
-    }
 
-    public void addPrior(Job job){
-        if(job != null && (!hasPrior(job) || !job.getName().equals(this.name))){
+    @Override
+    public void addPredecessor(Job job){
+        if(job != null && (!hasPredecessor(job) || !job.getName().equals(this.name))){
             priorJobs.put(job.getName(), job);
         }
     }
 
-    public void removePrior(Job job){
-        if(job != null && hasPrior(job)){
+    @Override
+    public Iterable<Job> getPredecessors(){
+        return new ArrayList<>(priorJobs.values());
+    }
+
+    @Override
+    public boolean hasPredecessors(){
+        return priorJobs.size() > 0;
+    }
+
+    @Override
+    public void removePredecessor(Job job){
+        if(job != null && hasPredecessor(job)){
             priorJobs.remove(job.getName());
         }
     }
+
 }

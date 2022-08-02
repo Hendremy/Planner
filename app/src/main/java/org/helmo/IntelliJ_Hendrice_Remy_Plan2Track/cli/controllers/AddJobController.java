@@ -6,8 +6,6 @@ import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.datas.PlanningRepository;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domain.Job;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domain.Planning;
 
-import java.util.List;
-
 public class AddJobController extends Controller{
     public AddJobController(Console console, Presenter presenter, PlanningRepository repository) {
         super(console, presenter, repository);
@@ -36,6 +34,6 @@ public class AddJobController extends Controller{
             priorJob = new Job(jobName);
             planning.addJob(priorJob);
         }
-        job.addPrior(priorJob);
+        job.addPredecessor(priorJob);
     }
 }
