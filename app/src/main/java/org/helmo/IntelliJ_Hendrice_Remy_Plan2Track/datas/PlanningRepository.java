@@ -1,9 +1,14 @@
 package org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.datas;
 
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domain.Planning;
-
-import java.util.Collection;
+import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domain.Technician;
 
 public interface PlanningRepository {
-    public Collection<Planning> load();
+
+    void load();
+    void loadPlannings();
+    void loadTechnicians();
+    void writePlannings(Iterable<Planning> plannings);
+    Iterable<Planning> getPlannings();
+    Iterable<Technician> getTechnicians();
 }

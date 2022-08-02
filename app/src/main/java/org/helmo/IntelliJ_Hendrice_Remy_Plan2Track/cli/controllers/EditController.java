@@ -2,18 +2,20 @@ package org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.cli.controllers;
 
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.cli.Console;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.cli.Presenter;
+import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.datas.PlanningRepository;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domain.Planning;
 
 public class EditController extends Controller{
 
     private final int exitNum = 0;
-    private final EditNameController editNameController = new EditNameController(console, presenter);
-    private final AddJobController addJobController = new AddJobController(console, presenter);
-    private final RemoveJobController removeJobController = new RemoveJobController(console, presenter);
+    private final EditNameController editNameController = new EditNameController(console, presenter, repository);
+    private final AddJobController addJobController = new AddJobController(console, presenter, repository);
+    private final RemoveJobController removeJobController = new RemoveJobController(console, presenter, repository);
+    private final AssignJobsController assignJobsController = new AssignJobsController(console, presenter, repository);
     private Planning planning;
 
-    public EditController(Console console, Presenter presenter) {
-        super(console, presenter);
+    public EditController(Console console, Presenter presenter, PlanningRepository repository) {
+        super(console, presenter, repository);
     }
 
     public void edit(Planning planning){
@@ -60,6 +62,9 @@ public class EditController extends Controller{
             case 3:
                 removeJob();
                 break;
+            case 4:
+                assignJobs();
+                break;
             case exitNum:
                 break;
             default:
@@ -79,4 +84,6 @@ public class EditController extends Controller{
     private void removeJob(){
         removeJobController.removeJob(planning);
     }
+
+    private void assignJobs() {assignJobsController.assignJobs(planning);}
 }

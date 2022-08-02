@@ -29,18 +29,15 @@ public class Job {
         return priorJobs.values().iterator();
     }
 
-    public Job(String name, String description, int duration, Collection<Job> priorJobs){
+    public Job(String name, String description, int duration){
         this.name = name;
         this.description = description;
         this.duration = duration;
         this.priorJobs = new HashMap<>();
-        for (var job : priorJobs) {
-            this.priorJobs.put(job.getName(), job);
-        }
     }
 
     public Job(String name){
-        this(name, "",1,new ArrayList<>());
+        this(name, "",1);
     }
 
     public boolean hasPrior(String name){
@@ -51,8 +48,14 @@ public class Job {
         return hasPrior(job.getName());
     }
 
+    public void addPrior(Job job){
+        if(job != null && (!hasPrior(job) || !job.getName().equals(this.name))){
+            priorJobs.put(job.getName(), job);
+        }
+    }
+
     public void removePrior(Job job){
-        if(hasPrior(job)){
+        if(job != null && hasPrior(job)){
             priorJobs.remove(job.getName());
         }
     }

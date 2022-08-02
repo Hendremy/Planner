@@ -1,17 +1,17 @@
 package org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.cli;
 
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.cli.controllers.MainController;
-import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domain.Planning;
+import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.datas.PlanningRepository;
+import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.datas.StaticPlanningRepository;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Main {
 
     private static Console console;
     private static Presenter presenter;
     private static MainController mainController;
+    private static PlanningRepository repository;
 
     public static void main(String[] args) {
         init();
@@ -24,7 +24,8 @@ public class Main {
     private static void init(){
         console =  new Console();
         presenter = new Presenter();
-        mainController = new MainController(console, presenter);
+        repository = new StaticPlanningRepository();
+        mainController = new MainController(console, presenter, repository);
     }
 
     private static void loop(){

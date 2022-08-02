@@ -2,40 +2,40 @@ package org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.cli.controllers;
 
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.cli.Console;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.cli.Presenter;
+import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.datas.PlanningRepository;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domain.Job;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domain.Planning;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class AddJobController extends Controller{
-    public AddJobController(Console console, Presenter presenter) {
-        super(console, presenter);
+    public AddJobController(Console console, Presenter presenter, PlanningRepository repository) {
+        super(console, presenter, repository);
     }
 
     public void addJob(Planning planning){
         String name = console.askString("Nom de la nouvelle tâche ?");
         String description = console.askString("Descriptif éventuel de la nouvelle tâche ?");
         int duration = console.askPosInt("Durée (en jours) de la nouvelle tâche ?");
-        List<Job> priorJobs = new ArrayList<>();
-        getPriorJobs(planning, priorJobs);
-        planning.addJob(new Job(name, description, duration, priorJobs));
+        Job job = new Job(name, description, duration);
+        addPriorJobs(planning, job);
+        planning.addJob(job);
     }
 
-    private void getPriorJobs(Planning planning, List<Job> priorJobs){
+    private void addPriorJobs(Planning planning, Job job){
         String name = null;
         while(name == null || !name.isBlank()){
             name = console.askString("Tâche antérieure (Enter si aucune) :");
-            if(!name.isBlank()) addPriorJob(planning, priorJobs, name);
+            if(!name.isBlank()) addPriorJob(planning, job, name);
         }
     }
 
-    private void addPriorJob(Planning planning, List<Job> priorJobs, String jobName){
+    private void addPriorJob(Planning planning, Job job, String jobName){
         Job priorJob = planning.getJobByName(jobName);
         if(priorJob == null){
             priorJob = new Job(jobName);
             planning.addJob(priorJob);
         }
-        priorJobs.add(priorJob);
+        job.addPrior(priorJob);
     }
 }

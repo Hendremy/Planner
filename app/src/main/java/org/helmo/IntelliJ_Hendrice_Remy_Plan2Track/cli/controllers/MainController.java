@@ -2,6 +2,7 @@ package org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.cli.controllers;
 
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.cli.Console;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.cli.Presenter;
+import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.datas.PlanningRepository;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domain.Planning;
 
 
@@ -12,8 +13,8 @@ public class MainController extends Controller{
     private final EditController editController;
     private Planning planning;
 
-    public MainController (Console console, Presenter presenter){
-        super(console, presenter);
+    public MainController (Console console, Presenter presenter, PlanningRepository repository){
+        super(console, presenter, repository);
         this.createController = new CreateController(console, presenter);
         this.editController = new EditController(console, presenter);
     }
