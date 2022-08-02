@@ -2,6 +2,7 @@ package org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.cli;
 
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domain.Job;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domain.Planning;
+import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domain.Technician;
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -15,8 +16,8 @@ public class Presenter {
         return String.format("%5s%s\n%5s%s"," ",name," ", jobs);
     }
 
-    private String listJobs(Collection<Job> jobs){
-        if(jobs.isEmpty()) return "(Aucune tâche)";
+    public String listJobs(Iterable<Job> jobs){
+        if(!jobs.iterator().hasNext()) return "(Aucune tâche)";
         StringBuilder sb = new StringBuilder();
         for (var job : jobs) {
             sb.append("\n");
@@ -43,14 +44,22 @@ public class Presenter {
         return description;
     }
 
-    private String formatPriorJobs(Iterator<Job> jobs){
-        if(!jobs.hasNext()) return "-";
-        Job job;
+    private String formatPriorJobs(Iterable<Job> jobs){
+        if(!jobs.iterator().hasNext()) return "-";
         StringJoiner sj = new StringJoiner(",");
-        while(jobs.hasNext()){
-            job = jobs.next();
+        for (Job job : jobs) {
             sj.add(job.getName());
         }
         return sj.toString();
+    }
+
+    public String listTechnicians(Iterable<Technician> technicians){
+        int count = 1;
+        StringBuilder sb = new StringBuilder();
+        for(Technician tech : technicians){
+            sb.append(String.format("%d. %s\n", count, tech.getFullName()));
+            count++;
+        }
+        return sb.toString();
     }
 }

@@ -18,7 +18,7 @@ public class Planning {
 
     public void setName(String name){ this.name = name;}
 
-    public Collection<Job> getJobs() {
+    public Iterable<Job> getJobs() {
         return jobs.values();
     }
 
@@ -45,5 +45,9 @@ public class Planning {
             }
         }
         return occ;
+    }
+
+    public boolean isEmpty(){
+        return jobs.isEmpty();
     }
 }

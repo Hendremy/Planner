@@ -25,8 +25,8 @@ public class Job {
         return duration;
     }
 
-    public Iterator<Job> getPriorJobs(){
-        return priorJobs.values().iterator();
+    public Iterable<Job> getPriorJobs(){
+        return new ArrayList<>(priorJobs.values());
     }
 
     public Job(String name, String description, int duration){

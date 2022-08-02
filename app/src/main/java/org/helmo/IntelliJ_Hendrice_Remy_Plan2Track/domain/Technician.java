@@ -19,6 +19,10 @@ public class Technician {
         return lastName;
     }
 
+    public String getFullName(){
+        return String.format("%s %s",firstName, lastName);
+    }
+
     public String getCode(){
         return code;
     }

@@ -15,8 +15,8 @@ public class MainController extends Controller{
 
     public MainController (Console console, Presenter presenter, PlanningRepository repository){
         super(console, presenter, repository);
-        this.createController = new CreateController(console, presenter);
-        this.editController = new EditController(console, presenter);
+        this.createController = new CreateController(console, presenter, repository);
+        this.editController = new EditController(console, presenter, repository);
     }
 
     public void loop(){
