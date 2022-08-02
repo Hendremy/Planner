@@ -1,24 +1,22 @@
 package org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domain;
 
-import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.algo.PertCandidate;
+import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.algo.PertTask;
 
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.HashMap;
+import java.util.*;
 
-public class Job implements PertCandidate<Job> {
+public class Job implements PertTask {
 
     private final String name;
     private final String description;
     private final int duration;
-    private final Map<String,Job> priorJobs;
+    private final Set<Job> priorJobs;
     private Technician technician;
 
     public Job(String name, String description, int duration){
         this.name = name;
         this.description = description;
         this.duration = duration;
-        this.priorJobs = new HashMap<>();
+        this.priorJobs = new HashSet<>();
         this.technician = null;
     }
 
@@ -34,10 +32,6 @@ public class Job implements PertCandidate<Job> {
         return description;
     }
 
-    public int getDuration(){
-        return duration;
-    }
-
     public String getTechnicianName(){
         return technician == null ? null : technician.getFullName();
     }
@@ -46,39 +40,40 @@ public class Job implements PertCandidate<Job> {
         this.technician = technician;
     }
 
-
-    @Override
-    public boolean hasPredecessor(Job job){
-        return hasPredecessor(job.getName());
-    }
-
-    private boolean hasPredecessor(String name){
-        return priorJobs.containsKey(name);
-    }
-
-
-    @Override
     public void addPredecessor(Job job){
-        if(job != null && (!hasPredecessor(job) || !job.getName().equals(this.name))){
-            priorJobs.put(job.getName(), job);
+        if(job != null && (!hasPredecessor(job) || !job.equals(this))){
+            priorJobs.add(job);
         }
     }
 
+    public void removePredecessor(Job job){
+        if(job != null && hasPredecessor(job)){
+            priorJobs.remove(job);
+        }
+    }
+
+    public Iterable<Job> getPriorJobs(){
+        return new ArrayList<>(priorJobs);
+    }
+
     @Override
-    public Iterable<Job> getPredecessors(){
-        return new ArrayList<>(priorJobs.values());
+    public Set<PertTask> getPredecessors(){
+        return new HashSet<>(priorJobs);
     }
 
     @Override
     public boolean hasPredecessors(){
-        return priorJobs.size() > 0;
+        return !getPredecessors().isEmpty();
     }
 
     @Override
-    public void removePredecessor(Job job){
-        if(job != null && hasPredecessor(job)){
-            priorJobs.remove(job.getName());
-        }
+    public int getDuration(){
+        return duration;
+    }
+
+    @Override
+    public boolean hasPredecessor(PertTask task){
+        return getPredecessors().contains(task);
     }
 
 }

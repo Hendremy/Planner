@@ -28,7 +28,7 @@ public class Presenter {
         String name = job.getName();
         String description = formatDescription(job.getDescription());
         String duration = String.format("%dj",job.getDuration());
-        String priorJobs = formatPriorJobs(job.getPredecessors());
+        String priorJobs = formatPriorJobs(job.getPriorJobs());
         return String.format("%s : %s %s Requis : %s", name, description, duration, priorJobs);
     }
 
