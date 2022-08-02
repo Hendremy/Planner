@@ -2,40 +2,40 @@ package org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.algo;
 
 import java.util.*;
 
-public class PertGraph<T> {
-    private List<PertNode<T>> nodes;
-    private final ArrayList<PertEdge<T>> edges;
+public class PertGraph {
+    private List<PertNode> nodes;
+    private final ArrayList<PertEdge> edges;
 
-    public PertGraph(Iterable<PertTask<T>> objects){
-        List<PertTask<T>> typeList = new ArrayList<>();
-        objects.forEach(typeList::add);
+    public PertGraph(Iterable<PertTask> tasks){
+        List<PertTask> taskList = new ArrayList<>();
+        tasks.forEach(taskList::add);
 
-        edges = new ArrayList<>(typeList.size());
-        initEdges(typeList);
-        calcLevels(typeList);
+        edges = new ArrayList<>(taskList.size());
+        initEdges(taskList);
+        calcLevels(taskList);
         buildGraph();
     }
 
-    private void initEdges(List<PertTask<T>> objects){
-        objects.forEach(obj -> edges.add(new PertEdge<>(obj)));
+    private void initEdges(List<PertTask> taskList){
+        taskList.forEach(task -> edges.add(new PertEdge(task)));
     }
 
-    private void calcLevels(List<PertTask<T>> objects){
-        var priorMatrix = initPriorMatrix(objects);
-        var levels = new int[objects.size()];
+    private void calcLevels(List<PertTask> taskList){
+        var priorMatrix = initPriorMatrix(taskList);
+        var levels = new int[taskList.size()];
         int currentLevel = 0;
 
-        while(!objects.isEmpty()){
-            determineLevels(objects, levels, priorMatrix, currentLevel);
+        while(!taskList.isEmpty()){
+            determineLevels(taskList, levels, priorMatrix, currentLevel);
             currentLevel++;
         }
     }
 
-    private int[][] initPriorMatrix(List<PertTask<T>> objects){
-        int dim = objects.size();
+    private int[][] initPriorMatrix(List<PertTask> taskList){
+        int dim = taskList.size();
         int[][] priorMatrix = new int[dim][dim];
         initMatrix(priorMatrix);
-        findDependencies(objects, priorMatrix, dim);
+        findDependencies(taskList, priorMatrix);
         return priorMatrix;
     }
 
@@ -45,19 +45,19 @@ public class PertGraph<T> {
         }
     }
 
-    private void findDependencies(List<PertTask<T>> objects, int[][] priorMatrix, int dim){
-        for(int hasToBeDone = 0; hasToBeDone < dim; ++hasToBeDone ){
-            for(int toDo = 0; toDo < dim; ++toDo){
-                if(objects.get(toDo).hasPredecessor(objects.get(hasToBeDone))){
+    private void findDependencies(List<PertTask> taskList, int[][] priorMatrix){
+        for(int hasToBeDone = 0; hasToBeDone < priorMatrix.length; ++hasToBeDone ){
+            for(int toDo = 0; toDo < priorMatrix[hasToBeDone].length; ++toDo){
+                if(taskList.get(toDo).hasPredecessor(taskList.get(hasToBeDone))){
                     priorMatrix[toDo][hasToBeDone] = 1;
                 }
             }
         }
     }
 
-    private void determineLevels(List<PertTask<T>> jobs, int[] levels, int[][] priorMatrix, int currentLevel){
+    private void determineLevels(List<PertTask> tasks, int[] levels, int[][] priorMatrix, int currentLevel){
         sumOnesInRow(levels, priorMatrix);
-        clearZerosRows(jobs, levels, priorMatrix, currentLevel);
+        clearZerosRows(tasks, levels, priorMatrix, currentLevel);
     }
 
     private void sumOnesInRow(int[] levels, int[][] priorMatrix){
@@ -70,12 +70,12 @@ public class PertGraph<T> {
         return Arrays.stream(row).sum();
     }
 
-    private void clearZerosRows(List<PertTask<T>> jobs, int[] levelsPerJob, int[][] priorMatrix, int currentLevel){
-        for (int i = 0; i < jobs.size(); ++i) {
+    private void clearZerosRows(List<PertTask> tasks, int[] levelsPerJob, int[][] priorMatrix, int currentLevel){
+        for (int i = 0; i < tasks.size(); ++i) {
             if(levelsPerJob[i] == 0){
                 clearColumn(i, priorMatrix);
-                T obj = jobs.get(i);
-                jobs.remove(job);
+                PertTask task = tasks.get(i);//Possibilité de changer tasks en ArrayList pour avoir accès à remove(int index)
+                tasks.remove(task);
                 edges.get(i).setLevel(currentLevel);
             }
         }
