@@ -4,18 +4,12 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class PertEdge {
-    private final PertTask edgeType;
-    private int level;
+    private final PertTask task;
     private final Set<PertEdge> priorEdges;
 
-    public PertEdge(PertTask edgeType){
-        this.edgeType = edgeType;
-        this.level = -1;
+    public PertEdge(PertTask task){
+        this.task = task;
         priorEdges = new HashSet<>();
-    }
-
-    public void setLevel(int level){
-        this.level = level;
     }
 
     public void addPriorEdge(PertEdge edge){

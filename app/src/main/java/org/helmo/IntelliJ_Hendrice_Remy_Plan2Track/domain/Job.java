@@ -24,10 +24,6 @@ public class Job implements PertTask {
         this(name, "",1);
     }
 
-    public String getName(){
-        return name;
-    }
-
     public String getDescription(){
         return description;
     }
@@ -54,6 +50,12 @@ public class Job implements PertTask {
 
     public Iterable<Job> getPriorJobs(){
         return new ArrayList<>(priorJobs);
+    }
+
+
+    @Override
+    public String getName(){
+        return name;
     }
 
     @Override

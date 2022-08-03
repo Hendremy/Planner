@@ -1,22 +1,26 @@
 package org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.algo;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class PertLevelCalculator {
 
-    public void calcLevels(List<PertTask> taskList, Set<PertEdge> edges){
+    public List<Set<PertTask>> calcLevels(Iterable<PertTask> tasks){
+        var taskList = tasksToList(tasks);
         var priorMatrix = initPriorMatrix(taskList);
         var levels = new int[taskList.size()];
-        int currentLevel = 0;
-        List<PertEdge> edgeList = new ArrayList<>(edges);
+        List<Set<PertTask>> tasksInLevels = new ArrayList<>();
 
         while(!taskList.isEmpty()){
-            determineLevels(taskList, edgeList, levels, priorMatrix, currentLevel);
-            currentLevel++;
+            determineLevels(taskList, tasksInLevels, levels, priorMatrix);
         }
+
+        return tasksInLevels;
+    }
+
+    private List<PertTask> tasksToList(Iterable<PertTask> tasks){
+        List<PertTask> taskList = new ArrayList<>();
+        tasks.forEach(taskList::add);
+        return taskList;
     }
 
     private int[][] initPriorMatrix(List<PertTask> taskList){
@@ -43,10 +47,10 @@ public class PertLevelCalculator {
         }
     }
 
-    private void determineLevels(List<PertTask> tasks, List<PertEdge> edges,
-                                 int[] levels, int[][] priorMatrix, int currentLevel){
+    private void determineLevels(List<PertTask> tasks, List<Set<PertTask>> tasksInLevels,
+                                 int[] levels, int[][] priorMatrix){
         sumOnesInRow(levels, priorMatrix);
-        clearZerosRows(tasks, edges, levels, priorMatrix, currentLevel);
+        clearZerosRows(tasks, tasksInLevels, levels, priorMatrix);
     }
 
     private void sumOnesInRow(int[] levels, int[][] priorMatrix){
@@ -59,16 +63,18 @@ public class PertLevelCalculator {
         return Arrays.stream(row).sum();
     }
 
-    private void clearZerosRows(List<PertTask> tasks, List<PertEdge> edges,
-                                int[] levelsPerJob, int[][] priorMatrix, int currentLevel){
+    private void clearZerosRows(List<PertTask> tasks, List<Set<PertTask>> tasksInLevels,
+                                int[] levelsPerJob, int[][] priorMatrix){
+        Set<PertTask> level = new HashSet<>();
         for (int i = 0; i < tasks.size(); ++i) {
             if(levelsPerJob[i] == 0){
                 clearColumn(i, priorMatrix);
                 PertTask task = tasks.get(i);//Possibilité de changer tasks en ArrayList pour avoir accès à remove(int index)
                 tasks.remove(task);
-                edges.get(i).setLevel(currentLevel);
+                level.add(task);
             }
         }
+        tasksInLevels.add(level);
     }
 
     private void clearColumn(int col, int[][] matrix){

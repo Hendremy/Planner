@@ -4,6 +4,6 @@ import java.util.Set;
 
 public class PertNode{
     private int order;
-    private Set<PertEdge> incomingEdges;
-    private PertEdge outGoingEdge;
+    private Set<PertEdge> outgoingEdges;
+    private PertEdge incoming;
 }

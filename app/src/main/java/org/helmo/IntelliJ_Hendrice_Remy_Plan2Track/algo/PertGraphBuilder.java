@@ -6,29 +6,26 @@ public class PertGraphBuilder {
 
     private final PertLevelCalculator calculator;
 
-    public PertGraphBuilder(PertLevelCalculator calculator){
-        this.calculator = calculator;
+    public PertGraphBuilder(){
+        this.calculator = new PertLevelCalculator();
     }
 
-    public PertGraph buildGraph(Iterable<PertTask> tasks){
-        List<PertTask> taskList = tasksToList(tasks);
-        Set<PertNode> nodes = new HashSet<>();
-        Set<PertEdge> edges = new HashSet<>(taskList.size());
-
-        buildEdges(taskList, edges);
-        buildNodes(edges);
-        return new PertGraph(edges, nodes);
+    public PertGraph getGraph(Iterable<PertTask> tasks){
+        var levels = calcLevels(tasks);
+        return new PertGraph(null, null);
     }
 
-    private List<PertTask> tasksToList(Iterable<PertTask> tasks){
-        List<PertTask> taskList = new ArrayList<>();
-        tasks.forEach(taskList::add);
-        return taskList;
+    private List<Set<PertTask>> calcLevels(Iterable<PertTask> tasks){
+        return calculator.calcLevels(tasks);
     }
 
-    private void buildEdges(List<PertTask> taskList, Set<PertEdge> edges){
-        taskList.forEach(task -> edges.add(new PertEdge(task)));
-        calculator.calcLevels(taskList,edges);
+
+    private void buildGraph(List<Set<PertTask>> tasks){
+
+    }
+
+    private void buildEdges(Set<PertEdge> edges){
+
     }
 
     private void buildNodes(Set<PertEdge> edges){
