@@ -4,11 +4,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class PertGraph {
-    private final Set<PertEdge> edges;
-    private final Set<PertNode> nodes;
+    //private final Set<PertEdge> edges;
 
-    public PertGraph(Set<PertEdge> edges, Set<PertNode> nodes){
+    /*public PertGraph(Set<PertEdge> edges){
         this.edges = edges;
-        this.nodes = nodes;
-    }
+    }*/
 }

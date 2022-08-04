@@ -5,20 +5,13 @@ import java.util.Set;
 
 public class PertEdge {
     private final PertTask task;
-    private final Set<PertEdge> priorEdges;
+    private final int from;
+    private final int to;
 
-    public PertEdge(PertTask task){
+    public PertEdge(int from, int to, PertTask task){
         this.task = task;
-        priorEdges = new HashSet<>();
+        this.from = from;
+        this.to = to;
     }
 
-    public void addPriorEdge(PertEdge edge){
-        if(edge != null && this != edge){
-            priorEdges.add(edge);
-        }
-    }
-
-    public Set<PertEdge> getPredecessors(){
-        return this.priorEdges;
-    }
 }

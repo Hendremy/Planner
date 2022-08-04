@@ -12,17 +12,24 @@ public class PertGraphBuilder {
 
     public PertGraph getGraph(Iterable<PertTask> tasks){
         var levels = calcLevels(tasks);
-        return new PertGraph(null, null);
+        return new PertGraph();
     }
 
     private List<Set<PertTask>> calcLevels(Iterable<PertTask> tasks){
         return calculator.calcLevels(tasks);
     }
 
-
     private void buildGraph(List<Set<PertTask>> tasks){
+        int stepNum = 1;
+        PertNode first = new PertNode(stepNum);
+        stepNum++;
+        for(var level : tasks){
+            for(var task : level){
 
+            }
+        }
     }
+
 
     private void buildEdges(Set<PertEdge> edges){
 
