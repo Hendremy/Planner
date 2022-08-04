@@ -9,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.view.MainWindow;
 
 public class App extends Application {
 
@@ -16,9 +17,13 @@ public class App extends Application {
     public void start(Stage primaryStage) throws Exception {
         Parent root = new VBox();
 
+
+
+        MainWindow view = new MainWindow();
+
         Scene scene = new Scene(root, 300,275);
 
-        primaryStage.setTitle("Ma suplication");
+        primaryStage.setTitle("Planner");
         primaryStage.setScene(scene);
         primaryStage.show();
     }
