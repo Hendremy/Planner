@@ -13,7 +13,6 @@ public class MainWindow {
 
     private ManagePlanning control;
 
-
     public MainWindow(ManagePlanning control){
         this.control = control;
     }
@@ -22,13 +21,7 @@ public class MainWindow {
 
     private GridPane root = new GridPane();
     {
-        root.setAlignment(Pos.CENTER);
-        //root.setGridLinesVisible(true);
-        root.setPadding(new Insets(20));
-        root.setHgap( 4 ); root.setVgap( 8 );
-        for (Node n:root.getChildren()) {
-            GridPane.setHalignment(n, HPos.CENTER );
-        }
+
     }
 
     public Parent getParent(){
