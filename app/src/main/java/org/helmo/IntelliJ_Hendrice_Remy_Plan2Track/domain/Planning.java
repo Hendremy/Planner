@@ -30,6 +30,23 @@ public class Planning {
         jobs.put(job.getName(), job);
     }
 
+    /*CTT de la suppression d'une tâche:
+    *
+    * O(n) : n étant le nombre de tâches dans le planning:
+    *
+    *   -   On doit parcourir les n tâches du planning pour
+    *       faire un simple retrait dans un HashSet qui a une CTT constante
+    *   => CTT = n * 1 = O(n)
+    *
+    *   -  Ensuite, on enlève la tâche de la HashMap du planning
+    *      qui est un simple retrait qui a une CTT constante
+    *   => CTT = 1 = O(n)
+    *
+    * En additionant ces deux étapes, on trouve la CTT:
+    *
+    *  n + 1 = O(n)
+    *
+    * */
     public void removeJob(Job job){
         if(job != null){
             for (Job otherJob : jobs.values()) {
