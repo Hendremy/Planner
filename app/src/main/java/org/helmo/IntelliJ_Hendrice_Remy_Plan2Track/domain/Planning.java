@@ -31,10 +31,12 @@ public class Planning {
     }
 
     public void removeJob(Job job){
-        for (Job otherJob : jobs.values()) {
-            otherJob.removePredecessor(job);
+        if(job != null){
+            for (Job otherJob : jobs.values()) {
+                otherJob.removePredecessor(job);
+            }
+            jobs.remove(job.getName());
         }
-        jobs.remove(job.getName());
     }
 
     public int countPriorJob(Job prior){
