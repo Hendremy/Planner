@@ -6,11 +6,19 @@ import java.util.Scanner;
 
 public class Console implements Closeable {
 
+    private static Console singleton;
     private final PrintStream out = System.out;
     private final Scanner in;
     private final String yesNo = "\n(O)ui/(N)on";
 
-    public Console(){
+    public static Console getInstance(){
+        if(singleton == null){
+            singleton = new Console();
+        }
+        return singleton;
+    }
+
+    private Console(){
         in = new Scanner(System.in);
     }
 

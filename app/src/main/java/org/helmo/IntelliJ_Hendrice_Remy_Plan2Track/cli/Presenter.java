@@ -1,12 +1,23 @@
 package org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.cli;
 
-import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domain.Job;
-import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domain.Planning;
-import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domain.Technician;
+import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.Job;
+import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.Planning;
+import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.Technician;
 
 import java.util.StringJoiner;
 
 public class Presenter {
+
+    public static Presenter singleton;
+
+    public static Presenter getInstance(){
+        if(singleton == null){
+            singleton = new Presenter();
+        }
+        return singleton;
+    }
+
+    private Presenter(){}
 
     public String presentPlanning(Planning planning){
         String name = planning.getName();

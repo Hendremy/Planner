@@ -1,4 +1,4 @@
-package org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domain;
+package org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains;
 
 import java.util.*;
 

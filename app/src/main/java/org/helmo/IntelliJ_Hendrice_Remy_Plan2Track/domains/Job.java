@@ -1,6 +1,6 @@
-package org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domain;
+package org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains;
 
-import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.algo.PertTask;
+import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.algo.PertTask;
 
 import java.util.*;
 

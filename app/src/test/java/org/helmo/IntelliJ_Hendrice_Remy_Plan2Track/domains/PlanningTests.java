@@ -1,10 +1,9 @@
-package org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domain;
+package org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;

@@ -2,14 +2,12 @@ package org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.cli.controllers;
 
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.cli.Console;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.cli.Presenter;
-import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.datas.PlanningRepository;
-import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domain.Job;
-import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domain.Planning;
-import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domain.Technician;
+import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.datas.PlanningRepository;
+import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.Job;
+import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.Planning;
+import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.Technician;
 
-import java.awt.font.TextHitInfo;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class AssignJobsController extends Controller{

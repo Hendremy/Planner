@@ -1,7 +1,4 @@
-package org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.algo;
-
-import java.util.HashSet;
-import java.util.Set;
+package org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.algo;
 
 public class PertEdge {
     private final PertTask task;

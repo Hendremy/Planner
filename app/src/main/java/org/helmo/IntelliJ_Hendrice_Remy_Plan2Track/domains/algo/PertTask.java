@@ -1,4 +1,4 @@
-package org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.algo;
+package org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.algo;
 
 import java.util.Set;
 
