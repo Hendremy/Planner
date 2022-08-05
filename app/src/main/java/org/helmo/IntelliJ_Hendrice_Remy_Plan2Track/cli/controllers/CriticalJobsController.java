@@ -6,8 +6,9 @@ import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.datas.PlanningReposit
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.Planning;
 
 public class CriticalJobsController extends Controller{
-    public CriticalJobsController(Console console, Presenter presenter, PlanningRepository planningRepository) {
-        super(console, presenter, planningRepository);
+
+    public CriticalJobsController(PlanningRepository planningRepository) {
+        super(planningRepository);
     }
 
     public void findCriticalJobs(Planning planning){

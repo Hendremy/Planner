@@ -30,6 +30,16 @@ public class Planning {
         jobs.put(job.getName(), job);
     }
 
+    public void addPriorToJob(String priorName, Job job){
+        if(priorName == null || job == null) return;
+        Job priorJob = getJobByName(priorName);
+        if(priorJob == null){
+            priorJob = new Job(priorName);
+            addJob(priorJob);
+        }
+        job.addPredecessor(priorJob);
+    }
+
     /*CTT de la suppression d'une tâche:
     *
     * O(n) : n étant le nombre de tâches dans le planning:
@@ -47,7 +57,7 @@ public class Planning {
     *  n + 1 = O(n)
     *
     * */
-    public void removeJob(Job job){
+    private void removeJob(Job job){
         if(job != null){
             for (Job otherJob : jobs.values()) {
                 otherJob.removePredecessor(job);
@@ -56,7 +66,11 @@ public class Planning {
         }
     }
 
-    public int countPriorJob(Job prior){
+    public void removeJob(String name) throws JobNotFoundException {
+        removeJob(findJob(name));
+    }
+
+    private int countPriorJob(Job prior){
         int occ = 0;
         for (Job job : this.jobs.values()) {
             if(job.hasPredecessor(prior)){
@@ -64,6 +78,16 @@ public class Planning {
             }
         }
         return occ;
+    }
+
+    public int countPriorJob(String name) throws JobNotFoundException {
+        return countPriorJob(findJob(name));
+    }
+
+    private Job findJob(String name) throws JobNotFoundException {
+        var job = getJobByName(name);
+        if(job == null) throw new JobNotFoundException();
+        return job;
     }
 
     public boolean isEmpty(){

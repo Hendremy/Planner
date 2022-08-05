@@ -77,11 +77,11 @@ public class EditView extends CliView{
     }
 
     private void addJob(){
-        //controller.addJob();
+        controller.addJob();
     }
 
     private void removeJob(){
-        //removeJobController.removeJob();
+        controller.removeJob();
     }
 
     private void assignJobs() {

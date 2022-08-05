@@ -7,4 +7,8 @@ public interface EditPlanning {
     Planning getPlanning();
 
     void editName(String name);
+
+    void addJob();
+
+    void removeJob();
 }

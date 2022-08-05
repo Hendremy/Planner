@@ -9,4 +9,10 @@ public interface ManagePlanning {
     Planning getPlanning();
 
     void editPlanning();
+
+    void launchAddJobView();
+
+    void launchRemoveJobView();
+
+    void launchAssignJobsView();
 }

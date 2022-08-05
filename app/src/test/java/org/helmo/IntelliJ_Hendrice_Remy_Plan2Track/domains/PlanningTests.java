@@ -35,10 +35,10 @@ public class PlanningTests {
     }
 
     @Test
-    void removeTaskThatIsPrior(){
+    void removeTaskThatIsPrior() throws JobNotFoundException {
         a.addPredecessor(b);
 
-        planning.removeJob(b);
+        planning.removeJob("B");
 
         for(var job : planning.getJobs()){
             assertNotEquals(job, b);
@@ -47,8 +47,8 @@ public class PlanningTests {
     }
 
     @Test
-    void removeAloneTask(){
-        planning.removeJob(e);
+    void removeAloneTask() throws JobNotFoundException {
+        planning.removeJob("E");
 
         for(var job : planning.getJobs()){
             assertNotEquals(job, e);
@@ -56,7 +56,7 @@ public class PlanningTests {
     }
 
     @Test
-    void removeNullTask(){
+    void removeNullTask() throws JobNotFoundException {
         planning.removeJob(null);
 
         List<Job> jobs = new ArrayList<>();
@@ -65,9 +65,8 @@ public class PlanningTests {
     }
 
     @Test
-    void removeTaskNotInPlanning(){
-        Job z = new Job("Z");
-        planning.removeJob(z);
+    void removeTaskNotInPlanning() throws JobNotFoundException {
+        planning.removeJob("Z");
 
         List<Job> jobs = new ArrayList<>();
         planning.getJobs().forEach(jobs::add);
@@ -75,13 +74,13 @@ public class PlanningTests {
     }
 
     @Test
-    void removeTaskIsPriorToMultiple(){
+    void removeTaskIsPriorToMultiple() throws JobNotFoundException {
         a.addPredecessor(b);
         c.addPredecessor(b);
         d.addPredecessor(b);
         e.addPredecessor(b);
 
-        planning.removeJob(b);
+        planning.removeJob("B");
 
         for(var job : planning.getJobs()){
             assertNotEquals(job, b);

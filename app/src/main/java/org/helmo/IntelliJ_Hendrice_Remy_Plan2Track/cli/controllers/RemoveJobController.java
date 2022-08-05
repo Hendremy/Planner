@@ -2,38 +2,29 @@ package org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.cli.controllers;
 
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.cli.Console;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.cli.Presenter;
+import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.controllers.RemoveJob;
+import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.JobNotFoundException;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.datas.PlanningRepository;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.Job;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.Planning;
 
-public class RemoveJobController extends Controller{
-    public RemoveJobController(Console console, Presenter presenter, PlanningRepository repository) {
-        super(console, presenter, repository);
+public class RemoveJobController extends Controller implements RemoveJob {
+
+    private final Planning planning;
+
+    public RemoveJobController(PlanningRepository planningRepository, Planning planning) {
+        super(planningRepository);
+        this.planning = planning;
     }
 
-    public void removeJob(Planning planning){
-        String name = console.askString("Nom de la tâche à modifier ? (Enter pour annuler)");
-        while(name == null || !name.isBlank()){
-            deleteJob(planning, name);
-            name = console.askString("Nom de la tâche à modifier ? (Enter pour annuler)");
-        }
+    @Override
+    public int findJobOccurences(String name) throws JobNotFoundException {
+        return planning.countPriorJob(name);
     }
 
-    private void deleteJob(Planning planning, String name){
-        Job job = planning.getJobByName(name);
-        if(job != null){
-            confirmDelete(planning, job);
-        }
-        else{
-            console.println("Ce nom de tâche n'existe pas");
-        }
+    @Override
+    public void removeJob(String name) throws JobNotFoundException {
+        planning.removeJob(name);
     }
 
-    private void confirmDelete(Planning planning, Job job){
-        int occ = planning.countPriorJob(job);
-        console.println(String.format("%s est requise pour %d autre(s) tâche(s)", job.getName(), occ));
-        if(console.askYesNo("Voulez-vous vraiment la supprimer ?")){
-            planning.removeJob(job);
-        }
-    }
 }

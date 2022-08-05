@@ -6,21 +6,16 @@ package org.helmo.IntelliJ_Hendrice_Remy_Plan2Track;
 import javafx.application.Application;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.controllers.LoadController;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.view.MainWindow;
 
 public class App extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = new VBox();
-
-
-
-        MainWindow view = new MainWindow();
-
+        MainWindow view = new MainWindow(new ManageController(), new LoadController());
+        Parent root = view.getParent();
         Scene scene = new Scene(root, 300,275);
 
         primaryStage.setTitle("Planner");

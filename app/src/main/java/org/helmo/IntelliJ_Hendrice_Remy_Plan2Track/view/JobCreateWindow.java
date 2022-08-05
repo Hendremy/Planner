@@ -21,7 +21,6 @@ public class JobCreateWindow {
         duration.setTextFormatter(new TextFormatter<>(new NumberStringConverter()));
     }
 
-
     private Label descriptionLabel = new Label("Description");
     private TextArea description = new TextArea();
 
