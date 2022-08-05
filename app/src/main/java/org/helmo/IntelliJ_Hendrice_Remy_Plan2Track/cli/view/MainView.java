@@ -1,5 +1,6 @@
 package org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.cli.view;
 
+
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.controllers.ManagePlanning;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.Planning;
 
@@ -59,10 +60,9 @@ public class MainView extends CliView {
     }
 
     private void createPlanning(){
-        if(getPlanning() != null && wantsOverride()){
-
+        if((getPlanning() != null && wantsOverride()) || getPlanning() == null){
+            createNewPlanning();
         }
-        createNewPlanning();
     }
 
     private boolean wantsOverride(){

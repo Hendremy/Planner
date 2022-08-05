@@ -29,7 +29,7 @@ public class MainController extends Controller implements ManagePlanning {
 
     @Override
     public void editPlanning(){
-        EditPlanning editController = new EditController(getRepository(),planning, this);
+        EditPlanning editController = new EditPlanningController(getRepository(),planning, this);
         new EditView(editController).loop();
     }
 

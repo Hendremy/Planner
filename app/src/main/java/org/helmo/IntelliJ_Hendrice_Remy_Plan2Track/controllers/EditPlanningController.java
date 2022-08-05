@@ -3,12 +3,12 @@ package org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.controllers;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.datas.PlanningRepository;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.Planning;
 
-public class EditController extends Controller implements EditPlanning {
+public class EditPlanningController extends Controller implements EditPlanning {
 
     private Planning planning;
     private ManagePlanning mainCtrl;
 
-    public EditController(PlanningRepository planningRepository, Planning planning, ManagePlanning mainCtrl) {
+    public EditPlanningController(PlanningRepository planningRepository, Planning planning, ManagePlanning mainCtrl) {
         super(planningRepository);
         this.planning = planning;
         this.mainCtrl = mainCtrl;
