@@ -1,20 +1,21 @@
 package org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.gui.view;
 
 import javafx.scene.Parent;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.controllers.LoadPlanning;
 
-public class LoadWindow {
+public class LoadView {
 
-    private LoadPlanning controller;
+    private final LoadPlanning controller;
 
-    public LoadWindow(LoadPlanning controller){
+    public LoadView(LoadPlanning controller){
         this.controller = controller;
     }
 
-    private BorderPane root = new BorderPane();
+    public GridPane root = new GridPane();
 
-    public Parent getParent() {
+
+    public Parent getParent(){
         return root;
     }
 }

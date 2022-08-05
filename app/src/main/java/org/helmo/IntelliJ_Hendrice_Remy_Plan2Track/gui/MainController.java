@@ -7,12 +7,15 @@ import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.datas.PlanningReposit
 
 public class MainController extends Controller implements ManagePlanning {
 
+    private Planning planning;
+
     public MainController(PlanningRepository planningRepository) {
         super(planningRepository);
     }
 
     @Override
     public void createPlanning(String name) {
+        planning = new Planning(name);
 
     }
 
