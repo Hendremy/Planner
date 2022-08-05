@@ -1,14 +1,8 @@
-package org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.view;
+package org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.gui.view;
 
-import javafx.geometry.HPos;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.GridPane;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.controllers.LoadPlanning;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.controllers.ManagePlanning;
 

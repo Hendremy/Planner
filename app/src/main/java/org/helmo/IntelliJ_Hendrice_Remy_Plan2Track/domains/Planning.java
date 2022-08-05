@@ -3,6 +3,7 @@ package org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains;
 import java.util.*;
 
 public class Planning {
+    //TODO : Isoler collection de Job dans une classe avec les méthodes associées
 
     private String name;
     private final Map<String,Job> jobs;
@@ -92,5 +93,9 @@ public class Planning {
 
     public boolean isEmpty(){
         return jobs.isEmpty();
+    }
+
+    public boolean hasJob(String name){
+        return jobs.containsKey(name);
     }
 }

@@ -2,7 +2,6 @@ package org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.cli.view;
 
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.controllers.AssignJobs;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.Job;
-import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.Planning;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.Technician;
 
 import java.util.ArrayList;
@@ -10,46 +9,46 @@ import java.util.List;
 
 public class AssignJobsView extends CliView{
 
-    private AssignJobs controller;
+    private final AssignJobs controller;
 
     public AssignJobsView(AssignJobs controller){
         this.controller = controller;
     }
 
     public void assignJobs(){
-        if(!planning.isEmpty()){
+        Iterable<Job> jobs = controller.getJobs();
+        if(jobs.iterator().hasNext()){
             String jobName = "blank";
             while(!jobName.isBlank()){
-                displayJobs(planning);
+                displayJobs(jobs);
                 jobName = console.askString("Nom de la tâche à assigner ou Enter pour arrêter ?");
-                assignJob(planning, jobName);
+                assignJob(jobName);
             }
         }else{
             console.println("Aucune tâche à assigner");
         }
     }
 
-    private void displayJobs(Planning planning){
-        console.println(presenter.displayAssignedJobs(planning.getJobs()));
+    private void displayJobs(Iterable<Job> jobs){
+        console.println(presenter.displayAssignedJobs(jobs));
     }
 
-    private void assignJob(Planning planning, String jobName){
+    private void assignJob(String jobName){
         if(!jobName.isBlank()){
-            Job job = planning.getJobByName(jobName);
-            if(job == null)
+            if(!controller.jobExists(jobName))
             {
                 console.println("Nom de tâche invalide");
             }
             else {
-                var tech = chooseTech(getTechnicianList());
-                if(tech != null){
-                    job.setTechnician(tech);
+                int techPosition = chooseTech(getTechnicianList());
+                if(techPosition != 0){
+                    controller.assignJob(jobName, techPosition - 1);
                 }
             }
         }
     }
 
-    private Technician chooseTech(List<Technician> technicians){
+    private int chooseTech(List<Technician> technicians){
         displayTechnicians(technicians);
         return findTechnician(technicians);
     }
@@ -59,17 +58,17 @@ public class AssignJobsView extends CliView{
         console.println(presenter.listTechnicians(technicians));
     }
 
-    private Technician findTechnician(List<Technician> technicians){
+    private int findTechnician(List<Technician> technicians){
         int choice = -1;
         while(!(0 <= choice && choice <= technicians.size())){
             choice = console.askPosInt("Numéro choisi (ou 0 pour annuler) ?");
         }
-        return choice == 0 ? null : technicians.get(choice - 1);
+        return choice;
     }
 
     private List<Technician> getTechnicianList(){
         List<Technician> technicianList = new ArrayList<>();
-        repository.getTechnicians().forEach(technicianList::add);
+        controller.getTechnicians().forEach(technicianList::add);
         return technicianList;
     }
 

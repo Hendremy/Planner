@@ -1,4 +1,4 @@
-package org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.cli.controllers;
+package org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.cli;
 
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.cli.view.AddJobView;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.cli.view.AssignJobsView;

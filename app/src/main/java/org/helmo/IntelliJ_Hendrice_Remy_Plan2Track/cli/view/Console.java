@@ -1,7 +1,6 @@
-package org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.cli;
+package org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.cli.view;
 
 import java.io.*;
-import java.util.Locale;
 import java.util.Scanner;
 
 public class Console implements Closeable {

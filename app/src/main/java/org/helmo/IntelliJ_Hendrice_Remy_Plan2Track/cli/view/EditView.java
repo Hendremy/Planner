@@ -85,7 +85,7 @@ public class EditView extends CliView{
     }
 
     private void assignJobs() {
-        //assignJobsController.assignJobs();
+        controller.assignJobs();
     }
 
     private void findCriticalJobs() {

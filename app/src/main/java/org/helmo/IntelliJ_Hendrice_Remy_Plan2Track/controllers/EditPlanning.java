@@ -11,4 +11,6 @@ public interface EditPlanning {
     void addJob();
 
     void removeJob();
+
+    void assignJobs();
 }

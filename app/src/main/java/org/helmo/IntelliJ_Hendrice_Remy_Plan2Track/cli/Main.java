@@ -1,7 +1,5 @@
 package org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.cli;
 
-import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.cli.controllers.MainController;
-import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.cli.view.CliView;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.cli.view.MainView;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.datas.PlanningRepository;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.datas.StaticPlanningRepository;

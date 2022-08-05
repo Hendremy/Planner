@@ -1,4 +1,4 @@
-package org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.cli;
+package org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.cli.view;
 
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.Job;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.Planning;

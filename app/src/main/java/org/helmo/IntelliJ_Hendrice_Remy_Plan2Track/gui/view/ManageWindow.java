@@ -1,4 +1,4 @@
-package org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.view;
+package org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.gui.view;
 
 import javafx.scene.Parent;
 import javafx.scene.layout.BorderPane;

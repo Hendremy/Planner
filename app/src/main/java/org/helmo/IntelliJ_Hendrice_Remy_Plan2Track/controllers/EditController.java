@@ -1,11 +1,5 @@
-package org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.cli.controllers;
+package org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.controllers;
 
-import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.cli.Console;
-import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.cli.Presenter;
-import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.cli.view.AddJobView;
-import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.controllers.AddJob;
-import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.controllers.EditPlanning;
-import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.controllers.ManagePlanning;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.datas.PlanningRepository;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.Planning;
 
@@ -38,5 +32,10 @@ public class EditController extends Controller implements EditPlanning {
     @Override
     public void removeJob(){
         mainCtrl.launchRemoveJobView();
+    }
+
+    @Override
+    public void assignJobs(){
+        mainCtrl.launchAssignJobsView();
     }
 }
