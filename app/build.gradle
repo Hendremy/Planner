@@ -31,7 +31,7 @@ dependencies {
 
 application {
     // Define the main class for the application.
-    mainClass = 'org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.App'
+    mainClass = 'org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.gui.App'
 }
 
 tasks.named('test') {

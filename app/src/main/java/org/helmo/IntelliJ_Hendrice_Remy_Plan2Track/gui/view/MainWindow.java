@@ -11,24 +11,19 @@ public class MainWindow {
     private ManageWindow manageWindow;
     private LoadWindow loadWindow;
 
-    public MainWindow(ManagePlanning manageControl, LoadPlanning loadControl){
-        this.manageWindow = new ManageWindow(manageControl);
-        this.loadWindow = new LoadWindow(loadControl);
-    }
-
     private Tab manageTab = new Tab();
-    {
-        manageTab.setContent(manageWindow.getParent());
-    }
 
     private Tab loadTab = new Tab();
-    {
-        loadTab.setContent(manageWindow.getParent());
-    }
 
+    public MainWindow(ManagePlanning managePlanning, LoadPlanning loadPlanning){
+        manageWindow = new ManageWindow(managePlanning);
+        loadWindow = new LoadWindow(loadPlanning);
+    }
 
     private TabPane root = new TabPane();
     {
+        manageTab.setContent(manageWindow.getParent());
+        loadTab.setContent(loadWindow.getParent());
         root.getTabs().add(manageTab);
         root.getTabs().add(loadTab);
     }
