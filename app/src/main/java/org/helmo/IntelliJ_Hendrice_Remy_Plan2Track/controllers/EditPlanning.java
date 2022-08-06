@@ -8,9 +8,9 @@ public interface EditPlanning {
 
     void editName(String name);
 
-    void addJob();
+    AddJob getAddJobController();
 
-    void removeJob();
+    RemoveJob getRemoveJobController();
 
-    void assignJobs();
+    AssignJobs getAssignJobsController();
 }

@@ -1,7 +1,9 @@
 package org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.cli;
 
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.cli.view.MainView;
+import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.controllers.MainController;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.controllers.ManagePlanning;
+import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.PlanningCreator;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.datas.PlanningRepository;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.datas.StaticPlanningRepository;
 
@@ -16,7 +18,8 @@ public class Main {
 
     private static void init(){
         PlanningRepository repository = new StaticPlanningRepository();
-        mainController = new MainController(repository);
+        PlanningCreator creator = new PlanningCreator();
+        mainController = new MainController(repository, creator);
         mainView = new MainView(mainController);
     }
 

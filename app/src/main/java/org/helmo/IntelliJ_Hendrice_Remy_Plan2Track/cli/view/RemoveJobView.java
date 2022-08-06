@@ -12,10 +12,11 @@ public class RemoveJobView extends CliView{
     }
 
     public void removeJob(){
-        String name = console.askString("Nom de la tâche à modifier ? (Enter pour annuler)");
+        String question = "Nom de la tâche à supprimer ? (Enter pour annuler)";
+        String name = console.askString(question);
         while(name == null || !name.isBlank()){
             deleteJob(name);
-            name = console.askString("Nom de la tâche à modifier ? (Enter pour annuler)");
+            name = console.askString(question);
         }
     }
 

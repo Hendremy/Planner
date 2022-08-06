@@ -1,6 +1,9 @@
 package org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.cli.view;
 
+import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.controllers.AddJob;
+import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.controllers.AssignJobs;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.controllers.EditPlanning;
+import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.controllers.RemoveJob;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.Planning;
 
 
@@ -77,15 +80,18 @@ public class EditView extends CliView{
     }
 
     private void addJob(){
-        controller.addJob();
+        AddJob addJobController = controller.getAddJobController();
+        new AddJobView(addJobController).addJob();
     }
 
     private void removeJob(){
-        controller.removeJob();
+        RemoveJob removeJobController = controller.getRemoveJobController();
+        new RemoveJobView(removeJobController).removeJob();
     }
 
     private void assignJobs() {
-        controller.assignJobs();
+        AssignJobs assignJobsController = controller.getAssignJobsController();
+        new AssignJobsView(assignJobsController).assignJobs();
     }
 
     private void findCriticalJobs() {

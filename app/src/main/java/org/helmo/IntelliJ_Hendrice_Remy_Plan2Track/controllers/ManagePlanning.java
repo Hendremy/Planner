@@ -7,12 +7,12 @@ public interface ManagePlanning {
 
     Planning getPlanning();
 
-    void editPlanning();
+    EditPlanning getEditPlanningController();
 
-    void launchAddJobView();
+    AddJob getAddJobController();
 
-    void launchRemoveJobView();
+    RemoveJob getRemoveJobController();
 
-    void launchAssignJobsView();
+    AssignJobs getAssignJobsController();
 
 }

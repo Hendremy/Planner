@@ -1,6 +1,7 @@
 package org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.cli.view;
 
 
+import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.controllers.EditPlanning;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.controllers.ManagePlanning;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.Planning;
 
@@ -77,7 +78,12 @@ public class MainView extends CliView {
     }
 
     private void editPlanning(){
-        mainController.editPlanning();
+        if(mainController.getPlanning() != null){
+            EditPlanning controller = mainController.getEditPlanningController();
+            new EditView(controller).loop();
+        }else{
+            console.println("Erreur - Aucun montage en cours");
+        }
     }
 
     private Planning getPlanning() {

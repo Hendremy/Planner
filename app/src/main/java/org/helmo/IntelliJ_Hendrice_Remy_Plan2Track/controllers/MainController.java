@@ -1,25 +1,28 @@
-package org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.cli;
+package org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.controllers;
 
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.cli.view.AddJobView;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.cli.view.AssignJobsView;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.cli.view.EditView;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.cli.view.RemoveJobView;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.controllers.*;
+import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.PlanningCreator;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.datas.PlanningRepository;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.Planning;
 
 
 public class MainController extends Controller implements ManagePlanning {
 
+    private final PlanningCreator creator;
     private Planning planning;
 
-    public MainController (PlanningRepository repository){
+    public MainController (PlanningRepository repository, PlanningCreator creator){
         super(repository);
+        this.creator = creator;
     }
 
     @Override
     public void createPlanning(String name) {
-        planning = new Planning(name);
+        planning = creator.create(name);
     }
 
     @Override
@@ -28,26 +31,22 @@ public class MainController extends Controller implements ManagePlanning {
     }
 
     @Override
-    public void editPlanning(){
-        EditPlanning editController = new EditPlanningController(getRepository(),planning, this);
-        new EditView(editController).loop();
+    public EditPlanning getEditPlanningController(){
+        return new EditPlanningController(getRepository(), this);
     }
 
     @Override
-    public void launchAddJobView(){
-        AddJob ctrl = new AddJobController(getRepository(), getPlanning());
-        new AddJobView(ctrl).addJob();
+    public AddJob getAddJobController(){
+        return new AddJobController(getRepository(), getPlanning());
     }
 
     @Override
-    public void launchRemoveJobView(){
-        RemoveJob ctrl = new RemoveJobController(getRepository(), getPlanning());
-        new RemoveJobView(ctrl).removeJob();
+    public RemoveJob getRemoveJobController(){
+        return new RemoveJobController(getRepository(), getPlanning());
     }
 
     @Override
-    public void launchAssignJobsView(){
-        AssignJobs ctrl = new AssignJobsController(getRepository(), getPlanning());
-        new AssignJobsView(ctrl).assignJobs();
+    public AssignJobs getAssignJobsController(){
+        return new AssignJobsController(getRepository(), getPlanning());
     }
 }

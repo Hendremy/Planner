@@ -5,37 +5,35 @@ import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.Planning;
 
 public class EditPlanningController extends Controller implements EditPlanning {
 
-    private Planning planning;
     private ManagePlanning mainCtrl;
 
-    public EditPlanningController(PlanningRepository planningRepository, Planning planning, ManagePlanning mainCtrl) {
+    public EditPlanningController(PlanningRepository planningRepository, ManagePlanning mainCtrl) {
         super(planningRepository);
-        this.planning = planning;
         this.mainCtrl = mainCtrl;
     }
 
     @Override
     public Planning getPlanning(){
-        return planning;
+        return mainCtrl.getPlanning();
     }
 
     @Override
     public void editName(String name) {
-        planning.setName(name);
+        getPlanning().setName(name);
     }
 
     @Override
-    public void addJob(){
-        mainCtrl.launchAddJobView();
+    public AddJob getAddJobController(){
+        return mainCtrl.getAddJobController();
     }
 
     @Override
-    public void removeJob(){
-        mainCtrl.launchRemoveJobView();
+    public RemoveJob getRemoveJobController(){
+        return mainCtrl.getRemoveJobController();
     }
 
     @Override
-    public void assignJobs(){
-        mainCtrl.launchAssignJobsView();
+    public AssignJobs getAssignJobsController(){
+        return mainCtrl.getAssignJobsController();
     }
 }
