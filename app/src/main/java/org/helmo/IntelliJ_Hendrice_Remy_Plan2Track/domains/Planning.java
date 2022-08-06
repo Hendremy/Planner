@@ -27,11 +27,20 @@ public class Planning {
         return jobs.get(name);
     }
 
-    public void addJob(Job job){
+    public void addJob(String name, String description, int duration, Iterable<String> priorJobs){
+        if(jobs.containsKey(name)) return;
+        Job newJob = new Job(name, description, duration);
+        for(String priorJob : priorJobs){
+            addPriorToJob(priorJob, newJob);
+        }
+        addJob(newJob);
+    }
+
+    private void addJob(Job job){
         jobs.put(job.getName(), job);
     }
 
-    public void addPriorToJob(String priorName, Job job){
+    private void addPriorToJob(String priorName, Job job){
         if(priorName == null || job == null) return;
         Job priorJob = getJobByName(priorName);
         if(priorJob == null){
@@ -40,6 +49,7 @@ public class Planning {
         }
         job.addPredecessor(priorJob);
     }
+
 
     /*CTT de la suppression d'une tâche:
     *

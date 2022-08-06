@@ -1,22 +1,20 @@
 package org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.gui.view;
 
-import javafx.beans.Observable;
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TitledPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.controllers.EditPlanning;
-import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.Job;
 
 public class JobListView {
 
-    private final ObservableList<Job> jobList;
+    private final ObservableList<String> jobList;
     private final ManageJobsView manageJobsView;
 
-    public JobListView(ObservableList<Job> jobList, ManageJobsView manageJobsView){
+    public JobListView(ObservableList<String> jobList, ManageJobsView manageJobsView){
         this.manageJobsView = manageJobsView;
         this.jobList = jobList;
         jobListView.setItems(jobList);
@@ -38,13 +36,18 @@ public class JobListView {
         buttonRow.setSpacing(50);
     }
 
-    private final ListView<Job> jobListView = new ListView<>();
+    private final ListView<String> jobListView = new ListView<>();
 
-    private final VBox root = new VBox(buttonRow, jobListView);
+    private final VBox content = new VBox(buttonRow, jobListView);
+    {
+        content.setSpacing(8);
+    }
+
+    private final TitledPane root = new TitledPane("Tâches", content);
     {
         root.setMinWidth(250);
-        root.setSpacing(8);
         root.setAlignment(Pos.CENTER_LEFT);
+        root.setCollapsible(false);
     }
 
     public Parent getParent(){
@@ -52,10 +55,18 @@ public class JobListView {
     }
 
     private void addJob(){
-        manageJobsView.addJob();
+        manageJobsView.showAddJob();
     }
 
     private void removeJob(){
-        manageJobsView.removeJob("");
+        manageJobsView.removeJob(getSelectedJob());
+    }
+
+    private void assignJob(){
+        manageJobsView.assignJob(getSelectedJob());
+    }
+
+    private String getSelectedJob(){
+        return jobListView.getSelectionModel().getSelectedItem();
     }
 }

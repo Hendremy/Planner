@@ -70,6 +70,7 @@ public class CreatePlanningView {
 
         Scene scene = new Scene(root);
         stage.setScene(scene);
+        stage.setAlwaysOnTop(true);
         stage.show();
     }
 

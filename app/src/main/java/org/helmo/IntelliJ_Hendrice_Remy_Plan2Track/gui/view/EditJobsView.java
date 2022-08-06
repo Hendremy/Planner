@@ -1,35 +1,36 @@
 package org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.gui.view;
 
-import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Parent;
-import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.controllers.EditPlanning;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.Job;
+import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.JobNotFoundException;
+
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 public class EditJobsView implements ManageJobsView {
 
     private final EditPlanning controller;
     private final JobListView jobListView;
-    private final ObservableList<Job> jobsObservable;
+    private final ObservableList<String> jobsObservable;
 
     public EditJobsView(EditPlanning controller){
         this.controller = controller;
-        this.jobsObservable = getJobsObservable();
+        this.jobsObservable = FXCollections.observableArrayList(getJobs());
         this.jobListView = new JobListView(jobsObservable, this);
         root.setLeft(jobListView.getParent());
     }
 
-    private ObservableList<Job> getJobsObservable(){
-        ObservableList<Job> jobsObservable = FXCollections.observableArrayList();
+    private Collection<String> getJobs(){
         Iterable<Job> jobsInPlanning = controller.getPlanning().getJobs();
-        jobsInPlanning.forEach(jobsObservable::add);
-        return jobsObservable;
+        Set<String> jobsSet = new HashSet<>();
+        jobsInPlanning.forEach(j -> jobsSet.add(j.getName()));
+        return jobsSet;
     }
 
     private final BorderPane root = new BorderPane();
@@ -42,18 +43,35 @@ public class EditJobsView implements ManageJobsView {
     }
 
     @Override
-    public void addJob() {
-        var ctrl = controller.getAddJobController();
-        ctrl.createJob("n","n",1);
-        ctrl.addJobToPlanning();
+    public void addJob(String name, String description, int duration, Iterable<String> priorJobs) {
+        controller.getAddJobController().addJobToPlanning(name, description, duration, priorJobs);
+        refreshJobList();
+        showAddJob();
+    }
 
+    private void refreshJobList(){
         jobsObservable.clear();
-        var obs = getJobsObservable();
-        jobsObservable.addAll(obs);
+        jobsObservable.addAll(getJobs());
+    }
+
+    @Override
+    public void showAddJob() {
+        AddJobView addJobView = new AddJobView(jobsObservable, this);
+        root.setCenter(addJobView.getParent());
     }
 
     @Override
     public void removeJob(String name) {
+        try{
+            controller.getRemoveJobController().removeJob(name);
+            jobsObservable.remove(name);
+        } catch(JobNotFoundException ex){
+            //ErrorWindow
+        }
+    }
+
+    @Override
+    public void assignJob(String name) {
 
     }
 }
