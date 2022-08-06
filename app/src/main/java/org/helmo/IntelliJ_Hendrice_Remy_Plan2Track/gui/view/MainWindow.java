@@ -16,7 +16,7 @@ public class MainWindow {
         this.mainController = mainController;
     }
 
-    private Button create = new Button("Nouveau planning");{
+    private Button create = new Button("Nouveau planning +");{
         create.setOnAction(e -> createPlanning());
     }
 
