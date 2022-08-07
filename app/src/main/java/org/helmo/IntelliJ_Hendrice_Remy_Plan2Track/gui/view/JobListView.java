@@ -67,7 +67,7 @@ public class JobListView {
     private void removeJob(){
         String selectedName = getSelectedJob();
         if(selectedName != null){
-            manageJobsView.removeJob(selectedName);
+            manageJobsView.showRemoveJob(selectedName);
         }
     }
 

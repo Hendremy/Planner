@@ -35,8 +35,7 @@ public class EditJobsView implements ManageJobsView {
     }
 
     @Override
-    public void addJob(String name, String description, int duration, Iterable<String> priorJobs) {
-        controller.getAddJobController().addJobToPlanning(name, description, duration, priorJobs);
+    public void jobAdded() {
         refreshJobList();
         showAddJob();
     }
@@ -49,12 +48,12 @@ public class EditJobsView implements ManageJobsView {
     @Override
     public void showAddJob() {
         priorJobsObservable = FXCollections.observableArrayList(controller.getJobsNames());
-        AddJobView addJobView = new AddJobView(priorJobsObservable, this);
+        AddJobView addJobView = new AddJobView(priorJobsObservable, controller.getAddJobController(), this);
         root.setCenter(addJobView.getParent());
     }
 
     @Override
-    public void removeJob(String name) {
+    public void showRemoveJob(String name) {//TODO: Refaire avec fenêtre modale qui compte nb d'occurences dans les autres job
         try{
             controller.getRemoveJobController().removeJob(name);
             refreshJobList();
@@ -74,10 +73,5 @@ public class EditJobsView implements ManageJobsView {
             AssignJobView assignJobView = new AssignJobView(jobViewModel, controller.getAssignJobsController());
             root.setCenter(assignJobView.getParent());
         }
-    }
-
-    @Override
-    public void assignJob(String name) {
-
     }
 }

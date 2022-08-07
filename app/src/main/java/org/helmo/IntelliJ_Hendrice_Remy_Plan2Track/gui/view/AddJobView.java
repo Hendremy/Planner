@@ -1,6 +1,5 @@
 package org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.gui.view;
 
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
@@ -8,15 +7,18 @@ import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.util.converter.NumberStringConverter;
+import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.controllers.AddJob;
 
 public class AddJobView {
 
     private final ObservableList<String> jobList;
     private final ManageJobsView manageJobsView;
+    private final AddJob controller;
 
-    public AddJobView(ObservableList<String> jobList, ManageJobsView manageJobsView){
+    public AddJobView(ObservableList<String> jobList, AddJob controller, ManageJobsView manageJobsView){
         this.manageJobsView = manageJobsView;
         this.jobList = jobList;
+        this.controller = controller;
         priorJobsListView.setItems(this.jobList);
     }
 
@@ -101,7 +103,8 @@ public class AddJobView {
         Iterable<String> priorJobs = getSelectedJobs();
 
         if(!name.isBlank() && duration > 0){
-            manageJobsView.addJob(name, description, duration, priorJobs);
+            controller.addJobToPlanning(name, description, duration, priorJobs);
+            manageJobsView.jobAdded();
         }
     }
 
