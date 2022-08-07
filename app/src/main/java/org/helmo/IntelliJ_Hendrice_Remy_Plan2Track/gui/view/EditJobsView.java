@@ -6,8 +6,7 @@ import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.layout.BorderPane;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.controllers.EditPlanning;
-import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.JobNotFoundException;
-import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.viewmodels.JobViewModel;
+import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.viewmodels.JobViewModel;
 
 public class EditJobsView implements ManageJobsView {
 
@@ -40,6 +39,15 @@ public class EditJobsView implements ManageJobsView {
         showAddJob();
     }
 
+    @Override
+    public void jobRemoved(String name){
+        refreshJobList();
+        if(name != null){
+            priorJobsObservable.remove(name);
+        }
+        showAddJob();
+    }
+
     private void refreshJobList(){
         jobsObservable.clear();
         jobsObservable.addAll(controller.getJobsViewModels());
@@ -53,17 +61,8 @@ public class EditJobsView implements ManageJobsView {
     }
 
     @Override
-    public void showRemoveJob(String name) {//TODO: Refaire avec fenêtre modale qui compte nb d'occurences dans les autres job
-        try{
-            controller.getRemoveJobController().removeJob(name);
-            refreshJobList();
-            if(priorJobsObservable != null){
-                priorJobsObservable.remove(name);
-            }
-            showAddJob();
-        } catch(JobNotFoundException ex){
-            new ErrorMessageView("La tâche sélectionnée n'a pas pu être supprimée");
-        }
+    public void showRemoveJob(String name) {
+        new RemoveJobView(controller.getRemoveJobController(), name, this);
     }
 
     @Override

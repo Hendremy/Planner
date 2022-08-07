@@ -22,11 +22,15 @@ public class AddJobView {
         priorJobsListView.setItems(this.jobList);
     }
 
+    private final Label jobInfoLabel = new Label("Détails de la tâche");
+    {
+        jobInfoLabel.setUnderline(true);
+    }
     private final Label nameLabel = new Label("Nom* :");
     private final TextField nameInput = new TextField();
 
     private final Label descriptionLabel = new Label("Description :");
-    private final TextField descriptionInput = new TextField();
+    private final TextArea descriptionInput = new TextArea();
 
     private final Label durationLabel = new Label("Durée (en jours)* :");
     private final TextField durationInput = new TextField();
@@ -34,7 +38,17 @@ public class AddJobView {
         durationInput.setTextFormatter(new TextFormatter<>(new NumberStringConverter()));
     }
 
-    private final Label priorJobsLabel = new Label("Tâches antérieures :");
+    private final VBox jobForm = new VBox(
+            jobInfoLabel,
+            nameLabel, nameInput,
+            durationLabel, durationInput,
+            descriptionLabel, descriptionInput
+            );
+
+    private final Label priorJobsLabel = new Label("Tâches antérieures");
+    {
+        priorJobsLabel.setUnderline(true);
+    }
     private final Label priorJobLabel = new Label("Nouvelle tâche :");
     private final TextField priorJobInput = new TextField();
     private final Button addJobBtn = new Button("Ajouter +");
@@ -52,11 +66,6 @@ public class AddJobView {
     {
         createBtn.setOnAction(e -> addJob());
     }
-
-    private final VBox jobForm = new VBox(
-            nameLabel, nameInput,
-            descriptionLabel, descriptionInput,
-            durationLabel, durationInput);
 
     private final HBox newPriorJobRow = new HBox(priorJobLabel, priorJobInput, addJobBtn);
     {

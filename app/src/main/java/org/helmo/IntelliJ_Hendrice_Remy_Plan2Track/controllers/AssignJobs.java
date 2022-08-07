@@ -1,7 +1,7 @@
 package org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.controllers;
 
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.Job;
-import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.viewmodels.TechnicianViewModel;
+import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.viewmodels.TechnicianViewModel;
 
 import java.util.Collection;
 

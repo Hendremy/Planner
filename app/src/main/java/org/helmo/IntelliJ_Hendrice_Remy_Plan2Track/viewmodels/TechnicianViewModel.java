@@ -1,4 +1,4 @@
-package org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.viewmodels;
+package org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.viewmodels;
 
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.Technician;
 
