@@ -16,7 +16,7 @@ public class AddJobView {
 
     public AddJobView(ObservableList<String> jobList, ManageJobsView manageJobsView){
         this.manageJobsView = manageJobsView;
-        this.jobList = FXCollections.observableArrayList(jobList);
+        this.jobList = jobList;
         priorJobsListView.setItems(this.jobList);
     }
 

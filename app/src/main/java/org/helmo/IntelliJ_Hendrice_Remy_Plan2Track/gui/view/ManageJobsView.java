@@ -4,5 +4,6 @@ public interface ManageJobsView {
     void addJob(String name, String description, int duration, Iterable<String> priorJobs);
     void showAddJob();
     void removeJob(String name);
+    void showAssignJob(String name);
     void assignJob(String name);
 }

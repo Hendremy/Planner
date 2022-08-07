@@ -18,6 +18,7 @@ public class EditJobsView implements ManageJobsView {
     private final EditPlanning controller;
     private final JobListView jobListView;
     private final ObservableList<String> jobsObservable;
+    private ObservableList<String> priorJobsObservable;
 
     public EditJobsView(EditPlanning controller){
         this.controller = controller;
@@ -56,7 +57,8 @@ public class EditJobsView implements ManageJobsView {
 
     @Override
     public void showAddJob() {
-        AddJobView addJobView = new AddJobView(jobsObservable, this);
+        priorJobsObservable = FXCollections.observableArrayList(jobsObservable);
+        AddJobView addJobView = new AddJobView(priorJobsObservable, this);
         root.setCenter(addJobView.getParent());
     }
 
@@ -64,10 +66,19 @@ public class EditJobsView implements ManageJobsView {
     public void removeJob(String name) {
         try{
             controller.getRemoveJobController().removeJob(name);
-            jobsObservable.remove(name);
+            refreshJobList();
+            if(priorJobsObservable != null){
+                priorJobsObservable.remove(name);
+            }
         } catch(JobNotFoundException ex){
-            //ErrorWindow
+            new ErrorMessageView("La tâche sélectionnée n'a pas pu être supprimée");
         }
+    }
+
+    @Override
+    public void showAssignJob(String name) {
+        AssignJobView assignJobView = new AssignJobView(name, null);
+        root.setCenter(assignJobView.getParent());
     }
 
     @Override

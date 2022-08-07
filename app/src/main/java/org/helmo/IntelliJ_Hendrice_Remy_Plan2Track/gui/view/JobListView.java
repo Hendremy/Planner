@@ -6,6 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TitledPane;
+import javafx.scene.input.MouseButton;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
@@ -37,6 +38,13 @@ public class JobListView {
     }
 
     private final ListView<String> jobListView = new ListView<>();
+    {
+        jobListView.setOnMouseClicked( e -> {
+            if(e.getButton() == MouseButton.PRIMARY && e.getClickCount() == 2){
+                assignJob();
+            }
+        });
+    }
 
     private final VBox content = new VBox(buttonRow, jobListView);
     {
@@ -63,7 +71,7 @@ public class JobListView {
     }
 
     private void assignJob(){
-        manageJobsView.assignJob(getSelectedJob());
+        manageJobsView.showAssignJob(getSelectedJob());
     }
 
     private String getSelectedJob(){
