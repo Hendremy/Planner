@@ -6,32 +6,23 @@ import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.layout.BorderPane;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.controllers.EditPlanning;
-import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.Job;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.JobNotFoundException;
-
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
+import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.viewmodels.JobViewModel;
 
 public class EditJobsView implements ManageJobsView {
 
     private final EditPlanning controller;
     private final JobListView jobListView;
-    private final ObservableList<String> jobsObservable;
+    private final ObservableList<JobViewModel> jobsObservable;
     private ObservableList<String> priorJobsObservable;
 
     public EditJobsView(EditPlanning controller){
         this.controller = controller;
-        this.jobsObservable = FXCollections.observableArrayList(getJobs());
+        this.jobsObservable = FXCollections.observableArrayList(controller.getJobsViewModels());
+        this.priorJobsObservable = FXCollections.observableArrayList(controller.getJobsNames());
         this.jobListView = new JobListView(jobsObservable, this);
         root.setLeft(jobListView.getParent());
-    }
-
-    private Collection<String> getJobs(){
-        Iterable<Job> jobsInPlanning = controller.getPlanning().getJobs();
-        Set<String> jobsSet = new HashSet<>();
-        jobsInPlanning.forEach(j -> jobsSet.add(j.getName()));
-        return jobsSet;
+        showAddJob();
     }
 
     private final BorderPane root = new BorderPane();
@@ -52,12 +43,12 @@ public class EditJobsView implements ManageJobsView {
 
     private void refreshJobList(){
         jobsObservable.clear();
-        jobsObservable.addAll(getJobs());
+        jobsObservable.addAll(controller.getJobsViewModels());
     }
 
     @Override
     public void showAddJob() {
-        priorJobsObservable = FXCollections.observableArrayList(jobsObservable);
+        priorJobsObservable = FXCollections.observableArrayList(controller.getJobsNames());
         AddJobView addJobView = new AddJobView(priorJobsObservable, this);
         root.setCenter(addJobView.getParent());
     }
@@ -70,6 +61,7 @@ public class EditJobsView implements ManageJobsView {
             if(priorJobsObservable != null){
                 priorJobsObservable.remove(name);
             }
+            showAddJob();
         } catch(JobNotFoundException ex){
             new ErrorMessageView("La tâche sélectionnée n'a pas pu être supprimée");
         }
@@ -77,8 +69,11 @@ public class EditJobsView implements ManageJobsView {
 
     @Override
     public void showAssignJob(String name) {
-        AssignJobView assignJobView = new AssignJobView(name, null);
-        root.setCenter(assignJobView.getParent());
+        JobViewModel jobViewModel = controller.getJobViewModel(name);
+        if(jobViewModel != null){
+            AssignJobView assignJobView = new AssignJobView(jobViewModel, controller.getAssignJobsController());
+            root.setCenter(assignJobView.getParent());
+        }
     }
 
     @Override

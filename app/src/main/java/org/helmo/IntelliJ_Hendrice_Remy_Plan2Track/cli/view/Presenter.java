@@ -2,8 +2,9 @@ package org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.cli.view;
 
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.Job;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.Planning;
-import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.Technician;
+import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.viewmodels.TechnicianViewModel;
 
+import java.util.List;
 import java.util.StringJoiner;
 
 public class Presenter {
@@ -62,10 +63,10 @@ public class Presenter {
         return sj.toString();
     }
 
-    public String listTechnicians(Iterable<Technician> technicians){
+    public String listTechnicians(List<TechnicianViewModel> technicians){
         int count = 1;
         StringBuilder sb = new StringBuilder();
-        for(Technician tech : technicians){
+        for(TechnicianViewModel tech : technicians){
             sb.append(String.format("%5s%d. %s\n"," ", count, tech.getFullName()));
             count++;
         }

@@ -32,6 +32,10 @@ public class Job implements PertTask {
         return technician == null ? null : technician.getFullName();
     }
 
+    public String getTechnicianCode(){
+        return technician == null ? null : technician.getCode();
+    }
+
     public void setTechnician(Technician technician){
         this.technician = technician;
     }

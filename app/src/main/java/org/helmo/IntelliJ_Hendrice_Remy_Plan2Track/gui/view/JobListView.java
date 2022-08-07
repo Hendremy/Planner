@@ -6,16 +6,16 @@ import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TitledPane;
-import javafx.scene.input.MouseButton;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.viewmodels.JobViewModel;
 
 public class JobListView {
 
-    private final ObservableList<String> jobList;
+    private final ObservableList<JobViewModel> jobList;
     private final ManageJobsView manageJobsView;
 
-    public JobListView(ObservableList<String> jobList, ManageJobsView manageJobsView){
+    public JobListView(ObservableList<JobViewModel> jobList, ManageJobsView manageJobsView){
         this.manageJobsView = manageJobsView;
         this.jobList = jobList;
         jobListView.setItems(jobList);
@@ -37,12 +37,10 @@ public class JobListView {
         buttonRow.setSpacing(50);
     }
 
-    private final ListView<String> jobListView = new ListView<>();
+    private final ListView<JobViewModel> jobListView = new ListView<>();
     {
-        jobListView.setOnMouseClicked( e -> {
-            if(e.getButton() == MouseButton.PRIMARY && e.getClickCount() == 2){
-                assignJob();
-            }
+        jobListView.getSelectionModel().selectedItemProperty().addListener(e -> {
+            assignJob();
         });
     }
 
@@ -67,14 +65,21 @@ public class JobListView {
     }
 
     private void removeJob(){
-        manageJobsView.removeJob(getSelectedJob());
+        String selectedName = getSelectedJob();
+        if(selectedName != null){
+            manageJobsView.removeJob(selectedName);
+        }
     }
 
     private void assignJob(){
-        manageJobsView.showAssignJob(getSelectedJob());
+        String selectedName = getSelectedJob();
+        if(selectedName != null){
+            manageJobsView.showAssignJob(selectedName);
+        }
     }
 
     private String getSelectedJob(){
-        return jobListView.getSelectionModel().getSelectedItem();
+        JobViewModel selectedItem = jobListView.getSelectionModel().getSelectedItem();
+        return selectedItem != null ? selectedItem.getName() : null;
     }
 }

@@ -1,15 +1,17 @@
 package org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.controllers;
 
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.Job;
-import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.Technician;
+import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.viewmodels.TechnicianViewModel;
+
+import java.util.Collection;
 
 public interface AssignJobs {
 
-    Iterable<Technician> getTechnicians();
+    Collection<TechnicianViewModel> getTechniciansViewModels();
 
     Iterable<Job> getJobs();
 
     boolean jobExists(String name);
 
-    void assignJob(String jobName, int techPosition);
+    void assignJob(String jobName, String code);
 }
