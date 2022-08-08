@@ -38,9 +38,14 @@ public class PertGraph {
         return targetNode;
     }
 
-    public PertTask addFake(PertNode origin, PertTask task){
+    public PertTask addFake(PertNode targetNode, PertTask task) throws CyclicPertGraphException {
         PertTask fakeTask = new FakeTask(task);
+        PertEdge originalEdge = edges.get(task);
+        PertNode originNode = nodes.get(originalEdge.getTarget());
+        PertEdge fakeEdge = new PertEdge(originNode.getPosition(), targetNode.getPosition(), fakeTask);
 
+        originNode.addOutGoingEdge(fakeEdge);
+        targetNode.addIncomingEdge(fakeEdge);
         return fakeTask;
     }
 
