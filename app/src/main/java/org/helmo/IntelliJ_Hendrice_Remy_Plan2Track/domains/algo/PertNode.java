@@ -57,4 +57,8 @@ public class PertNode{
         return null;
     }
 
+    public boolean isEmpty(){
+        return incomingEdges.isEmpty() && outgoingEdges.isEmpty();
+    }
+
 }

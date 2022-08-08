@@ -75,6 +75,8 @@ public class PertGraph {
                 PertEdge edgeToReattach = newOrigin.getOutGoingEdgeWithTarget(originNode.getPosition());
                 edgeToReattach.setTarget(targetNode.getPosition());
                 targetNode.addIncomingEdge(edgeToReattach);
+
+                if(originNode.isEmpty()) nodes.remove(originNode.getPosition());
             }
         }
     }
