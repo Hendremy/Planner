@@ -105,7 +105,11 @@ public class AssignJobView {
         techLabel.setUnderline(true);
     }
 
+    private final Text techPH = new Text("Sélectionner le chef d'équipe");
     private final ComboBox<TechnicianViewModel> techListView = new ComboBox<>();
+    {
+        techListView.setPlaceholder(techPH);
+    }
     private final Button assignBtn = new Button("Assigner le chef d'équipe");
     {
         assignBtn.setOnAction(e -> assignJob());
@@ -123,9 +127,8 @@ public class AssignJobView {
 
     private final HBox content = new HBox(jobInfo, priorJobsCol, techList);
     {
-        content.setSpacing(12);
+        content.setSpacing(8);
         content.setPadding(new Insets(10));
-        content.setAlignment(Pos.TOP_LEFT);
     }
 
     private final TitledPane root = new TitledPane("Assigner une tâche", content);
