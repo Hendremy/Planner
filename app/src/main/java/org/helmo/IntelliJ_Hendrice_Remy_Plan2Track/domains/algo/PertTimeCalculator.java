@@ -51,7 +51,7 @@ public class PertTimeCalculator {
         int highestStep = findHighestStep(nodes.keySet());
         initFinalNode(nodes.get(highestStep));
 
-        for(int i = highestStep; i >= 1; --i){
+        for(int i = highestStep - 1; i >= 1; --i){
             PertNode node = nodes.get(i);
             if(node != null){
                 int duration = findMinFollowingDuration(nodes, node);
@@ -65,7 +65,7 @@ public class PertTimeCalculator {
     }
 
     private int findMinFollowingDuration(Map<Integer,PertNode> nodes, PertNode node){
-        int minDuration = 0;
+        int minDuration = Integer.MAX_VALUE;
         for(PertEdge outgoing : node.getOutgoingEdges()){
             PertNode followingNode = nodes.get(outgoing.getTarget());
             int totalDuration = followingNode.getLatestTime() - outgoing.getDuration();
