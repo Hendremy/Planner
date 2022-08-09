@@ -38,6 +38,7 @@ public class EditView extends CliView{
                         + "\n3. Supprimer une tâche existante"
                         + "\n4. Assigner des tâches"
                         + "\n5. Trouver les tâches critiques"
+                        + "\n6. Déterminer la date de fin au plus tôt"
                         + "\n0. Arrêter la modification"
         );
     }
