@@ -10,11 +10,18 @@ public class PertLevelCalculator {
         var levels = new int[taskList.size()];
         List<Set<PertTask>> tasksInLevels = new ArrayList<>();
 
-        while(!taskList.isEmpty()){
+        do{
             determineLevels(taskList, tasksInLevels, levels, priorMatrix);
-        }
+        }while((!allTasksProcessed(levels)));
 
         return tasksInLevels;
+    }
+
+    private boolean allTasksProcessed(int[] levels){
+        for(int i = 0; i < levels.length; ++i){
+            if(levels[i] > 0) return false;
+        }
+        return true;
     }
 
     private List<PertTask> tasksToList(Iterable<PertTask> tasks){
@@ -69,8 +76,8 @@ public class PertLevelCalculator {
         for (int i = 0; i < tasks.size(); ++i) {
             if(levelsPerJob[i] == 0){
                 clearColumn(i, priorMatrix);
+                disableRow(i, priorMatrix);
                 PertTask task = tasks.get(i);//Possibilité de changer tasks en ArrayList pour avoir accès à remove(int index)
-                tasks.remove(task);
                 level.add(task);
             }
         }
@@ -81,5 +88,9 @@ public class PertLevelCalculator {
         for(int i = 0; i < matrix.length; ++i){
             matrix[i][col] = 0;
         }
+    }
+
+    private void disableRow(int row, int[][] matrix){
+        Arrays.fill(matrix[row], -1);
     }
 }
