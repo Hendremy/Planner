@@ -7,17 +7,16 @@ import javafx.application.Application;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.cli.Main;
-import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.controllers.EditPlanningController;
-import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.controllers.LoadPlanningController;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.controllers.MainController;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.controllers.ManagePlanning;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.PlanningCreator;
+import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.algo.PertGraphBuilder;
+import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.algo.PertMarginCalculator;
+import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.algo.PertSchedulePlanner;
+import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.algo.PertTimeCalculator;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.datas.PlanningRepository;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.datas.StaticPlanningRepository;
-import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.gui.view.LoadTab;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.gui.view.MainWindow;
-import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.gui.view.EditTab;
 
 public class App extends Application {
 
@@ -25,7 +24,8 @@ public class App extends Application {
     public void start(Stage primaryStage) throws Exception {
         PlanningRepository repo = new StaticPlanningRepository();
         PlanningCreator creator = new PlanningCreator();
-        ManagePlanning mainController = new MainController(repo, creator);
+        PertSchedulePlanner schedulePlanner = new PertSchedulePlanner(new PertGraphBuilder(), new PertTimeCalculator(), new PertMarginCalculator());
+        ManagePlanning mainController = new MainController(repo, creator, schedulePlanner);
         MainWindow view = new MainWindow(mainController);
 
         Parent root = view.getParent();

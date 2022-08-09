@@ -1,7 +1,5 @@
 package org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.algo;
 
-import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.CyclicPertGraphException;
-
 import java.util.*;
 
 public class PertGraphBuilder {
@@ -13,7 +11,7 @@ public class PertGraphBuilder {
         this.calculator = new PertLevelCalculator();
     }
 
-    public PertGraph getGraph(Iterable<PertTask> tasks) throws CyclicPertGraphException {
+    public PertGraph getGraph(Iterable<PertTask> tasks) throws CyclicGraphException {
         List<Set<PertTask>> levels = calcLevels(tasks);
         PertGraph graph = buildGraph(levels);
         pruneFakeTasks(graph);
@@ -24,7 +22,7 @@ public class PertGraphBuilder {
         return calculator.calcLevels(tasks);
     }
 
-    private PertGraph buildGraph(List<Set<PertTask>> tasks) throws CyclicPertGraphException {
+    private PertGraph buildGraph(List<Set<PertTask>> tasks) throws CyclicGraphException {
         PertGraph pertGraph = new PertGraph();
         int nodePosition = 1;
         pruningCandidates = new HashSet<>();
@@ -41,7 +39,7 @@ public class PertGraphBuilder {
         return pertGraph;
     }
 
-    private void addHighestRankedPredecessor(List<Set<PertTask>> tasks, PertTask task, PertGraph pertGraph, int nodePosition) throws CyclicPertGraphException {
+    private void addHighestRankedPredecessor(List<Set<PertTask>> tasks, PertTask task, PertGraph pertGraph, int nodePosition) throws CyclicGraphException {
         PertTask highestPredecessor = findHighestRankedPredecessor(tasks, task);
         PertNode originStep = pertGraph.addNode(nodePosition, highestPredecessor, task);
         Set<PertTask> remainingPredecessors = getRemainingPredecessors(task.getPredecessors(), highestPredecessor);

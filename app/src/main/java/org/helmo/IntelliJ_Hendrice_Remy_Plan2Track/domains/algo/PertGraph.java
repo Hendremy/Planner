@@ -1,7 +1,5 @@
 package org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.algo;
 
-import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.CyclicPertGraphException;
-
 import java.util.*;
 
 public class PertGraph {
@@ -10,6 +8,7 @@ public class PertGraph {
 
     public PertGraph(){
         nodes = new HashMap<>();
+        addNode(new PertNode(1));
         edges = new HashMap<>();
     }
 
@@ -17,11 +16,15 @@ public class PertGraph {
         return new HashMap<>(nodes);
     }
 
+    public Set<PertEdge> getEdges(){return new HashSet<>(edges.values());}
+
+    public PertNode getNode(int position){return nodes.get(position);}
+
     public void addNode(PertNode node) {
         nodes.put(node.getPosition(), node);
     }
 
-    public void addEdge(int from, int to, PertTask task) throws CyclicPertGraphException {
+    public void addEdge(int from, int to, PertTask task) throws CyclicGraphException {
         PertNode originNode = getOrCreateNode(from);
         PertNode targetNode = getOrCreateNode(to);
         PertEdge edge = new PertEdge(from, to, task);
@@ -31,7 +34,7 @@ public class PertGraph {
         insertEdge(originNode, targetNode, edge);
     }
 
-    public PertNode addNode (int pos, PertTask prior, PertTask task) throws CyclicPertGraphException {
+    public PertNode addNode (int pos, PertTask prior, PertTask task) throws CyclicGraphException {
         PertEdge priorEdge = getExistingEdge(prior);
         PertNode originNode = getOrCreateNode(priorEdge.getTarget());
         PertNode targetNode = getOrCreateNode(pos);
@@ -41,7 +44,7 @@ public class PertGraph {
         return targetNode;
     }
 
-    public PertTask addFake(PertNode targetNode, PertTask task) throws CyclicPertGraphException {
+    public PertTask addFake(PertNode targetNode, PertTask task) throws CyclicGraphException {
         PertTask fakeTask = new FakeTask(task);
         PertEdge originalEdge = edges.get(task);
         PertNode originNode = nodes.get(originalEdge.getTarget());
@@ -106,7 +109,7 @@ public class PertGraph {
     private PertNode findOriginToReattach(PertNode previousOrigin, int target){
         for(PertEdge incomingEdges : previousOrigin.getIncomingEdges()){
             PertNode originCandidate = nodes.get(incomingEdges.getOrigin());
-            if(!originCandidate.hasOutgoinEdge(target)) return originCandidate;
+            if(!originCandidate.hasOutgoingEdge(target)) return originCandidate;
         }
         return null;
     }

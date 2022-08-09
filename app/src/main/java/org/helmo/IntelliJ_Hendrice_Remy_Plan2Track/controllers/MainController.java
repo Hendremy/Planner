@@ -1,11 +1,7 @@
 package org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.controllers;
 
-import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.cli.view.AddJobView;
-import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.cli.view.AssignJobsView;
-import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.cli.view.EditView;
-import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.cli.view.RemoveJobView;
-import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.controllers.*;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.PlanningCreator;
+import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.algo.PertSchedulePlanner;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.datas.PlanningRepository;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.Planning;
 
@@ -14,11 +10,13 @@ public class MainController implements ManagePlanning {
 
     private final PlanningCreator creator;
     private final PlanningRepository repository;
+    private final PertSchedulePlanner schedulePlanner;
     private Planning planning;
 
-    public MainController (PlanningRepository repository, PlanningCreator creator){
+    public MainController (PlanningRepository repository, PlanningCreator creator, PertSchedulePlanner schedulePlanner){
         this.repository = repository;
         this.creator = creator;
+        this.schedulePlanner = schedulePlanner;
     }
 
     @Override
@@ -33,6 +31,11 @@ public class MainController implements ManagePlanning {
 
     @Override
     public PlanningRepository getRepository(){return repository;}
+
+    @Override
+    public PertSchedulePlanner getSchedulePlanner() {
+        return schedulePlanner;
+    }
 
     @Override
     public EditPlanning getEditPlanningController(){
@@ -55,5 +58,5 @@ public class MainController implements ManagePlanning {
     }
 
     @Override
-    public PlanSchedule getPlanScheduleController(){return new PlanScheduleController( this);};
+    public PlanSchedule getPlanScheduleController(){return new PlanScheduleController( this);}
 }

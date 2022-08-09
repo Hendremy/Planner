@@ -1,8 +1,11 @@
 package org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains;
 
+import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.algo.PertPlanning;
+import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.algo.PertTask;
+
 import java.util.*;
 
-public class Planning {
+public class Planning implements PertPlanning {
     //TODO : Isoler collection de Job dans une classe avec les méthodes associées
 
     private String name;
@@ -107,5 +110,10 @@ public class Planning {
 
     public boolean hasJob(String name){
         return jobs.containsKey(name);
+    }
+
+    @Override
+    public Iterable<PertTask> getTasks() {
+        return new HashSet<>(jobs.values());
     }
 }
