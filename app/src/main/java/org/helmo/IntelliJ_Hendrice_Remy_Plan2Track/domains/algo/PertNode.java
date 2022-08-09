@@ -8,11 +8,13 @@ public class PertNode{
     private int position;
     private final Set<PertEdge> outgoingEdges;
     private final Set<PertEdge> incomingEdges;
+    private int earliestTime;
 
     public PertNode(int position){
         this.position = position;
         outgoingEdges = new HashSet<>();
         incomingEdges = new HashSet<>();
+        earliestTime = -1;
     }
 
     public void addOutGoingEdge(PertEdge edge){
@@ -61,4 +63,9 @@ public class PertNode{
         return incomingEdges.isEmpty() && outgoingEdges.isEmpty();
     }
 
+    public void setEarliestTime(int time){
+        earliestTime = time;
+    }
+
+    public int getEarliestTime(){return earliestTime;}
 }

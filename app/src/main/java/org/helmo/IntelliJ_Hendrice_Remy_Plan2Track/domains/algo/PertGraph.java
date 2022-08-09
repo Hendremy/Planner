@@ -10,8 +10,11 @@ public class PertGraph {
 
     public PertGraph(){
         nodes = new HashMap<>();
-        addNode(new PertNode(1));
         edges = new HashMap<>();
+    }
+
+    public Map<Integer, PertNode> getNodes(){
+        return new HashMap<>(nodes);
     }
 
     public void addNode(PertNode node) {
@@ -19,12 +22,13 @@ public class PertGraph {
     }
 
     public void addEdge(int from, int to, PertTask task) throws CyclicPertGraphException {
-        PertNode fromNode = getOrCreateNode(from);
-        PertNode toNode = getOrCreateNode(to);
+        PertNode originNode = getOrCreateNode(from);
+        PertNode targetNode = getOrCreateNode(to);
         PertEdge edge = new PertEdge(from, to, task);
         edges.put(task, edge);
-        fromNode.addOutGoingEdge(edge);
-        toNode.addIncomingEdge(edge);
+        originNode.addOutGoingEdge(edge);
+        targetNode.addIncomingEdge(edge);
+        insertEdge(originNode, targetNode, edge);
     }
 
     public PertNode addNode (int pos, PertTask prior, PertTask task) throws CyclicPertGraphException {
@@ -33,8 +37,7 @@ public class PertGraph {
         PertNode targetNode = getOrCreateNode(pos);
         PertEdge newEdge = new PertEdge(originNode.getPosition(), targetNode.getPosition(), task);
         edges.put(task, newEdge);
-        originNode.addOutGoingEdge(newEdge);
-        targetNode.addIncomingEdge(newEdge);
+        insertEdge(originNode, targetNode, newEdge);
         return targetNode;
     }
 
@@ -43,10 +46,15 @@ public class PertGraph {
         PertEdge originalEdge = edges.get(task);
         PertNode originNode = nodes.get(originalEdge.getTarget());
         PertEdge fakeEdge = new PertEdge(originNode.getPosition(), targetNode.getPosition(), fakeTask);
+        edges.put(fakeTask, fakeEdge);
 
-        originNode.addOutGoingEdge(fakeEdge);
-        targetNode.addIncomingEdge(fakeEdge);
+        insertEdge(originNode, targetNode, fakeEdge);
         return fakeTask;
+    }
+
+    private void insertEdge(PertNode originNode, PertNode targetNode, PertEdge edge){
+        originNode.addOutGoingEdge(edge);
+        targetNode.addIncomingEdge(edge);
     }
 
     private PertNode getOrCreateNode(int position){
@@ -65,25 +73,34 @@ public class PertGraph {
     }
 
     public void pruneFakeTask(PertTask fakeTask){
-        PertEdge taskEdge = edges.get(fakeTask);
-        PertNode originNode = nodes.get(taskEdge.getOrigin());
-        PertNode targetNode = nodes.get(taskEdge.getTarget());
+        PertEdge fakeEdge = edges.get(fakeTask);
+        PertNode originNode = nodes.get(fakeEdge.getOrigin());
+        PertNode targetNode = nodes.get(fakeEdge.getTarget());
 
         if(targetNode.hasOneOutgoingEdge()){
             PertNode newOrigin = findOriginToReattach(originNode, targetNode.getPosition());
             if(newOrigin != null){
-                //Supprimer la fake task & réattacher la newOrigin au targetNode
-                originNode.removeOutgoingEdge(taskEdge);
-                targetNode.removeIncomingEdge(taskEdge);
+                redirectEdge(originNode, targetNode, fakeEdge, newOrigin);
                 edges.remove(fakeTask);
-
-                PertEdge edgeToReattach = newOrigin.getOutGoingEdgeWithTarget(originNode.getPosition());
-                edgeToReattach.setTarget(targetNode.getPosition());
-                targetNode.addIncomingEdge(edgeToReattach);
-
                 if(originNode.isEmpty()) nodes.remove(originNode.getPosition());
             }
         }
+    }
+
+    private void redirectEdge(PertNode fakeOrigin, PertNode targetNode, PertEdge fakeEdge, PertNode newOrigin){
+        PertEdge edgeToRedirect = newOrigin.getOutGoingEdgeWithTarget(fakeOrigin.getPosition());
+        detachEdge(fakeOrigin, targetNode, fakeEdge);
+        reattachEdge(edgeToRedirect, targetNode);
+    }
+
+    private void detachEdge(PertNode originNode, PertNode targetNode, PertEdge edge){
+        originNode.removeOutgoingEdge(edge);
+        targetNode.removeIncomingEdge(edge);
+    }
+
+    private void reattachEdge(PertEdge edge, PertNode targetNode){
+        edge.setTarget(targetNode.getPosition());
+        targetNode.addIncomingEdge(edge);
     }
 
     private PertNode findOriginToReattach(PertNode previousOrigin, int target){

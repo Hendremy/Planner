@@ -10,13 +10,14 @@ import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.datas.PlanningReposit
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.Planning;
 
 
-public class MainController extends Controller implements ManagePlanning {
+public class MainController implements ManagePlanning {
 
     private final PlanningCreator creator;
+    private final PlanningRepository repository;
     private Planning planning;
 
     public MainController (PlanningRepository repository, PlanningCreator creator){
-        super(repository);
+        this.repository = repository;
         this.creator = creator;
     }
 
@@ -31,22 +32,28 @@ public class MainController extends Controller implements ManagePlanning {
     }
 
     @Override
+    public PlanningRepository getRepository(){return repository;}
+
+    @Override
     public EditPlanning getEditPlanningController(){
-        return new EditPlanningController(getRepository(), this);
+        return new EditPlanningController( this);
     }
 
     @Override
     public AddJob getAddJobController(){
-        return new AddJobController(getRepository(), getPlanning());
+        return new AddJobController(this);
     }
 
     @Override
     public RemoveJob getRemoveJobController(){
-        return new RemoveJobController(getRepository(), getPlanning());
+        return new RemoveJobController( this);
     }
 
     @Override
     public AssignJobs getAssignJobsController(){
-        return new AssignJobsController(getRepository(), getPlanning());
+        return new AssignJobsController( this);
     }
+
+    @Override
+    public PlanSchedule getPlanScheduleController(){return new PlanScheduleController( this);};
 }

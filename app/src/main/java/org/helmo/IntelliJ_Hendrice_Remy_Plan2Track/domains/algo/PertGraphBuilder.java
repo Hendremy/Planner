@@ -34,18 +34,21 @@ public class PertGraphBuilder {
                 if(!task.hasPredecessors()){
                     pertGraph.addEdge(1, ++nodePosition, task);
                 }else{
-                    PertTask highestPredecessor = findHighestRankedPredecessor(tasks, task);
-                    PertNode originStep = pertGraph.addNode(++nodePosition, highestPredecessor, task);
-                    Set<PertTask> remainingPredecessors = getRemainingPredecessors(task.getPredecessors(), highestPredecessor);
-                    for(PertTask remainingP : remainingPredecessors){
-                        PertTask fakeTask = pertGraph.addFake(originStep, remainingP);
-                        pruningCandidates.add(fakeTask);
-                    }
+                    addHighestRankedPredecessor(tasks, task, pertGraph, ++nodePosition);
                 }
             }
         }
-
         return pertGraph;
+    }
+
+    private void addHighestRankedPredecessor(List<Set<PertTask>> tasks, PertTask task, PertGraph pertGraph, int nodePosition) throws CyclicPertGraphException {
+        PertTask highestPredecessor = findHighestRankedPredecessor(tasks, task);
+        PertNode originStep = pertGraph.addNode(nodePosition, highestPredecessor, task);
+        Set<PertTask> remainingPredecessors = getRemainingPredecessors(task.getPredecessors(), highestPredecessor);
+        for(PertTask remainingP : remainingPredecessors){
+            PertTask fakeTask = pertGraph.addFake(originStep, remainingP);
+            pruningCandidates.add(fakeTask);
+        }
     }
 
     private PertTask findHighestRankedPredecessor(List<Set<PertTask>> taskByLevel, PertTask task){

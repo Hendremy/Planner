@@ -4,20 +4,18 @@ import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.Job;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.Planning;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.Technician;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.datas.PlanningRepository;
-import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.viewmodels.JobViewModel;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.viewmodels.TechnicianViewModel;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class AssignJobsController extends Controller implements AssignJobs {
+public class AssignJobsController implements AssignJobs {
 
-    private final Planning planning;
+    private final ManagePlanning manageController;
 
-    public AssignJobsController(PlanningRepository planningRepository, Planning planning) {
-        super(planningRepository);
-        this.planning = planning;
+    public AssignJobsController(ManagePlanning manageController) {
+        this.manageController = manageController;
     }
 
     private Iterable<Technician> getTechnicians(){
@@ -34,17 +32,17 @@ public class AssignJobsController extends Controller implements AssignJobs {
 
     @Override
     public Iterable<Job> getJobs() {
-        return planning.getJobs();
+        return getPlanning().getJobs();
     }
 
     @Override
     public boolean jobExists(String name){
-        return planning.hasJob(name);
+        return getPlanning().hasJob(name);
     }
 
     @Override
     public void assignJob(String jobName, String code){
-        Job job = planning.getJobByName(jobName);
+        Job job = getPlanning().getJobByName(jobName);
         Technician tech = findTechnician(code);
         if(job != null && tech != null){
             job.setTechnician(tech);
@@ -59,5 +57,10 @@ public class AssignJobsController extends Controller implements AssignJobs {
             }
         }
         return null;
+    }
+
+    private PlanningRepository getRepository() { return manageController.getRepository();}
+    private Planning getPlanning(){
+        return manageController.getPlanning();
     }
 }
