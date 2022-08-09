@@ -1,19 +1,18 @@
 package org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.cli.view;
 
-import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.controllers.AddJob;
-import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.controllers.AssignJobs;
-import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.controllers.EditPlanning;
-import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.controllers.RemoveJob;
+import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.controllers.*;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.Planning;
 
 
 public class EditView extends CliView{
 
-    private final EditPlanning controller;
+    private final EditPlanning editController;
+    private final PlanSchedule planController;
     private final int exitNum = 0;
 
-    public EditView (EditPlanning controller){
-        this.controller = controller;
+    public EditView (EditPlanning editController, PlanSchedule planController){
+        this.editController = editController;
+        this.planController = planController;
     }
 
     public void loop(){
@@ -60,6 +59,8 @@ public class EditView extends CliView{
             case 5:
                 findCriticalJobs();
                 break;
+            case 6:
+                findEarliestEndTime();
             case exitNum:
                 break;
             default:
@@ -69,34 +70,37 @@ public class EditView extends CliView{
     }
 
     private Planning getPlanning(){
-        return controller.getPlanning();
+        return editController.getPlanning();
     }
 
     public void editName(){
         String name = console.askString("Nom du montage ?");
         if(name != null && !name.isBlank() && !name.isEmpty()){
-            controller.editName(name);
+            editController.editName(name);
         }
     }
 
     private void addJob(){
-        AddJob addJobController = controller.getAddJobController();
-        new AddJobView(addJobController).addJob();
+        AddJob addJobController = editController.getAddJobController();
+        new AddJobView(addJobController).show();
     }
 
     private void removeJob(){
-        RemoveJob removeJobController = controller.getRemoveJobController();
-        new RemoveJobView(removeJobController).removeJob();
+        RemoveJob removeJobController = editController.getRemoveJobController();
+        new RemoveJobView(removeJobController).show();
     }
 
     private void assignJobs() {
-        AssignJobs assignJobsController = controller.getAssignJobsController();
-        new AssignJobsView(assignJobsController).assignJobs();
+        AssignJobs assignJobsController = editController.getAssignJobsController();
+        new AssignJobsView(assignJobsController).show();
     }
 
     private void findCriticalJobs() {
-        //criticalJobsController.findCriticalJobs();
+        new CriticalJobsView(planController).show();
     }
 
+    private void findEarliestEndTime(){
+        new EarliestEndTimeView(planController).show();
+    }
 
 }

@@ -11,7 +11,7 @@ public class RemoveJobView extends CliView{
         this.controller = controller;
     }
 
-    public void removeJob(){
+    public void show(){
         String question = "Nom de la tâche à supprimer ? (Enter pour annuler)";
         String name = console.askString(question);
         while(name == null || !name.isBlank()){

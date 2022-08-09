@@ -16,19 +16,20 @@ public class PlanScheduleController implements PlanSchedule{
         this.manageController = manageController;
     }
 
-    @Override
-    public void buildGraph() throws PertException {
+    private void buildGraph() throws PertException {
         PertSchedulePlanner planner = manageController.getSchedulePlanner();
         graph = planner.planSchedule(manageController.getPlanning());
     }
 
     @Override
     public List<PertTask> getCriticalPath() throws PertException {
+        buildGraph();
         return getSchedulePlanner().findCriticalPath(graph);
     }
 
     @Override
-    public int getEarliestEndDate(){
+    public int getEarliestEndDate() throws PertException {
+        buildGraph();
         return getSchedulePlanner().findEarliestEndDate(graph);
     }
 

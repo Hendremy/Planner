@@ -44,7 +44,8 @@ public class PertSchedulePlanner {
     }
 
     public int findEarliestEndDate(PertGraph graph){
-        Set<PertNode> nodes = new HashSet<>(graph.getNodes().values());
-        int max
+        Set<Integer> nodePositions = new HashSet<>(graph.getNodes().keySet());
+        int max = Collections.max(nodePositions);
+        return graph.getNode(max).getLatestTime();
     }
 }

@@ -50,7 +50,7 @@ public class PertGraphBuilder {
     }
 
     private PertTask findHighestRankedPredecessor(List<Set<PertTask>> taskByLevel, PertTask task){
-        for(int i = taskByLevel.size() - 1 ; i >= 0 ; i++){
+        for(int i = taskByLevel.size() - 1 ; i >= 0 ; i--){
             Set<PertTask> level = taskByLevel.get(i);
             for (PertTask priorTask : task.getPredecessors()){
                 if(level.contains(priorTask)) return priorTask;

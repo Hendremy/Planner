@@ -9,6 +9,8 @@ public class Console implements Closeable {
     private final PrintStream out = System.out;
     private final Scanner in;
     private final String yesNo = "\n(O)ui/(N)on";
+    private final String ANSI_RESET = "\u001B[0m";
+    private final String ANSI_RED = "\u001B[31m";
 
     public static Console getInstance(){
         if(singleton == null){
@@ -27,6 +29,10 @@ public class Console implements Closeable {
 
     public void println(String str){
         out.println(str);
+    }
+
+    public void error(String message){
+        out.println("\nErreur: " + ANSI_RED + message + ANSI_RESET);
     }
 
     public String askString(String question){

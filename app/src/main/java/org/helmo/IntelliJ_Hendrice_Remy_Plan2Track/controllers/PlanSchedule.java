@@ -7,9 +7,7 @@ import java.util.List;
 
 public interface PlanSchedule {
 
-    void buildGraph() throws PertException;
-
     List<PertTask> getCriticalPath() throws PertException;
 
-    int getEarliestEndDate();
+    int getEarliestEndDate() throws PertException;
 }

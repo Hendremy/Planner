@@ -17,7 +17,7 @@ public class AssignJobsView extends CliView{
         this.techs = new ArrayList<>(controller.getTechniciansViewModels());
     }
 
-    public void assignJobs(){
+    public void show(){
         Iterable<Job> jobs = controller.getJobs();
         if(jobs.iterator().hasNext()){
             String jobName = "blank";

@@ -3,8 +3,6 @@ package org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.cli.view;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.controllers.AddJob;
 
 import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Set;
 
 public class AddJobView extends CliView{
@@ -15,7 +13,7 @@ public class AddJobView extends CliView{
         this.controller = controller;
     }
 
-    public void addJob(){
+    public void show(){
         String name = console.askString("Nom de la nouvelle tâche ?");
         String description = console.askString("Descriptif éventuel de la nouvelle tâche ?");
         int duration = console.askPosInt("Durée (en jours) de la nouvelle tâche ?");
