@@ -33,7 +33,7 @@ public class RemoveJobView {
             String message = String.format("La tâche \"%s\" est requise pour %d autre(s) tâche(s)\nConfirmez-vous sa suppression ?", jobName, occ);
             messageLabel.setText(message);
         }catch(JobNotFoundException ex){
-            new ErrorMessageView(String.format("La tâche à supprimer \"%s\" n'a pas été trouvée", jobName));
+            new ErrorMessageWindow(String.format("La tâche à supprimer \"%s\" n'a pas été trouvée", jobName));
         }
         stage.close();
 
@@ -84,7 +84,7 @@ public class RemoveJobView {
             controller.removeJob(jobName);
             parentView.jobRemoved(jobName);
         }catch(JobNotFoundException ex){
-            new ErrorMessageView(String.format("La tâche à supprimer \"%s\" n'a pas été trouvée", jobName));
+            new ErrorMessageWindow(String.format("La tâche à supprimer \"%s\" n'a pas été trouvée", jobName));
         }
         stage.close();
     }

@@ -3,11 +3,9 @@ package org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.gui.view;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.controllers.PlanSchedule;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.algo.PertException;
 
@@ -25,32 +23,15 @@ public class ScheduleView {
         nameArea.setPadding(new Insets(10));
     }
 
-    private final Button criticalPathBtn = new Button("Trouver les tâches critiques");
-    {
-        criticalPathBtn.setOnAction(e -> findCriticalPath());
-    }
-
-    private final Button generateSchedBtn = new Button("Générer le planning");
-    {
-        generateSchedBtn.setOnAction(e -> generateSchedule());
-    }
-
-    private final VBox criticalTasks = new VBox(criticalPathBtn, generateSchedBtn);
-    {
-
-    }
-
-    public ScheduleView(PlanSchedule controller){
-        this.controller = controller;
-        updateNameLabel();
-    }
+    private final CriticalPathView criticalPathView;
+    private final ScheduleGenerationView scheduleGenerationView;
 
     private void updateNameLabel(){
         String name = controller.getPlanningName();
         try{
             setNameLabel(name, controller.getEarliestEndDate());
         } catch (PertException e) {
-            new ErrorMessageView(e.getMessage());
+            new ErrorMessageWindow(e.getMessage());
         }
     }
 
@@ -67,19 +48,19 @@ public class ScheduleView {
     public BorderPane root = new BorderPane();
     {
         root.setTop(nameArea);
-        root.setLeft(criticalTasks);
         root.setPadding(new Insets(20));
+    }
+
+    public ScheduleView(PlanSchedule controller){
+        this.controller = controller;
+        criticalPathView = new CriticalPathView(controller);
+        scheduleGenerationView = new ScheduleGenerationView(controller);
+        root.setLeft(criticalPathView.getParent());
+        root.setCenter(scheduleGenerationView.getParent());
+        updateNameLabel();
     }
 
     public Parent getParent(){
         return root;
-    }
-
-    private void findCriticalPath(){
-
-    }
-
-    private void generateSchedule(){
-
     }
 }

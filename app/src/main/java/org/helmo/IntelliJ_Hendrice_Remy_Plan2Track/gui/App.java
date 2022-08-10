@@ -8,6 +8,7 @@ import javafx.stage.Stage;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.controllers.MainController;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.controllers.ManagePlanning;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.PlanningCreator;
+import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.ScheduleGenerator;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.algo.PertGraphBuilder;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.algo.PertMarginCalculator;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.algo.PertSchedulePlanner;
@@ -23,7 +24,8 @@ public class App extends Application {
         PlanningRepository repo = new StaticPlanningRepository();
         PlanningCreator creator = new PlanningCreator();
         PertSchedulePlanner schedulePlanner = new PertSchedulePlanner(new PertGraphBuilder(), new PertTimeCalculator(), new PertMarginCalculator());
-        ManagePlanning mainController = new MainController(repo, creator, schedulePlanner);
+        ScheduleGenerator scheduleGenerator = new ScheduleGenerator();
+        ManagePlanning mainController = new MainController(repo, creator, schedulePlanner, scheduleGenerator);
         MainWindow view = new MainWindow(primaryStage, mainController);
         view.show();
     }

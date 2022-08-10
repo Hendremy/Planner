@@ -5,29 +5,60 @@ import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TitledPane;
 import javafx.scene.layout.VBox;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.controllers.PlanSchedule;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.algo.PertException;
-import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.algo.PertTask;
+import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.viewmodels.PertTaskViewModel;
 
 public class CriticalPathView {
 
     private final PlanSchedule controller;
 
-    public CriticalPathView(PlanSchedule controller) throws PertException {
+    public CriticalPathView(PlanSchedule controller) {
         this.controller = controller;
-        ObservableList<PertTask> taskObservableList = FXCollections.observableArrayList(controller.getCriticalPath());
-        criticalTasks.setItems(taskObservableList);
+        setCriticalPathItems();
     }
 
-    private ListView<PertTask> criticalTasks = new ListView<>();
+    private void setCriticalPathItems(){
+        try{
+            ObservableList<PertTaskViewModel> taskObservableList = FXCollections.observableArrayList(controller.getCriticalPath());
+            if(!taskObservableList.isEmpty()){
+                critTasksListView.setItems(taskObservableList);
+                content.getChildren().add(critTasksListView);
+            }else{
+                content.getChildren().add(emptyPathMessage);
+            }
+        }catch(PertException ex){
+            content.getChildren().add(errorMessage);
+        }
+    }
 
-    private final VBox root = new VBox();
+    private final Label errorMessage = new Label("Une erreur est survenue lors du calcul du chemin critique");
+    private final Label emptyPathMessage = new Label("Aucune tâche critique");
     {
-        root.setSpacing(20);
-        root.setAlignment(Pos.TOP_CENTER);
-        root.setPadding(new Insets(20));
+        errorMessage.setAlignment(Pos.CENTER);
+        emptyPathMessage.setAlignment(Pos.CENTER);
+    }
+
+    private final ListView<PertTaskViewModel> critTasksListView = new ListView<>();
+    {
+        critTasksListView.setMouseTransparent(true);
+        critTasksListView.setFocusTraversable(false);
+    }
+
+    private final VBox content = new VBox();
+    {
+        content.setSpacing(20);
+        content.setAlignment(Pos.TOP_CENTER);
+        content.setPadding(new Insets(20));
+    }
+
+    private final TitledPane root = new TitledPane("Tâches critique", content);
+    {
+        root.setCollapsible(false);
     }
 
     public Parent getParent(){

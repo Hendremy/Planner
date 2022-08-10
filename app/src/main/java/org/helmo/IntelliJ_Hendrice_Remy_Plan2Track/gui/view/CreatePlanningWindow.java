@@ -12,7 +12,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.controllers.ManagePlanning;
 
-public class CreatePlanningView {
+public class CreatePlanningWindow {
 
     private final ManagePlanning mainController;
     private final MainWindow mainWindow;
@@ -55,7 +55,7 @@ public class CreatePlanningView {
         root.setSpacing(8);
     }
 
-    public CreatePlanningView(ManagePlanning mainController, MainWindow mainWindow, String message){
+    public CreatePlanningWindow(ManagePlanning mainController, MainWindow mainWindow, String message){
         this.mainController = mainController;
         this.mainWindow = mainWindow;
         if(message != null) this.messageLabel.setText(message);

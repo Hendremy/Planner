@@ -1,10 +1,15 @@
 package org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.controllers;
 
+import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.Schedule;
+import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.ScheduleGenerator;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.algo.PertException;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.algo.PertGraph;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.algo.PertSchedulePlanner;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.algo.PertTask;
+import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.viewmodels.PertTaskViewModel;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class PlanScheduleController implements PlanSchedule{
@@ -22,9 +27,12 @@ public class PlanScheduleController implements PlanSchedule{
     }
 
     @Override
-    public List<PertTask> getCriticalPath() throws PertException {
+    public List<PertTaskViewModel> getCriticalPath() throws PertException {
         buildGraph();
-        return getSchedulePlanner().findCriticalPath(graph);
+        List<PertTask> tasks =  getSchedulePlanner().findCriticalPath(graph);
+        List<PertTaskViewModel> tasksVM = new ArrayList<>(tasks.size());
+        tasks.forEach(t -> tasksVM.add(new PertTaskViewModel(t)));
+        return tasksVM;
     }
 
     @Override
@@ -38,7 +46,16 @@ public class PlanScheduleController implements PlanSchedule{
         return manageController.getPlanning().getName();
     }
 
+    @Override
+    public Schedule generateSchedule(Date startDate){
+        Schedule schedule = getScheduleGenerator().generate(graph, startDate);
+
+        return schedule;
+    }
+
     private PertSchedulePlanner getSchedulePlanner(){
         return manageController.getSchedulePlanner();
     }
+
+    private ScheduleGenerator getScheduleGenerator(){return manageController.getScheduleGenerator();}
 }

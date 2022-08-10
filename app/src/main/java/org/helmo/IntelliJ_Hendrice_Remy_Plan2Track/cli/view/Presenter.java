@@ -3,6 +3,7 @@ package org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.cli.view;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.Job;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.Planning;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.algo.PertTask;
+import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.viewmodels.PertTaskViewModel;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.viewmodels.TechnicianViewModel;
 
 import java.util.List;
@@ -87,18 +88,18 @@ public class Presenter {
         return sb.toString();
     }
 
-    public String displayCriticalPath(List<PertTask> criticalPath){
+    public String displayCriticalPath(List<PertTaskViewModel> criticalPath){
         if(criticalPath.isEmpty()) return "Aucune tâche critique";
         StringBuilder sb = new StringBuilder();
-        PertTask[] taskArray = criticalPath.toArray(PertTask[]::new);
+        PertTaskViewModel[] taskArray = criticalPath.toArray(PertTaskViewModel[]::new);
         sb.append("Tâches critiques :");
         int i;
         for(i = 0; i < taskArray.length - 1; ++i){
-            PertTask first = taskArray[i];
-            PertTask following = taskArray[i+1];
+            PertTaskViewModel first = taskArray[i];
+            PertTaskViewModel following = taskArray[i+1];
             sb.append(String.format("\n - %s, requise pour %s", first.getName(), following.getName()));
         }
-        PertTask last = taskArray[i];
+        PertTaskViewModel last = taskArray[i];
         sb.append(String.format("\n - %s", last.getName()));
         return sb.toString();
     }

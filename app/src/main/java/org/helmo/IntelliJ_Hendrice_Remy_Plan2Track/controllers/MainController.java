@@ -1,6 +1,7 @@
 package org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.controllers;
 
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.PlanningCreator;
+import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.ScheduleGenerator;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.algo.PertSchedulePlanner;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.datas.PlanningRepository;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.Planning;
@@ -11,12 +12,15 @@ public class MainController implements ManagePlanning {
     private final PlanningCreator creator;
     private final PlanningRepository repository;
     private final PertSchedulePlanner schedulePlanner;
+    private final ScheduleGenerator scheduleGenerator;
     private Planning planning;
 
-    public MainController (PlanningRepository repository, PlanningCreator creator, PertSchedulePlanner schedulePlanner){
+    public MainController (PlanningRepository repository, PlanningCreator creator,
+                           PertSchedulePlanner schedulePlanner, ScheduleGenerator scheduleGenerator){
         this.repository = repository;
         this.creator = creator;
         this.schedulePlanner = schedulePlanner;
+        this.scheduleGenerator = scheduleGenerator;
     }
 
     @Override
@@ -36,6 +40,9 @@ public class MainController implements ManagePlanning {
     public PertSchedulePlanner getSchedulePlanner() {
         return schedulePlanner;
     }
+
+    @Override
+    public ScheduleGenerator getScheduleGenerator(){ return scheduleGenerator;}
 
     @Override
     public EditPlanning getEditPlanningController(){

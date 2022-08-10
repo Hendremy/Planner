@@ -5,13 +5,11 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.controllers.ManagePlanning;
 
-public class ErrorMessageView {
+public class ErrorMessageWindow {
 
     private final Stage stage = new Stage();
     private final Label messageLabel = new Label();
@@ -32,7 +30,7 @@ public class ErrorMessageView {
         root.setSpacing(8);
     }
 
-    public ErrorMessageView(String message){
+    public ErrorMessageWindow(String message){
         if(message != null) this.messageLabel.setText(message);
         showView();
     }

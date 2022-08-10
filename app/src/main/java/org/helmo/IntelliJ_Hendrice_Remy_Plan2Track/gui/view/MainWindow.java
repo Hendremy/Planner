@@ -9,7 +9,6 @@ import javafx.scene.control.ToolBar;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.controllers.ManagePlanning;
-import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.Planning;
 
 public class MainWindow {
 
@@ -64,7 +63,7 @@ public class MainWindow {
         if(mainController.getPlanning() != null){
             message = "Un montage est déjà en cours de création, vous allez l'écraser";
         }
-        new CreatePlanningView(mainController, this, message);
+        new CreatePlanningWindow(mainController, this, message);
         disable();
     }
 
