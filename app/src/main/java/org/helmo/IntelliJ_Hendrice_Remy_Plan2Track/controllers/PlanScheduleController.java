@@ -33,6 +33,11 @@ public class PlanScheduleController implements PlanSchedule{
         return getSchedulePlanner().findEarliestEndDate(graph);
     }
 
+    @Override
+    public String getPlanningName() {
+        return manageController.getPlanning().getName();
+    }
+
     private PertSchedulePlanner getSchedulePlanner(){
         return manageController.getSchedulePlanner();
     }

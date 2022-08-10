@@ -1,34 +1,55 @@
 package org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.gui.view;
 
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.ToolBar;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.controllers.ManagePlanning;
+import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.Planning;
 
 public class MainWindow {
 
     private final ManagePlanning mainController;
+    private final Stage primaryStage;
 
-    public MainWindow(ManagePlanning mainController){
+    public MainWindow(Stage primaryStage, ManagePlanning mainController){
         this.mainController = mainController;
+        this.primaryStage = primaryStage;
     }
 
-    private Button create = new Button("Nouveau planning +");{
+    public void show(){
+        Scene scene = new Scene(root, 1200,800);
+
+        primaryStage.setTitle("Planner");
+        primaryStage.setScene(scene);
+        primaryStage.show();
+    }
+
+    private final Button create = new Button("Nouveau planning +");{
         create.setOnAction(e -> createPlanning());
     }
 
-    private Button load = new Button("Charger un planning");{
+    private final Button load = new Button("Charger un planning");{
         load.setOnAction(e -> loadPlanning());
     }
 
-    private ToolBar toolBar = new ToolBar(create, load);
+    private final ToolBar toolBar = new ToolBar(create, load);
 
-    private TabPane tabs = new TabPane();
+    private final TabPane tabs = new TabPane();
+    {
+        tabs.getSelectionModel().selectedItemProperty().addListener( (observable, oldValue, newValue) -> {
+            if(newValue instanceof ScheduleTab){
+                ScheduleTab tab = (ScheduleTab) newValue;
+                tab.refresh();
+            }
+        });
+    }
 
-    private VBox root = new VBox();
+    private final VBox root = new VBox();
     {
         root.getChildren().add(toolBar);
         root.getChildren().add(tabs);
@@ -53,6 +74,9 @@ public class MainWindow {
 
     public void enable(){
         root.setDisable(false);
+    }
+
+    public void updateView(){
         if(mainController.getPlanning() != null){
             resetTabs();
             createTabs();
@@ -61,9 +85,10 @@ public class MainWindow {
 
     private void createTabs(){
         EditTab editTab = new EditTab(mainController.getEditPlanningController());
-        //LoadTab laodTab = new LoadTab(mainController.getLoadPlanningController));
+        ScheduleTab scheduleTab = new ScheduleTab(mainController.getPlanScheduleController());
 
-        addTab(editTab.getTab());
+        addTab(editTab);
+        addTab(scheduleTab);
     }
 
     private void addTab(Tab tab){

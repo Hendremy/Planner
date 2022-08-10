@@ -4,8 +4,6 @@
 package org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.gui;
 
 import javafx.application.Application;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.controllers.MainController;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.controllers.ManagePlanning;
@@ -26,14 +24,8 @@ public class App extends Application {
         PlanningCreator creator = new PlanningCreator();
         PertSchedulePlanner schedulePlanner = new PertSchedulePlanner(new PertGraphBuilder(), new PertTimeCalculator(), new PertMarginCalculator());
         ManagePlanning mainController = new MainController(repo, creator, schedulePlanner);
-        MainWindow view = new MainWindow(mainController);
-
-        Parent root = view.getParent();
-        Scene scene = new Scene(root, 1200,800);
-
-        primaryStage.setTitle("Planner");
-        primaryStage.setScene(scene);
-        primaryStage.show();
+        MainWindow view = new MainWindow(primaryStage, mainController);
+        view.show();
     }
 
     /**

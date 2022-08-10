@@ -80,6 +80,7 @@ public class CreatePlanningView {
             mainController.createPlanning(name);
             stage.hide();
             mainWindow.enable();
+            mainWindow.updateView();
         }
     }
 

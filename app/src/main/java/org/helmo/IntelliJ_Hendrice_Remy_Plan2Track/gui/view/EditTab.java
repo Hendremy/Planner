@@ -4,21 +4,12 @@ import javafx.scene.control.Tab;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.controllers.EditPlanning;
 
 
-public class EditTab {
+public class EditTab extends Tab{
 
-    private Tab tab = new Tab("Modification");
-    {
-        tab.setClosable(false);
-    }
-
-    public EditTab(EditPlanning controller){
+    public EditTab(EditPlanning controller) {
         EditView manageView = new EditView(controller);
-        tab.setContent(manageView.getParent());
+        setContent(manageView.getParent());
+        setClosable(false);
+        setText("Modification");
     }
-
-    public Tab getTab() {
-        return tab;
-    }
-
-
 }

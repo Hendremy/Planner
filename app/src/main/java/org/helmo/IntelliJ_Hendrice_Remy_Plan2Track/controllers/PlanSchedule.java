@@ -10,4 +10,6 @@ public interface PlanSchedule {
     List<PertTask> getCriticalPath() throws PertException;
 
     int getEarliestEndDate() throws PertException;
+
+    String getPlanningName();
 }
