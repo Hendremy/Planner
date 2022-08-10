@@ -15,8 +15,8 @@ public class PertNode{
         this.position = position;
         outgoingEdges = new HashSet<>();
         incomingEdges = new HashSet<>();
-        earliestTime = -1;
-        latestTime = -1;
+        earliestTime = 0;
+        latestTime = 0;
     }
 
     public void addOutGoingEdge(PertEdge edge){

@@ -68,9 +68,15 @@ public class PertTimeCalculator {
         int minDuration = Integer.MAX_VALUE;
         for(PertEdge outgoing : node.getOutgoingEdges()){
             PertNode followingNode = nodes.get(outgoing.getTarget());
+            if(outgoing.getDuration() == 0) ensureFollowingIsCalculated(nodes, followingNode);
             int totalDuration = followingNode.getLatestTime() - outgoing.getDuration();
             minDuration = Math.min(minDuration, totalDuration);
         }
         return minDuration;
+    }
+
+    private void ensureFollowingIsCalculated(Map<Integer, PertNode> nodes, PertNode node){
+        int duration = findMinFollowingDuration(nodes, node);
+        node.setLatestTime(duration);
     }
 }

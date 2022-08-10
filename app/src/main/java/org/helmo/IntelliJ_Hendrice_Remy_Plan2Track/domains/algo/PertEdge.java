@@ -9,7 +9,7 @@ public class PertEdge {
     private int totalMargin;
 
     public PertEdge(int origin, int target, PertTask task) throws CyclicGraphException {
-        if(origin < target){
+        if(origin < target || task.getDuration() == 0){
             this.task = task;
             this.origin = origin;
             this.target = target;

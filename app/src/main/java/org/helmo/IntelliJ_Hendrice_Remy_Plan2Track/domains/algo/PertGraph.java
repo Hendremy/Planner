@@ -41,7 +41,7 @@ public class PertGraph {
         PertEdge newEdge = new PertEdge(originNode.getPosition(), targetNode.getPosition(), task);
         edges.put(task, newEdge);
         insertEdge(originNode, targetNode, newEdge);
-        return targetNode;
+        return originNode;
     }
 
     public PertTask addFake(PertNode targetNode, PertTask task) throws CyclicGraphException {
@@ -92,13 +92,14 @@ public class PertGraph {
 
     private void redirectEdge(PertNode fakeOrigin, PertNode targetNode, PertEdge fakeEdge, PertNode newOrigin){
         PertEdge edgeToRedirect = newOrigin.getOutGoingEdgeWithTarget(fakeOrigin.getPosition());
-        detachEdge(fakeOrigin, targetNode, fakeEdge);
+        detachEdge(fakeOrigin, targetNode, fakeEdge, edgeToRedirect);
         reattachEdge(edgeToRedirect, targetNode);
     }
 
-    private void detachEdge(PertNode originNode, PertNode targetNode, PertEdge edge){
-        originNode.removeOutgoingEdge(edge);
-        targetNode.removeIncomingEdge(edge);
+    private void detachEdge(PertNode originNode, PertNode targetNode, PertEdge fakeEdge, PertEdge edgeToRedirect){
+        originNode.removeOutgoingEdge(fakeEdge);
+        originNode.removeIncomingEdge(edgeToRedirect);
+        targetNode.removeIncomingEdge(fakeEdge);
     }
 
     private void reattachEdge(PertEdge edge, PertNode targetNode){
