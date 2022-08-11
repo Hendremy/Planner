@@ -54,6 +54,7 @@ public class JobListView {
     private final TitledPane root = new TitledPane("Tâches", content);
     {
         root.setMinWidth(250);
+        root.setMinHeight(500);
         root.setAlignment(Pos.CENTER_LEFT);
         root.setCollapsible(false);
     }

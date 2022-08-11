@@ -1,12 +1,12 @@
 package org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.gui.view;
 
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TabPane;
-import javafx.scene.control.ToolBar;
-import javafx.scene.layout.VBox;
+import javafx.scene.control.*;
+import javafx.scene.layout.*;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.controllers.ManagePlanning;
 
@@ -28,15 +28,30 @@ public class MainWindow {
         primaryStage.show();
     }
 
-    private final Button create = new Button("Nouveau planning +");{
+    private final Button create = new Button("Nouveau montage +");{
         create.setOnAction(e -> createPlanning());
     }
 
-    private final Button load = new Button("Charger un planning");{
+    private final Button load = new Button("Charger un montage");{
         load.setOnAction(e -> loadPlanning());
     }
 
     private final ToolBar toolBar = new ToolBar(create, load);
+
+    private final Label noPlanningErrorMessage = new Label("Aucun montage en cours");
+    {
+        noPlanningErrorMessage.setAlignment(Pos.CENTER);
+        noPlanningErrorMessage.setFont(new Font(30));
+        noPlanningErrorMessage.setStyle("-fx-text-fill: gray");
+    }
+    private final VBox messageBox = new VBox(noPlanningErrorMessage);
+    {
+        messageBox.setPadding(new Insets(300));
+        messageBox.setAlignment(Pos.CENTER);
+    }
+
+
+    private final StackPane content = new StackPane(messageBox);
 
     private final TabPane tabs = new TabPane();
     {
@@ -48,11 +63,7 @@ public class MainWindow {
         });
     }
 
-    private final VBox root = new VBox();
-    {
-        root.getChildren().add(toolBar);
-        root.getChildren().add(tabs);
-    }
+    private final VBox root = new VBox(toolBar, content);
 
     public Parent getParent(){
         return root;
@@ -79,10 +90,15 @@ public class MainWindow {
         if(mainController.getPlanning() != null){
             resetTabs();
             createTabs();
+        }else{
+            content.getChildren().remove(tabs);
         }
     }
 
     private void createTabs(){
+        content.getChildren().remove(tabs);
+        content.getChildren().add(tabs);
+
         EditTab editTab = new EditTab(mainController.getEditPlanningController());
         ScheduleTab scheduleTab = new ScheduleTab(mainController.getPlanScheduleController());
 

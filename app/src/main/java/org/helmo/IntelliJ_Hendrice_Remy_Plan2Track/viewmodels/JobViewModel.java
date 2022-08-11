@@ -15,7 +15,7 @@ public class JobViewModel {
     private final String techCode;
     private final Set<JobViewModel> priorJobs;
 
-    public JobViewModel (Job job){
+    public JobViewModel(Job job){
         this.name = job.getName();
         this.description = job.getDescription();
         this.duration = job.getDuration();

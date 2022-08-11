@@ -89,6 +89,7 @@ public class AddJobView {
 
     private final TitledPane root = new TitledPane("Créer une tâche", content);
     {
+        root.minHeight(500);
         root.setCollapsible(false);
     }
 

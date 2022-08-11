@@ -3,10 +3,8 @@ package org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.gui.view;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -133,6 +131,7 @@ public class AssignJobView {
 
     private final TitledPane root = new TitledPane("Assigner une tâche", content);
     {
+        root.setMinHeight(500);
         root.setCollapsible(false);
     }
 

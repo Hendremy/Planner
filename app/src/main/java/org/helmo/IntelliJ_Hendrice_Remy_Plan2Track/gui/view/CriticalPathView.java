@@ -8,6 +8,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TitledPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.controllers.PlanSchedule;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.algo.PertException;
@@ -51,7 +52,8 @@ public class CriticalPathView {
 
     private final VBox content = new VBox();
     {
-        content.setSpacing(20);
+        content.setSpacing(10);
+        content.setMinHeight(500);
         content.setAlignment(Pos.TOP_CENTER);
         content.setPadding(new Insets(20));
     }

@@ -1,15 +1,16 @@
 package org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.controllers;
 
-import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.Schedule;
-import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.ScheduleGenerator;
+import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.*;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.algo.PertException;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.algo.PertGraph;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.algo.PertSchedulePlanner;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.algo.PertTask;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.viewmodels.PertTaskViewModel;
+import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.viewmodels.ScheduleRowViewModel;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 public class PlanScheduleController implements PlanSchedule{
@@ -47,10 +48,19 @@ public class PlanScheduleController implements PlanSchedule{
     }
 
     @Override
-    public Schedule generateSchedule(Date startDate){
+    public List<ScheduleRowViewModel> generateSchedule(Date startDate){
         Schedule schedule = getScheduleGenerator().generate(graph, startDate);
+        List<ScheduleRowViewModel> scheduleRows = new LinkedList<>();
+        for(PlannedTask plannedTask : schedule.getSchedule()){
+            Job job = findJobByName(plannedTask.getTaskName());
+            scheduleRows.add(new ScheduleRowViewModel(job, plannedTask.getDate()));
+        }
+        return scheduleRows;
+    }
 
-        return schedule;
+    private Job findJobByName(String name){
+        Planning planning = manageController.getPlanning();
+        return planning.getJobByName(name);
     }
 
     private PertSchedulePlanner getSchedulePlanner(){

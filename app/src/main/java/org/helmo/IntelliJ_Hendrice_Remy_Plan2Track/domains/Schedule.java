@@ -2,23 +2,21 @@ package org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains;
 
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.algo.PertTask;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class Schedule {
 
-    private final Map<PertTask, Date> schedule;
+    private final List<PlannedTask> schedule;
 
     public Schedule(){
-        schedule = new HashMap<>();
+        schedule = new LinkedList<>();
     }
 
     public void add(PertTask task, Date date){
-        schedule.put(task, date);
+        schedule.add(new PlannedTask(task, date));
     }
 
-    public Map<PertTask, Date> getSchedule(){
-        return new HashMap<>(schedule);
+    public List<PlannedTask> getSchedule(){
+        return new LinkedList<>(schedule);
     }
 }
