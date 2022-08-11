@@ -1,5 +1,6 @@
 package org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.datas;
 
+import com.github.cliftonlabs.json_simple.JsonObject;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.Planning;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.Technician;
 
@@ -22,7 +23,6 @@ public class JsonPlanningRepository implements PlanningRepository{
 
     @Override
     public void writePlannings(Iterable<Planning> plannings) {
-
     }
 
     @Override
