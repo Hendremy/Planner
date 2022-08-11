@@ -1,29 +1,24 @@
 package org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.viewmodels;
 
-import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.Job;
-
-import java.time.LocalDate;
-
+import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.PlannedJob;
 
 public class ScheduleRowViewModel {
 
-    private final Job task;
-    private final LocalDate startDate;
+    private final PlannedJob plannedJob;
 
-    public ScheduleRowViewModel(Job task, LocalDate startDate){
-        this.task = task;
-        this.startDate = startDate;
+    public ScheduleRowViewModel(PlannedJob plannedJob){
+        this.plannedJob = plannedJob;
     }
 
     public String getTaskName(){
-        return task.getName();
+        return plannedJob.getTaskName();
     }
 
     public String getTechName(){
-        return task.getTechnicianName();
+        return plannedJob.getTechName();
     }
 
     public String getStartDate(){
-        return startDate.toString();
+        return plannedJob.getDate().toString();
     }
 }

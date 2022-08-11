@@ -10,7 +10,7 @@ import java.util.Set;
 
 public class ScheduleGenerator {
 
-    public Schedule generate(PertGraph graph, LocalDate startDate){
+    public Schedule generate(PertGraph graph, Planning planning, LocalDate startDate){
         Schedule schedule = new Schedule();
         Set<PertEdge> edges = graph.getEdges();
 
@@ -19,9 +19,15 @@ public class ScheduleGenerator {
                 PertNode originNode = graph.getNode(edge.getOrigin());
                 int daysToAdd = originNode.getEarliestTime();
                 LocalDate taskStart = startDate.plusDays(daysToAdd);
-                schedule.add(edge.getTask(), taskStart);
+                Job job = getJobFromPlanning(edge, planning);
+                schedule.add(job, taskStart);
             }
         }
         return schedule;
+    }
+
+    public Job getJobFromPlanning(PertEdge edge, Planning planning){
+        String jobName = edge.getTask().getName();
+        return planning.getJobByName(jobName);
     }
 }

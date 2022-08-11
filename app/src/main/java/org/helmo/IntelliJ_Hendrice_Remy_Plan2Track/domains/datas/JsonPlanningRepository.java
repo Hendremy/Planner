@@ -6,6 +6,8 @@ import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.Technician;
 
 public class JsonPlanningRepository implements PlanningRepository{
 
+
+
     @Override
     public void load() {
 

@@ -50,11 +50,10 @@ public class PlanScheduleController implements PlanSchedule{
 
     @Override
     public List<ScheduleRowViewModel> generateSchedule(LocalDate startDate){
-        schedule = getScheduleGenerator().generate(graph, startDate);
+        schedule = getScheduleGenerator().generate(graph, getPlanning(), startDate);
         List<ScheduleRowViewModel> scheduleRows = new LinkedList<>();
-        for(PlannedTask plannedTask : schedule.getSchedule()){
-            Job job = findJobByName(plannedTask.getTaskName());
-            scheduleRows.add(new ScheduleRowViewModel(job, plannedTask.getDate()));
+        for(PlannedJob job : schedule.getSchedule()){
+            scheduleRows.add(new ScheduleRowViewModel(job));
         }
         return scheduleRows;
     }
@@ -74,11 +73,6 @@ public class PlanScheduleController implements PlanSchedule{
         if(schedule != null){
 
         }
-    }
-
-    private Job findJobByName(String name){
-        Planning planning = manageController.getPlanning();
-        return planning.getJobByName(name);
     }
 
     private PertSchedulePlanner getSchedulePlanner(){
