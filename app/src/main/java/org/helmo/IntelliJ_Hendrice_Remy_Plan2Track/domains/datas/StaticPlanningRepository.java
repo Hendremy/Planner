@@ -30,7 +30,7 @@ public class StaticPlanningRepository implements PlanningRepository{
         technicians = new ArrayList<>();
         technicians.add(new Technician("Nicolas","Hendrikx", "T001"));
         technicians.add(new Technician("Jean","Jadot", "T002"));
-        technicians.add(new Technician("François","Ludewig", "T003"));
+        technicians.add(new Technician("Francois","Ludewig", "T003"));
     }
 
     @Override

@@ -12,6 +12,7 @@ import javafx.scene.layout.VBox;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.controllers.PlanSchedule;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.viewmodels.ScheduleRowViewModel;
 
+import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -29,7 +30,12 @@ public class ScheduleGenerationView {
     {
         generateBtn.setOnAction(e -> generateSchedule());
     }
-    private final Label generateErrorMessage = new Label();
+    private final Label errorMessage = new Label();
+    {
+        errorMessage.setAlignment(Pos.CENTER);
+        errorMessage.setVisible(false);
+        errorMessage.setStyle("-fx-text-fill: red");
+    }
 
     private final HBox generateBar = new HBox(startDateLabel, startDatePicker, generateBtn);
     {
@@ -40,7 +46,6 @@ public class ScheduleGenerationView {
     private final TableColumn<ScheduleRowViewModel, String> taskNameCol = new TableColumn<>("Nom de la tâche");
     private final TableColumn<ScheduleRowViewModel, String> startDateCol = new TableColumn<>("Début prévu");
     private final TableColumn<ScheduleRowViewModel, String> techNameCol = new TableColumn<>("Assigné à");
-
 
     private final TableView<ScheduleRowViewModel> scheduleTableView = new TableView<>();
     {
@@ -62,10 +67,11 @@ public class ScheduleGenerationView {
 
     private final Button saveScheduleBtn = new Button("Sauvegarder le planning");
     {
+        saveScheduleBtn.setDisable(true);
         saveScheduleBtn.setOnAction(e -> saveSchedule());
     }
 
-    private final VBox content = new VBox(generateBar, scheduleTableView, saveScheduleBtn);
+    private final VBox content = new VBox(generateBar, errorMessage, scheduleTableView, saveScheduleBtn);
     {
         content.setSpacing(8);
         content.setPadding(new Insets(20));
@@ -83,15 +89,40 @@ public class ScheduleGenerationView {
     }
 
     private void generateSchedule(){
-        if(!controller.planningIsEmpty()){
-            LocalDate startDate = getDatePickerValue();
-            List<ScheduleRowViewModel> scheduleRows = controller.generateSchedule(startDate);
-            ObservableList<ScheduleRowViewModel> scheduleRowsObservable = FXCollections.observableArrayList(scheduleRows);
-            scheduleTableView.setItems(scheduleRowsObservable);
-            scheduleTableView.getSortOrder().add(startDateCol);
+        if(controller.planningIsEmpty()){
+            showError("Aucune tâche à planifier");
+        }else if(!controller.planningAllTasksAssigned()){
+            showError("Toutes les tâches ne sont pas assignées");
         }else{
-
+            getSchedule();
         }
+    }
+
+    private void getSchedule(){
+        try{
+            resetError();
+            updateTableView();
+            saveScheduleBtn.setDisable(false);
+        }catch(DateTimeException ex){
+            showError("Date invalide");
+        }
+    }
+
+    private void updateTableView(){
+        LocalDate startDate = getDatePickerValue();
+        List<ScheduleRowViewModel> scheduleRows = controller.generateSchedule(startDate);
+        ObservableList<ScheduleRowViewModel> scheduleRowsObservable = FXCollections.observableArrayList(scheduleRows);
+        scheduleTableView.setItems(scheduleRowsObservable);
+        scheduleTableView.getSortOrder().add(startDateCol);
+    }
+
+    private void showError(String message){
+        errorMessage.setText(message);
+        errorMessage.setVisible(true);
+    }
+
+    private void resetError(){
+        errorMessage.setVisible(false);
     }
 
     private LocalDate getDatePickerValue(){

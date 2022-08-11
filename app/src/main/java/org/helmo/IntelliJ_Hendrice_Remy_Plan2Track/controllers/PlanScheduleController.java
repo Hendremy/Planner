@@ -61,7 +61,12 @@ public class PlanScheduleController implements PlanSchedule{
 
     @Override
     public boolean planningIsEmpty(){
-        return manageController.getPlanning().isEmpty();
+        return getPlanning().isEmpty();
+    }
+
+    @Override
+    public boolean planningAllTasksAssigned(){
+        return getPlanning().allTasksAssigned();
     }
 
     @Override
@@ -81,4 +86,6 @@ public class PlanScheduleController implements PlanSchedule{
     }
 
     private ScheduleGenerator getScheduleGenerator(){return manageController.getScheduleGenerator();}
+
+    private Planning getPlanning(){ return manageController.getPlanning();}
 }

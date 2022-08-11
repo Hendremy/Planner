@@ -56,6 +56,9 @@ public class Job implements PertTask {
         return new ArrayList<>(priorJobs);
     }
 
+    public boolean isAssigned(){
+        return technician != null;
+    }
 
     @Override
     public String getName(){

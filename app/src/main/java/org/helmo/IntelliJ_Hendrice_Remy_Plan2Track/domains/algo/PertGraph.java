@@ -80,7 +80,7 @@ public class PertGraph {
         PertNode originNode = nodes.get(fakeEdge.getOrigin());
         PertNode targetNode = nodes.get(fakeEdge.getTarget());
 
-        if(targetNode.hasOneOutgoingEdge()){
+        if(targetNode.hasOneOutgoingEdge() && originNode.hasOneOutgoingEdge()){
             PertNode newOrigin = findOriginToReattach(originNode, targetNode.getPosition());
             if(newOrigin != null){
                 redirectEdge(originNode, targetNode, fakeEdge, newOrigin);

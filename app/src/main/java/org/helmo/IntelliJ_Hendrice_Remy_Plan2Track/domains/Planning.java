@@ -108,6 +108,13 @@ public class Planning implements PertPlanning {
         return jobs.isEmpty();
     }
 
+    public boolean allTasksAssigned(){
+        for(Job job : jobs.values()){
+            if(!job.isAssigned()) return false;
+        }
+        return true;
+    }
+
     public boolean hasJob(String name){
         return jobs.containsKey(name);
     }

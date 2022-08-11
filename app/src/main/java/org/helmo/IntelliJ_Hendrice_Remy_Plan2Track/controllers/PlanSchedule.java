@@ -20,4 +20,6 @@ public interface PlanSchedule {
     void saveSchedule();
 
     boolean planningIsEmpty();
+
+    boolean planningAllTasksAssigned();
 }
