@@ -4,12 +4,12 @@ import java.util.ArrayList;
 
 public class PlanningCreator{
 
-    public Planning create(String name){
+    /*public Planning create(String name){
         return new Planning(name);
-    }
+    }*/
 
     //Montages des tests d'acceptation
-    /*public Planning create(String name){
+    public Planning create(String name){
         Planning test = new Planning("test");
         test.addJob("A","",6, new ArrayList<>());
         test.addJob("B","",5, new ArrayList<>());
@@ -34,7 +34,7 @@ public class PlanningCreator{
 
 
         return test;
-    }*/
+    }
 
     /*public Planning create(String name){
         Planning test = new Planning("test");

@@ -4,7 +4,7 @@ import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.algo.PertException;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.viewmodels.PertTaskViewModel;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.viewmodels.ScheduleRowViewModel;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 public interface PlanSchedule {
@@ -15,5 +15,9 @@ public interface PlanSchedule {
 
     String getPlanningName();
 
-    List<ScheduleRowViewModel> generateSchedule(Date startDate);
+    List<ScheduleRowViewModel> generateSchedule(LocalDate startDate);
+
+    void saveSchedule();
+
+    boolean planningIsEmpty();
 }

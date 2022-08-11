@@ -8,8 +8,8 @@ import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.algo.PertTask;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.viewmodels.PertTaskViewModel;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.viewmodels.ScheduleRowViewModel;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -17,6 +17,7 @@ public class PlanScheduleController implements PlanSchedule{
 
     private final ManagePlanning manageController;
     private PertGraph graph;
+    private Schedule schedule;
 
     public PlanScheduleController(ManagePlanning manageController) {
         this.manageController = manageController;
@@ -48,14 +49,26 @@ public class PlanScheduleController implements PlanSchedule{
     }
 
     @Override
-    public List<ScheduleRowViewModel> generateSchedule(Date startDate){
-        Schedule schedule = getScheduleGenerator().generate(graph, startDate);
+    public List<ScheduleRowViewModel> generateSchedule(LocalDate startDate){
+        schedule = getScheduleGenerator().generate(graph, startDate);
         List<ScheduleRowViewModel> scheduleRows = new LinkedList<>();
         for(PlannedTask plannedTask : schedule.getSchedule()){
             Job job = findJobByName(plannedTask.getTaskName());
             scheduleRows.add(new ScheduleRowViewModel(job, plannedTask.getDate()));
         }
         return scheduleRows;
+    }
+
+    @Override
+    public boolean planningIsEmpty(){
+        return manageController.getPlanning().isEmpty();
+    }
+
+    @Override
+    public void saveSchedule(){
+        if(schedule != null){
+
+        }
     }
 
     private Job findJobByName(String name){

@@ -1,5 +1,7 @@
 package org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.gui.view;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
@@ -11,6 +13,7 @@ import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.controllers.PlanSchedule;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.viewmodels.ScheduleRowViewModel;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public class ScheduleGenerationView {
 
@@ -21,28 +24,40 @@ public class ScheduleGenerationView {
     }
 
     private final Label startDateLabel = new Label("Date de début du montage :");
-    private final DatePicker startDate = new DatePicker(LocalDate.now());
+    private final DatePicker startDatePicker = new DatePicker(LocalDate.now());
     private final Button generateBtn = new Button("Générer le planning");
     {
         generateBtn.setOnAction(e -> generateSchedule());
     }
+    private final Label generateErrorMessage = new Label();
 
-    private final HBox generateBar = new HBox(startDateLabel, startDate, generateBtn);
+    private final HBox generateBar = new HBox(startDateLabel, startDatePicker, generateBtn);
     {
         generateBar.setSpacing(8);
         generateBar.setAlignment(Pos.CENTER);
     }
 
+    private final TableColumn<ScheduleRowViewModel, String> taskNameCol = new TableColumn<>("Nom de la tâche");
+    private final TableColumn<ScheduleRowViewModel, String> startDateCol = new TableColumn<>("Début prévu");
+    private final TableColumn<ScheduleRowViewModel, String> techNameCol = new TableColumn<>("Assigné à");
+
+
     private final TableView<ScheduleRowViewModel> scheduleTableView = new TableView<>();
     {
-        TableColumn<ScheduleRowViewModel, String> taskNameCol = new TableColumn<>("Nom de la tâche");
-        TableColumn<ScheduleRowViewModel, String> startDateCol = new TableColumn<>("Début prévu");
-        TableColumn<ScheduleRowViewModel, String> techNameCol = new TableColumn<>("Nom de la tâche");
-
         taskNameCol.setCellValueFactory(new PropertyValueFactory<>("taskName"));
+        taskNameCol.setResizable(false);
         startDateCol.setCellValueFactory(new PropertyValueFactory<>("startDate"));
+        startDateCol.setResizable(false);
         techNameCol.setCellValueFactory(new PropertyValueFactory<>("techName"));
+        techNameCol.setResizable(false);
 
+        taskNameCol.prefWidthProperty().bind(scheduleTableView.widthProperty().multiply(0.5));
+        startDateCol.prefWidthProperty().bind(scheduleTableView.widthProperty().multiply(0.2));
+        techNameCol.prefWidthProperty().bind(scheduleTableView.widthProperty().multiply(0.3));
+
+        scheduleTableView.getColumns().add(taskNameCol);
+        scheduleTableView.getColumns().add(startDateCol);
+        scheduleTableView.getColumns().add(techNameCol);
     }
 
     private final Button saveScheduleBtn = new Button("Sauvegarder le planning");
@@ -50,12 +65,17 @@ public class ScheduleGenerationView {
         saveScheduleBtn.setOnAction(e -> saveSchedule());
     }
 
-    private final VBox root = new VBox(generateBar, scheduleTableView, saveScheduleBtn);
+    private final VBox content = new VBox(generateBar, scheduleTableView, saveScheduleBtn);
     {
-        root.setSpacing(8);
-        root.setPadding(new Insets(20));
-        root.setMinHeight(500);
-        root.setAlignment(Pos.CENTER);
+        content.setSpacing(8);
+        content.setPadding(new Insets(20));
+        content.setMinHeight(500);
+        content.setAlignment(Pos.CENTER);
+    }
+
+    private final TitledPane root = new TitledPane("Planning", content);
+    {
+        root.setCollapsible(false);
     }
 
     public Parent getParent(){
@@ -63,7 +83,20 @@ public class ScheduleGenerationView {
     }
 
     private void generateSchedule(){
+        if(!controller.planningIsEmpty()){
+            LocalDate startDate = getDatePickerValue();
+            List<ScheduleRowViewModel> scheduleRows = controller.generateSchedule(startDate);
+            ObservableList<ScheduleRowViewModel> scheduleRowsObservable = FXCollections.observableArrayList(scheduleRows);
+            scheduleTableView.setItems(scheduleRowsObservable);
+            scheduleTableView.getSortOrder().add(startDateCol);
+        }else{
 
+        }
+    }
+
+    private LocalDate getDatePickerValue(){
+        String dateString = startDatePicker.getEditor().getText();
+        return startDatePicker.getConverter().fromString(dateString);
     }
 
     private void saveSchedule(){
