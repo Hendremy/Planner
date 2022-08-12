@@ -4,6 +4,7 @@ import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.Job;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.Planning;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.Technician;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.datas.PlanningRepository;
+import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.datas.PlanningRepositoryException;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.viewmodels.TechnicianViewModel;
 
 import java.util.ArrayList;
@@ -23,7 +24,7 @@ public class AssignJobsController implements AssignJobs {
     }
 
     @Override
-    public Collection<TechnicianViewModel> getTechniciansViewModels(){
+    public Collection<TechnicianViewModel> getTechniciansViewModels() {
         List<TechnicianViewModel> techVMs = new ArrayList<>();
         Iterable<Technician> techs = getTechnicians();
         techs.forEach(t -> techVMs.add(new TechnicianViewModel(t)));

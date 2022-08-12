@@ -1,6 +1,7 @@
 package org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.datas;
 
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.Planning;
+import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.Schedule;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.Technician;
 
 import java.util.ArrayList;
@@ -14,19 +15,11 @@ public class StaticPlanningRepository implements PlanningRepository{
         load();
     }
 
-    @Override
-    public void load() {
-        loadPlannings();
+    private void load(){
         loadTechnicians();
     }
 
-    @Override
-    public void loadPlannings() {
-        plannings = new ArrayList<>();
-    }
-
-    @Override
-    public void loadTechnicians(){
+    private void loadTechnicians(){
         technicians = new ArrayList<>();
         technicians.add(new Technician("Nicolas","Hendrikx", "T001"));
         technicians.add(new Technician("Jean","Jadot", "T002"));
@@ -34,17 +27,12 @@ public class StaticPlanningRepository implements PlanningRepository{
     }
 
     @Override
-    public Iterable<Planning> getPlannings() {
-        return plannings;
+    public void writeSchedule(Schedule schedule) {
+
     }
 
     @Override
     public Iterable<Technician> getTechnicians() {
         return technicians;
-    }
-
-    @Override
-    public void writePlannings(Iterable<Planning> plannings) {
-
     }
 }

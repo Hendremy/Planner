@@ -13,21 +13,27 @@ import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.algo.PertGraphBuilder
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.algo.PertMarginCalculator;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.algo.PertSchedulePlanner;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.algo.PertTimeCalculator;
+import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.datas.JsonPlanningRepository;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.datas.PlanningRepository;
-import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.datas.StaticPlanningRepository;
+import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.datas.PlanningRepositoryException;
+import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.gui.view.ErrorMessageWindow;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.gui.view.MainWindow;
 
 public class App extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        PlanningRepository repo = new StaticPlanningRepository();
-        PlanningCreator creator = new PlanningCreator();
-        PertSchedulePlanner schedulePlanner = new PertSchedulePlanner(new PertGraphBuilder(), new PertTimeCalculator(), new PertMarginCalculator());
-        ScheduleGenerator scheduleGenerator = new ScheduleGenerator();
-        ManagePlanning mainController = new MainController(repo, creator, schedulePlanner, scheduleGenerator);
-        MainWindow view = new MainWindow(primaryStage, mainController);
-        view.show();
+        try{
+            PlanningRepository repo = new JsonPlanningRepository();
+            PlanningCreator creator = new PlanningCreator();
+            PertSchedulePlanner schedulePlanner = new PertSchedulePlanner(new PertGraphBuilder(), new PertTimeCalculator(), new PertMarginCalculator());
+            ScheduleGenerator scheduleGenerator = new ScheduleGenerator();
+            ManagePlanning mainController = new MainController(repo, creator, schedulePlanner, scheduleGenerator);
+            MainWindow mainView = new MainWindow(primaryStage, mainController);
+            mainView.show();
+        }catch(PlanningRepositoryException ex){
+            new ErrorMessageWindow(String.format("Erreur de lancement :\n%s",ex.getMessage()));
+        }
     }
 
     /**
