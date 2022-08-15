@@ -6,9 +6,15 @@ import java.util.*;
 public class Schedule {
 
     private final List<PlannedJob> schedule;
+    private final String name;
 
-    public Schedule(){
+    public Schedule(String name){
+        this.name = name;
         schedule = new LinkedList<>();
+    }
+
+    public String getName(){
+        return name;
     }
 
     public void add(Job job, LocalDate date){

@@ -9,9 +9,7 @@ import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.algo.PertGraphBuilder
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.algo.PertMarginCalculator;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.algo.PertSchedulePlanner;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.algo.PertTimeCalculator;
-import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.datas.JsonPlanningRepository;
-import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.datas.PlanningRepository;
-import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.datas.PlanningRepositoryException;
+import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.datas.*;
 
 public class Main {
 
@@ -20,17 +18,16 @@ public class Main {
     }
 
     private static void launch(){
-        try{
-            PlanningRepository repository = new JsonPlanningRepository();
-            PlanningCreator creator = new PlanningCreator();
-            PertSchedulePlanner schedulePlanner = new PertSchedulePlanner(new PertGraphBuilder(), new PertTimeCalculator(), new PertMarginCalculator());
-            ScheduleGenerator scheduleGenerator = new ScheduleGenerator();
-            ManagePlanning mainController = new MainController(repository, creator, schedulePlanner, scheduleGenerator);
-            MainView mainView = new MainView(mainController);
-            mainView.start();
-        }catch(PlanningRepositoryException ex){
-            System.out.println(ex.getMessage());
-        }
+        UserParser userParser = new JSONUserParser();
+        PlanningSerializer planningParser = new JSONPlanningSerializer();
+        PlanningRepository repo = new JSONPlanningRepository(userParser, planningParser
+                , "../json","users.json", "plannings");
+        PlanningCreator creator = new PlanningCreator();
+        PertSchedulePlanner schedulePlanner = new PertSchedulePlanner(new PertGraphBuilder(), new PertTimeCalculator(), new PertMarginCalculator());
+        ScheduleGenerator scheduleGenerator = new ScheduleGenerator();
+        ManagePlanning mainController = new MainController(repo, creator, schedulePlanner, scheduleGenerator);
+        MainView mainView = new MainView(mainController);
+        mainView.start();
     }
 
 }

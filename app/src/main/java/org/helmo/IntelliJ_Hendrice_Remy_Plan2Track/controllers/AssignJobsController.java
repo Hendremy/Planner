@@ -19,12 +19,12 @@ public class AssignJobsController implements AssignJobs {
         this.manageController = manageController;
     }
 
-    private Iterable<Technician> getTechnicians(){
+    private Iterable<Technician> getTechnicians() throws PlanningRepositoryException {
         return getRepository().getTechnicians();
     }
 
     @Override
-    public Collection<TechnicianViewModel> getTechniciansViewModels() {
+    public Collection<TechnicianViewModel> getTechniciansViewModels() throws PlanningRepositoryException {
         List<TechnicianViewModel> techVMs = new ArrayList<>();
         Iterable<Technician> techs = getTechnicians();
         techs.forEach(t -> techVMs.add(new TechnicianViewModel(t)));
@@ -42,7 +42,7 @@ public class AssignJobsController implements AssignJobs {
     }
 
     @Override
-    public void assignJob(String jobName, String code){
+    public void assignJob(String jobName, String code) throws PlanningRepositoryException {
         Job job = getPlanning().getJobByName(jobName);
         Technician tech = findTechnician(code);
         if(job != null && tech != null){
@@ -50,7 +50,7 @@ public class AssignJobsController implements AssignJobs {
         }
     }
 
-    private Technician findTechnician(String code){
+    private Technician findTechnician(String code) throws PlanningRepositoryException {
         Iterable<Technician> techs = getTechnicians();
         for(Technician tech : techs){
             if(tech.getCode().equals(code)){

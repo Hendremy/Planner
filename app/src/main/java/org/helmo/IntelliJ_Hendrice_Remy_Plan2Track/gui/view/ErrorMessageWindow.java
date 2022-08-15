@@ -31,8 +31,10 @@ public class ErrorMessageWindow {
     }
 
     public ErrorMessageWindow(String message){
-        if(message != null) this.messageLabel.setText(message);
-        showView();
+        if(message != null){
+            this.messageLabel.setText(message);
+            showView();
+        }
     }
 
     private void showView(){

@@ -9,6 +9,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.controllers.AssignJobs;
+import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.datas.PlanningRepositoryException;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.viewmodels.JobViewModel;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.viewmodels.TechnicianViewModel;
 
@@ -24,7 +25,7 @@ public class AssignJobView {
         this.jobViewModel = jobVM;
         setTexts();
         setPriorListView();
-        setTechListView();
+        trySetTechListView();
     }
 
     private void setTexts(){
@@ -40,7 +41,15 @@ public class AssignJobView {
         priorJobListView.setItems(priorJobList);
     }
 
-    private void setTechListView(){
+    private void trySetTechListView(){
+        try{
+            setTechListView();
+        }catch(PlanningRepositoryException ex){
+            new ErrorMessageWindow(ex.getMessage());
+        }
+    }
+
+    private void setTechListView() throws PlanningRepositoryException {
         Collection<TechnicianViewModel> techVMs = controller.getTechniciansViewModels();
         ObservableList<TechnicianViewModel> techObsList = FXCollections.observableArrayList(techVMs);
         techListView.setItems(techObsList);
@@ -142,8 +151,12 @@ public class AssignJobView {
     private void assignJob(){
         TechnicianViewModel selected = techListView.getSelectionModel().getSelectedItem();
         if(selected != null){
-            controller.assignJob(jobViewModel.getName(), selected.getCode());
-            showMessageSuccess();
+            try{
+                controller.assignJob(jobViewModel.getName(), selected.getCode());
+                showMessageSuccess();
+            }catch(PlanningRepositoryException ex){
+                new ErrorMessageWindow(ex.getMessage());
+            }
         }else{
             showMessageError();
         }

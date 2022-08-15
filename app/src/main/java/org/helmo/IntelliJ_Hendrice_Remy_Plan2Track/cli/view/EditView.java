@@ -2,6 +2,8 @@ package org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.cli.view;
 
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.controllers.*;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.Planning;
+import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.datas.PlanningRepositoryException;
+import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.gui.view.ErrorMessageWindow;
 
 
 public class EditView extends CliView{
@@ -93,7 +95,11 @@ public class EditView extends CliView{
 
     private void assignJobs() {
         AssignJobs assignJobsController = editController.getAssignJobsController();
-        new AssignJobsView(assignJobsController).show();
+        try{
+            new AssignJobsView(assignJobsController).show();
+        }catch(PlanningRepositoryException ex){
+            new ErrorMessageWindow(ex.getMessage());
+        }
     }
 
     private void findCriticalJobs() {

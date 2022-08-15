@@ -27,6 +27,11 @@ public class StaticPlanningRepository implements PlanningRepository{
     }
 
     @Override
+    public PlanningDTO loadSchedule(String filePath) throws PlanningRepositoryException {
+        return null;
+    }
+
+    @Override
     public void writeSchedule(Schedule schedule) {
 
     }

@@ -10,6 +10,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.controllers.PlanSchedule;
+import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.datas.PlanningRepositoryException;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.viewmodels.ScheduleRowViewModel;
 
 import java.time.DateTimeException;
@@ -70,8 +71,11 @@ public class ScheduleGenerationView {
         saveScheduleBtn.setDisable(true);
         saveScheduleBtn.setOnAction(e -> saveSchedule());
     }
+    private final Label saveSuccess = new Label();{
+        saveSuccess.setVisible(false);
+    }
 
-    private final VBox content = new VBox(generateBar, errorMessage, scheduleTableView, saveScheduleBtn);
+    private final VBox content = new VBox(generateBar, errorMessage, scheduleTableView, saveScheduleBtn, saveSuccess);
     {
         content.setSpacing(8);
         content.setPadding(new Insets(20));
@@ -100,6 +104,7 @@ public class ScheduleGenerationView {
 
     private void getSchedule(){
         try{
+            resetSuccess();
             resetError();
             updateTableView();
             saveScheduleBtn.setDisable(false);
@@ -131,6 +136,21 @@ public class ScheduleGenerationView {
     }
 
     private void saveSchedule(){
+        try{
+            controller.saveSchedule();
+            showSaveSuccess();
+        }catch(PlanningRepositoryException ex){
+            new ErrorMessageWindow(ex.getMessage());
+        }
+    }
 
+    private void resetSuccess(){
+        saveSuccess.setText("");
+        saveSuccess.setVisible(false);
+    }
+
+    private void showSaveSuccess(){
+        saveSuccess.setText("Planning enregistré !");
+        saveSuccess.setVisible(true);
     }
 }

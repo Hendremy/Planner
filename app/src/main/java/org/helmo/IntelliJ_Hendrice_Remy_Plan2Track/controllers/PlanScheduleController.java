@@ -5,6 +5,8 @@ import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.algo.PertException;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.algo.PertGraph;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.algo.PertSchedulePlanner;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.algo.PertTask;
+import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.datas.PlanningRepository;
+import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.datas.PlanningRepositoryException;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.viewmodels.PertTaskViewModel;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.viewmodels.ScheduleRowViewModel;
 
@@ -69,9 +71,9 @@ public class PlanScheduleController implements PlanSchedule{
     }
 
     @Override
-    public void saveSchedule(){
+    public void saveSchedule() throws PlanningRepositoryException {
         if(schedule != null){
-
+            getRepository().writeSchedule(schedule);
         }
     }
 
@@ -82,4 +84,8 @@ public class PlanScheduleController implements PlanSchedule{
     private ScheduleGenerator getScheduleGenerator(){return manageController.getScheduleGenerator();}
 
     private Planning getPlanning(){ return manageController.getPlanning();}
+
+    private PlanningRepository getRepository(){
+        return manageController.getRepository();
+    }
 }

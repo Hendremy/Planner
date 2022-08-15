@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class PlanningTests {
 
     //Plan de test pour suppression d'une tâche
-    private Planning planning;
+    private Planning test;
     private Job a;
     private Job b;
     private Job c;
@@ -20,27 +20,37 @@ public class PlanningTests {
 
     @BeforeEach
     void init(){
-        planning = new Planning("Tomorrowland");
-        a = new Job("A");
-        b = new Job("B");
-        c = new Job("C");
-        d = new Job("D");
-        e = new Job("E");
+        test = new Planning("test");
+        test.addJob("A","",6, new ArrayList<>());
+        test.addJob("B","",5, new ArrayList<>());
 
-        planning.addJob(a);
-        planning.addJob(b);
-        planning.addJob(c);
-        planning.addJob(d);
-        planning.addJob(e);
+        var C = new ArrayList<String>();
+        C.add("A");
+        var D = new ArrayList<String>();
+        D.add("B");
+        var E = new ArrayList<String>();
+        E.add("C");
+        var F = new ArrayList<String>();
+        F.add("A");F.add("D");
+        var G = new ArrayList<String>();
+        G.add("E");G.add("F");
+
+        test.addJob("C","",4, C);
+        test.addJob("D","",6, D);
+        test.addJob("E","",5, E);
+
+        test.addJob("F","",6, F);
+        test.addJob("G","",4, G);
+
     }
 
     @Test
     void removeTaskThatIsPrior() throws JobNotFoundException {
         a.addPredecessor(b);
 
-        planning.removeJob("B");
+        test.removeJob("B");
 
-        for(var job : planning.getJobs()){
+        for(var job : test.getJobs()){
             assertNotEquals(job, b);
         }
         assertFalse(a.hasPredecessor(b));
@@ -48,28 +58,28 @@ public class PlanningTests {
 
     @Test
     void removeAloneTask() throws JobNotFoundException {
-        planning.removeJob("E");
+        test.removeJob("E");
 
-        for(var job : planning.getJobs()){
+        for(var job : test.getJobs()){
             assertNotEquals(job, e);
         }
     }
 
     @Test
     void removeNullTask() throws JobNotFoundException {
-        planning.removeJob(null);
+        test.removeJob(null);
 
         List<Job> jobs = new ArrayList<>();
-        planning.getJobs().forEach(jobs::add);
+        test.getJobs().forEach(jobs::add);
         assertEquals(jobs.size(),5);
     }
 
     @Test
     void removeTaskNotInPlanning() throws JobNotFoundException {
-        planning.removeJob("Z");
+        test.removeJob("Z");
 
         List<Job> jobs = new ArrayList<>();
-        planning.getJobs().forEach(jobs::add);
+        test.getJobs().forEach(jobs::add);
         assertEquals(jobs.size(),5);
     }
 
@@ -80,9 +90,9 @@ public class PlanningTests {
         d.addPredecessor(b);
         e.addPredecessor(b);
 
-        planning.removeJob("B");
+        test.removeJob("B");
 
-        for(var job : planning.getJobs()){
+        for(var job : test.getJobs()){
             assertNotEquals(job, b);
         }
         assertFalse(a.hasPredecessor(b));

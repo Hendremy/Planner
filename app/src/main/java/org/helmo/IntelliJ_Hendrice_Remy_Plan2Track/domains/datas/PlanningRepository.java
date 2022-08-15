@@ -8,6 +8,7 @@ import java.io.FileNotFoundException;
 
 public interface PlanningRepository {
 
-    void writeSchedule(Schedule schedule);
-    Iterable<Technician> getTechnicians();
+    PlanningDTO loadSchedule(String filePath) throws PlanningRepositoryException;
+    void writeSchedule(Schedule schedule) throws PlanningRepositoryException;
+    Iterable<Technician> getTechnicians() throws PlanningRepositoryException;
 }

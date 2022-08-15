@@ -1,6 +1,7 @@
 package org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.controllers;
 
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.algo.PertException;
+import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.datas.PlanningRepositoryException;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.viewmodels.PertTaskViewModel;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.viewmodels.ScheduleRowViewModel;
 
@@ -17,7 +18,7 @@ public interface PlanSchedule {
 
     List<ScheduleRowViewModel> generateSchedule(LocalDate startDate);
 
-    void saveSchedule();
+    void saveSchedule() throws PlanningRepositoryException;
 
     boolean planningIsEmpty();
 

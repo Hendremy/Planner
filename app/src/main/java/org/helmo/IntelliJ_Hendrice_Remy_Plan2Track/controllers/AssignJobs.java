@@ -8,11 +8,11 @@ import java.util.Collection;
 
 public interface AssignJobs {
 
-    Collection<TechnicianViewModel> getTechniciansViewModels();
+    Collection<TechnicianViewModel> getTechniciansViewModels() throws PlanningRepositoryException;
 
     Iterable<Job> getJobs();
 
     boolean jobExists(String name);
 
-    void assignJob(String jobName, String code);
+    void assignJob(String jobName, String code) throws PlanningRepositoryException;
 }

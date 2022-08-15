@@ -11,11 +11,21 @@ public class PlannedJob {
         this.date = date;
     }
 
-    public String getTaskName(){ return job.getName(); }
+    public String getName(){ return job.getName(); }
 
-    public LocalDate getDate(){
+    public LocalDate getStartDate(){
         return date;
     }
 
+    public LocalDate getEndDate(){
+        return getStartDate().plusDays(job.getDuration());
+    }
+
     public String getTechName(){return job.getTechnicianName();}
+
+    public String getTechCode(){ return job.getTechnicianCode();}
+
+    public String getDescription(){
+        return job.getDescription();
+    }
 }

@@ -13,27 +13,23 @@ import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.algo.PertGraphBuilder
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.algo.PertMarginCalculator;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.algo.PertSchedulePlanner;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.algo.PertTimeCalculator;
-import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.datas.JsonPlanningRepository;
-import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.datas.PlanningRepository;
-import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.datas.PlanningRepositoryException;
-import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.gui.view.ErrorMessageWindow;
+import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.datas.*;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.gui.view.MainWindow;
 
 public class App extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        try{
-            PlanningRepository repo = new JsonPlanningRepository();
-            PlanningCreator creator = new PlanningCreator();
-            PertSchedulePlanner schedulePlanner = new PertSchedulePlanner(new PertGraphBuilder(), new PertTimeCalculator(), new PertMarginCalculator());
-            ScheduleGenerator scheduleGenerator = new ScheduleGenerator();
-            ManagePlanning mainController = new MainController(repo, creator, schedulePlanner, scheduleGenerator);
-            MainWindow mainView = new MainWindow(primaryStage, mainController);
-            mainView.show();
-        }catch(PlanningRepositoryException ex){
-            new ErrorMessageWindow(String.format("Erreur de lancement :\n%s",ex.getMessage()));
-        }
+        UserParser userParser = new JSONUserParser();
+        PlanningSerializer planningParser = new JSONPlanningSerializer();
+        PlanningRepository repo = new JSONPlanningRepository(userParser, planningParser
+                , "../json","users.json", "plannings");
+        PlanningCreator creator = new PlanningCreator();
+        PertSchedulePlanner schedulePlanner = new PertSchedulePlanner(new PertGraphBuilder(), new PertTimeCalculator(), new PertMarginCalculator());
+        ScheduleGenerator scheduleGenerator = new ScheduleGenerator();
+        ManagePlanning mainController = new MainController(repo, creator, schedulePlanner, scheduleGenerator);
+        MainWindow mainView = new MainWindow(primaryStage, mainController);
+        mainView.show();
     }
 
     /**

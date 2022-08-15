@@ -11,7 +11,7 @@ public class ScheduleRowViewModel {
     }
 
     public String getTaskName(){
-        return plannedJob.getTaskName();
+        return plannedJob.getName();
     }
 
     public String getTechName(){
@@ -19,6 +19,6 @@ public class ScheduleRowViewModel {
     }
 
     public String getStartDate(){
-        return plannedJob.getDate().toString();
+        return plannedJob.getStartDate().toString();
     }
 }

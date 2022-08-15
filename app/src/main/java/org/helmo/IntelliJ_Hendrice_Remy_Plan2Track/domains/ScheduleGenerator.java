@@ -11,7 +11,7 @@ import java.util.Set;
 public class ScheduleGenerator {
 
     public Schedule generate(PertGraph graph, Planning planning, LocalDate startDate){
-        Schedule schedule = new Schedule();
+        Schedule schedule = new Schedule(planning.getName());
         Set<PertEdge> edges = graph.getEdges();
 
         for(PertEdge edge : edges){

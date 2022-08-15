@@ -2,6 +2,8 @@ package org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.cli.view;
 
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.controllers.AssignJobs;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.Job;
+import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.datas.PlanningRepositoryException;
+import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.gui.view.ErrorMessageWindow;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.viewmodels.TechnicianViewModel;
 
 import java.util.ArrayList;
@@ -12,7 +14,7 @@ public class AssignJobsView extends CliView{
     private final AssignJobs controller;
     private final List<TechnicianViewModel> techs;
 
-    public AssignJobsView(AssignJobs controller){
+    public AssignJobsView(AssignJobs controller) throws PlanningRepositoryException {
         this.controller = controller;
         this.techs = new ArrayList<>(controller.getTechniciansViewModels());
     }
@@ -24,7 +26,7 @@ public class AssignJobsView extends CliView{
             while(!jobName.isBlank()){
                 displayJobs(jobs);
                 jobName = console.askString("Nom de la tâche à assigner ou Enter pour arrêter ?");
-                assignJob(jobName);
+                tryAssignJob(jobName);
             }
         }else{
             console.println("Aucune tâche à assigner");
@@ -35,7 +37,15 @@ public class AssignJobsView extends CliView{
         console.println(presenter.displayAssignedJobs(jobs));
     }
 
-    private void assignJob(String jobName){
+    private void tryAssignJob(String jobName){
+        try{
+            assignJob(jobName);
+        }catch(PlanningRepositoryException ex){
+            new ErrorMessageWindow(ex.getMessage());
+        }
+    }
+
+    private void assignJob(String jobName) throws PlanningRepositoryException{
         if(!jobName.isBlank()){
             if(!controller.jobExists(jobName))
             {
