@@ -80,7 +80,7 @@ public class CreatePlanningWindow {
             mainController.createPlanning(name);
             stage.hide();
             mainWindow.enable();
-            mainWindow.updateView();
+            mainWindow.setManageTabs();
         }
     }
 

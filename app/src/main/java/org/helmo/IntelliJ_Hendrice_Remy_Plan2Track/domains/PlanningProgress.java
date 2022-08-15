@@ -16,6 +16,14 @@ public class PlanningProgress {
         this.jobs = new HashSet<>(jobs);
     }
 
+    public Collection<JobProgress> getJobs(){
+        return new HashSet<>(jobs);
+    }
+
+    public String getName() {
+        return name;
+    }
+
     public long getDelay(){
         LocalDate latestExpectedEnd = getLatestExpectedEnd();
         if(latestExpectedEnd.isEqual(LocalDate.MIN)){

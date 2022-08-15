@@ -11,6 +11,8 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.controllers.ManagePlanning;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.controllers.SupervisePlanning;
+import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.PlanningProgress;
+import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.datas.PlanningRepositoryException;
 
 import java.io.File;
 
@@ -28,7 +30,6 @@ public class MainWindow {
 
     public void show(){
         Scene scene = new Scene(root, 1200,800);
-
         primaryStage.setTitle("Planner");
         primaryStage.setScene(scene);
         primaryStage.show();
@@ -56,9 +57,6 @@ public class MainWindow {
         messageBox.setAlignment(Pos.CENTER);
     }
 
-
-    private final StackPane content = new StackPane(messageBox);
-
     private final TabPane tabs = new TabPane();
     {
         tabs.getSelectionModel().selectedItemProperty().addListener( (observable, oldValue, newValue) -> {
@@ -68,6 +66,8 @@ public class MainWindow {
             }
         });
     }
+
+    private final StackPane content = new StackPane(messageBox, tabs);
 
     private final VBox root = new VBox(toolBar, content);
 
@@ -92,22 +92,16 @@ public class MainWindow {
         root.setDisable(false);
     }
 
-    public void updateView(){
+    public void setManageTabs(){
+        resetTabs();
         if(mainController.getPlanning() != null){
-            resetTabs();
-            createTabs();
-        }else{
-            content.getChildren().remove(tabs);
+            createManageTabs();
         }
     }
 
-    private void createTabs(){
-        content.getChildren().remove(tabs);
-        content.getChildren().add(tabs);
-
+    private void createManageTabs(){
         EditTab editTab = new EditTab(mainController.getEditPlanningController());
         ScheduleTab scheduleTab = new ScheduleTab(mainController.getPlanScheduleController());
-
         addTab(editTab);
         addTab(scheduleTab);
     }
@@ -122,6 +116,34 @@ public class MainWindow {
 
     private void loadPlanning(){
         Stage fileStage = new Stage();
-        File selectedFile = new FileChooser().showOpenDialog(fileStage);
+        File selectedFile = selectJsonFile(fileStage);
+        try{
+            if(selectedFile != null){
+                PlanningProgress planningProgress = superviseController.loadPlanning(selectedFile);
+                setSuperviseTabs(planningProgress);
+            }
+        }catch(PlanningRepositoryException ex){
+            new ErrorMessageWindow(ex.getMessage());
+        }
+    }
+
+    private void setSuperviseTabs(PlanningProgress planningProgress){
+        resetTabs();
+        if(planningProgress != null){
+            createSuperviseTabs(planningProgress);
+        }
+    }
+
+    private void createSuperviseTabs(PlanningProgress planningProgress){
+        SuperviseTab superviseTab = new SuperviseTab(superviseController, planningProgress);
+        addTab(superviseTab);
+    }
+
+    private File selectJsonFile(Stage fileStage){
+        FileChooser fileChooser = new FileChooser();
+        FileChooser.ExtensionFilter jsonExtensionFilter = new FileChooser.ExtensionFilter("JSON files(*.json)","*.json");
+        fileChooser.getExtensionFilters().add(jsonExtensionFilter);
+        fileChooser.setInitialDirectory(superviseController.getPlanningFilesDirectory());
+        return fileChooser.showOpenDialog(fileStage);
     }
 }

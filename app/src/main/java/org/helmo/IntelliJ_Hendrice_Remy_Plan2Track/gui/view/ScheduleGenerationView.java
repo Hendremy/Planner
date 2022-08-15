@@ -51,17 +51,27 @@ public class ScheduleGenerationView {
 
     private final TableView<ScheduleRowViewModel> scheduleTableView = new TableView<>();
     {
+        setColumnsCellValueFactories();
+        bindColumnWidths();
+        addColumns();
+    }
+
+    private void setColumnsCellValueFactories(){
         taskNameCol.setCellValueFactory(new PropertyValueFactory<>("taskName"));
         taskNameCol.setResizable(false);
         startDateCol.setCellValueFactory(new PropertyValueFactory<>("startDate"));
         startDateCol.setResizable(false);
         techNameCol.setCellValueFactory(new PropertyValueFactory<>("techName"));
         techNameCol.setResizable(false);
+    }
 
+    private void bindColumnWidths(){
         taskNameCol.prefWidthProperty().bind(scheduleTableView.widthProperty().multiply(0.5));
         startDateCol.prefWidthProperty().bind(scheduleTableView.widthProperty().multiply(0.2));
         techNameCol.prefWidthProperty().bind(scheduleTableView.widthProperty().multiply(0.3));
+    }
 
+    private void addColumns(){
         scheduleTableView.getColumns().add(taskNameCol);
         scheduleTableView.getColumns().add(startDateCol);
         scheduleTableView.getColumns().add(techNameCol);

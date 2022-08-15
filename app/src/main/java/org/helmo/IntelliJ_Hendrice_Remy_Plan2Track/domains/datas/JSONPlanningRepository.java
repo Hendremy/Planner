@@ -11,11 +11,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
-import java.text.Normalizer;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
@@ -123,5 +119,10 @@ public class JSONPlanningRepository implements PlanningRepository{
     }
     private String getPathInJsonDir(String name){
         return String.format("%s/%s", jsonDir, name);
+    }
+
+    public File getPlanningFilesDirectory(){
+        Path jsonDirPath = Paths.get(getPathInPlanningDir("")).toAbsolutePath();
+        return new File(jsonDirPath.toUri());
     }
 }
