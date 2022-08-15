@@ -9,6 +9,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Paint;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.controllers.PlanSchedule;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.datas.PlanningRepositoryException;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.viewmodels.ScheduleRowViewModel;
@@ -73,6 +74,7 @@ public class ScheduleGenerationView {
     }
     private final Label saveSuccess = new Label();{
         saveSuccess.setVisible(false);
+        saveSuccess.setTextFill(Paint.valueOf("Green"));
     }
 
     private final VBox content = new VBox(generateBar, errorMessage, scheduleTableView, saveScheduleBtn, saveSuccess);

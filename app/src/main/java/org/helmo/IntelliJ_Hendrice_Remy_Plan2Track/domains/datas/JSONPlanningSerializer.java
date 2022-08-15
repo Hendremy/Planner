@@ -23,6 +23,7 @@ public class JSONPlanningSerializer implements PlanningSerializer {
             JSONObject jJob = serializeJob(plannedJob);
             jJobs.put(jJob);
         }
+        jPlanning.put("Jobs", jJobs);
         return jPlanning.toString();
     }
 

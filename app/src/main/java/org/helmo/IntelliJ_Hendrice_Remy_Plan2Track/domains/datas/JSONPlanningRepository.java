@@ -1,6 +1,5 @@
 package org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.datas;
 
-
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.Schedule;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.Technician;
 import org.json.JSONException;
@@ -13,7 +12,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.text.Normalizer;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -24,7 +24,7 @@ public class JSONPlanningRepository implements PlanningRepository{
     private final String jsonDir;
     private final String usersFile;
     private final String planningDir;
-    private Set<Technician> technicianSet;
+    private List<Technician> technicianList;
 
     public JSONPlanningRepository(UserParser userParser, PlanningSerializer planningParser,
                                   String jsonDir, String usersFile, String planningDir) {
@@ -33,7 +33,6 @@ public class JSONPlanningRepository implements PlanningRepository{
         this.jsonDir = jsonDir;
         this.usersFile = usersFile;
         this.planningDir = planningDir;
-        //TODO: Replacer loadTechnicians dans getTechnicians (pas à la création de l'objet)
     }
 
     @Override
@@ -44,7 +43,7 @@ public class JSONPlanningRepository implements PlanningRepository{
     @Override
     public void writeSchedule(Schedule schedule) throws PlanningRepositoryException{
         String planningsDirLocation = getPathInJsonDir(planningDir);
-        String fileName = normalizeName(schedule.getName());
+        String fileName = formatFileName(schedule.getName());
         try{
             String planningJson = planningSerializer.serialize(schedule);
             String filePathString = getPathInPlanningDir(fileName);
@@ -65,13 +64,19 @@ public class JSONPlanningRepository implements PlanningRepository{
         Files.write(filePath, iterableJsonLines, StandardCharsets.UTF_8, StandardOpenOption.CREATE);
     }
 
-    private String normalizeName(String name){
-        return Normalizer.normalize(name, Normalizer.Form.NFKD);
+    private String formatFileName(String name){
+        String normalizedName = Normalizer.normalize(name, Normalizer.Form.NFKD);
+        return String.format("%s.json",normalizedName);
     }
 
     @Override
     public Iterable<Technician> getTechnicians() throws PlanningRepositoryException {
-        return loadTechnicians();
+        if(technicianList == null){
+            technicianList = new ArrayList<>();
+            Iterable<Technician> technicians = loadTechnicians();
+            technicians.forEach(technicianList::add);
+        }
+        return technicianList;
     }
 
     private Iterable<Technician> loadTechnicians() throws PlanningRepositoryException {
