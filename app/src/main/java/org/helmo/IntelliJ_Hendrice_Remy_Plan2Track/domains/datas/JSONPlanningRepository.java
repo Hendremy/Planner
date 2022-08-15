@@ -12,8 +12,12 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.text.Normalizer;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -36,8 +40,21 @@ public class JSONPlanningRepository implements PlanningRepository{
     }
 
     @Override
-    public PlanningDTO loadSchedule(String filePath) throws PlanningRepositoryException{
-        return null;
+    public PlanningDTO loadSchedule(String filePathString) throws PlanningRepositoryException{
+        if(!filePathString.endsWith(".json")) throw new PlanningRepositoryException("Fichier invalide : fichier .json seulement accepté");
+        try{
+            Path filePath = Paths.get(filePathString).toAbsolutePath();
+            String planningJson = Files.readString(filePath);
+            return planningSerializer.deserialize(planningJson);
+        }catch(IOException ex){
+            throw new PlanningRepositoryException(String.format("Impossible de lire le fichier %s", filePathString));
+        }catch(JSONException ex){
+            throw new PlanningRepositoryException(String.format("Fichier \"%s\" corrompu", filePathString));
+        }catch(IllegalArgumentException ex){
+            throw new PlanningRepositoryException(String.format("Chemin invalide : %s",  filePathString));
+        }catch(OutOfMemoryError ex){
+            throw new PlanningRepositoryException(String.format("Fichier %s trop volumineux", filePathString));
+        }
     }
 
     @Override
@@ -65,8 +82,13 @@ public class JSONPlanningRepository implements PlanningRepository{
     }
 
     private String formatFileName(String name){
-        String normalizedName = Normalizer.normalize(name, Normalizer.Form.NFKD);
-        return String.format("%s.json",normalizedName);
+        name = name.replaceAll("[^a-zA-Z0-9]","");
+        return String.format("%s-%d.json",name, getRandomNum());
+    }
+
+    private int getRandomNum(){
+        Random random = new Random();
+        return (int) (random.nextDouble() * 100000);
     }
 
     @Override
@@ -91,6 +113,8 @@ public class JSONPlanningRepository implements PlanningRepository{
             throw new PlanningRepositoryException(String.format("Fichier %s corrompu", usersFile));
         }catch(IllegalArgumentException ex){
             throw new PlanningRepositoryException(String.format("Chemin invalide - %s",  userFileLocation));
+        }catch(OutOfMemoryError ex){
+            throw new PlanningRepositoryException(String.format("Fichier %s trop volumineux", usersFile));
         }
     }
 

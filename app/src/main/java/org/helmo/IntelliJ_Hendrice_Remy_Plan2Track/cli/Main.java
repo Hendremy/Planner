@@ -1,7 +1,7 @@
 package org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.cli;
 
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.cli.view.MainView;
-import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.controllers.MainController;
+import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.controllers.ManagePlanningController;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.controllers.ManagePlanning;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.PlanningCreator;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.ScheduleGenerator;
@@ -25,7 +25,7 @@ public class Main {
         PlanningCreator creator = new PlanningCreator();
         PertSchedulePlanner schedulePlanner = new PertSchedulePlanner(new PertGraphBuilder(), new PertTimeCalculator(), new PertMarginCalculator());
         ScheduleGenerator scheduleGenerator = new ScheduleGenerator();
-        ManagePlanning mainController = new MainController(repo, creator, schedulePlanner, scheduleGenerator);
+        ManagePlanning mainController = new ManagePlanningController(repo, creator, schedulePlanner, scheduleGenerator);
         MainView mainView = new MainView(mainController);
         mainView.start();
     }

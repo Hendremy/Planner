@@ -23,4 +23,23 @@ public class JobDTO {
         this.actEnd = actEnd;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public LocalDate getExpStart() {
+        return expStart;
+    }
+
+    public LocalDate getExpEnd() {
+        return expEnd;
+    }
+
+    public LocalDate getActStart() {
+        return actStart;
+    }
+
+    public LocalDate getActEnd() {
+        return actEnd;
+    }
 }

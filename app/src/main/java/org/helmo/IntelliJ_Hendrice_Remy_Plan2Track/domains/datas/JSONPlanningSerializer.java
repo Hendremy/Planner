@@ -5,26 +5,57 @@ import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.Schedule;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
+
 public class JSONPlanningSerializer implements PlanningSerializer {
 
 
     @Override
     public PlanningDTO deserialize(String planningJson) {
-        return null;
+        JSONObject jsonPlanning = new JSONObject(planningJson);
+        String name = jsonPlanning.getString("Name");
+        JSONArray jsonJobs = jsonPlanning.getJSONArray("Jobs");
+        Set<JobDTO> jobsDTO = new HashSet<>();
+        for (Object obj : jsonJobs) {
+            JSONObject jsonJob = (JSONObject) obj;
+            jobsDTO.add(deserializeJob(jsonJob));
+        }
+        return new PlanningDTO(name, jobsDTO);
+    }
+
+    private JobDTO deserializeJob(JSONObject jsonJob){
+        String name = jsonJob.getString("Name");
+        String description = jsonJob.getString("Description");
+        String technician = jsonJob.getString("Technician");
+        LocalDate expStart = parseJsonDate(jsonJob.getString("ExpStart"));
+        LocalDate expEnd = parseJsonDate(jsonJob.getString("ExpEnd"));
+        LocalDate actStart = parseJsonDate(jsonJob.getString("ActStart"));
+        LocalDate actEnd = parseJsonDate(jsonJob.getString("ActEnd"));
+        return new JobDTO(name, description, technician, expStart, expEnd, actStart, actEnd);
+    }
+
+    private LocalDate parseJsonDate(String dateString){
+        if(dateString != null && !dateString.isBlank()){
+            return LocalDate.parse(dateString);
+        }else{
+            return null;
+        }
     }
 
     @Override
     public String serialize(Schedule schedule) {
-        JSONObject jPlanning = new JSONObject();
-        jPlanning.put("Name",schedule.getName());
-        JSONArray jJobs = new JSONArray();
+        JSONObject jsonPlanning = new JSONObject();
+        jsonPlanning.put("Name",schedule.getName());
+        JSONArray jsonJobs = new JSONArray();
         Iterable<PlannedJob> plannedJobs = schedule.getSchedule();
         for (PlannedJob plannedJob : plannedJobs) {
             JSONObject jJob = serializeJob(plannedJob);
-            jJobs.put(jJob);
+            jsonJobs.put(jJob);
         }
-        jPlanning.put("Jobs", jJobs);
-        return jPlanning.toString();
+        jsonPlanning.put("Jobs", jsonJobs);
+        return jsonPlanning.toString();
     }
 
     private JSONObject serializeJob(PlannedJob plannedJob){

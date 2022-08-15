@@ -23,9 +23,9 @@ public class JSONUserParser implements UserParser {
     }
 
     private Technician readJsonUser(JSONObject userJson){
-        String code = userJson.get("Code").toString();
-        String firstName = userJson.get("FirstName").toString();
-        String lastName = userJson.get("LastName").toString();
+        String code = userJson.getString("Code");
+        String firstName = userJson.getString("FirstName");
+        String lastName = userJson.getString("LastName");
         return new Technician(firstName, lastName, code);
     }
 }

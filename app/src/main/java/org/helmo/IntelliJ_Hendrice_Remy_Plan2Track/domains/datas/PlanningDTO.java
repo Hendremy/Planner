@@ -12,4 +12,12 @@ public class PlanningDTO {
         this.name = name;
         this.jobs = new HashSet<>(jobs);
     }
+
+    public String getName(){
+        return name;
+    }
+
+    public Collection<JobDTO> getJobs(){
+        return new HashSet<>(jobs);
+    }
 }

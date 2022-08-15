@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 public class PlanningCreator{
 
+    //TODO : Rétablir la fonction de création
     /*public Planning create(String name){
         return new Planning(name);
     }*/

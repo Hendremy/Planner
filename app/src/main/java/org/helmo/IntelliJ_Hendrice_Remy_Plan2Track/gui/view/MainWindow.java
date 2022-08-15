@@ -7,17 +7,23 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.controllers.ManagePlanning;
+import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.controllers.SupervisePlanning;
+
+import java.io.File;
 
 public class MainWindow {
 
     private final ManagePlanning mainController;
+    private final SupervisePlanning superviseController;
     private final Stage primaryStage;
 
-    public MainWindow(Stage primaryStage, ManagePlanning mainController){
-        this.mainController = mainController;
+    public MainWindow(Stage primaryStage, ManagePlanning manageController, SupervisePlanning superviseController){
+        this.mainController = manageController;
         this.primaryStage = primaryStage;
+        this.superviseController = superviseController;
     }
 
     public void show(){
@@ -115,6 +121,7 @@ public class MainWindow {
     }
 
     private void loadPlanning(){
-
+        Stage fileStage = new Stage();
+        File selectedFile = new FileChooser().showOpenDialog(fileStage);
     }
 }

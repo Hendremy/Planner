@@ -5,8 +5,10 @@ package org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.gui;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
-import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.controllers.MainController;
+import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.controllers.ManagePlanningController;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.controllers.ManagePlanning;
+import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.controllers.SupervisePlanning;
+import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.controllers.SupervisePlanningController;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.PlanningCreator;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.ScheduleGenerator;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.algo.PertGraphBuilder;
@@ -27,8 +29,10 @@ public class App extends Application {
         PlanningCreator creator = new PlanningCreator();
         PertSchedulePlanner schedulePlanner = new PertSchedulePlanner(new PertGraphBuilder(), new PertTimeCalculator(), new PertMarginCalculator());
         ScheduleGenerator scheduleGenerator = new ScheduleGenerator();
-        ManagePlanning mainController = new MainController(repo, creator, schedulePlanner, scheduleGenerator);
-        MainWindow mainView = new MainWindow(primaryStage, mainController);
+        ConvertPlanningDTO planningDTOConverter = new PlanningDTOConverter();
+        ManagePlanning manageController = new ManagePlanningController(repo, creator, schedulePlanner, scheduleGenerator);
+        SupervisePlanning superviseController = new SupervisePlanningController(repo, planningDTOConverter);
+        MainWindow mainView = new MainWindow(primaryStage, manageController, superviseController);
         mainView.show();
     }
 
