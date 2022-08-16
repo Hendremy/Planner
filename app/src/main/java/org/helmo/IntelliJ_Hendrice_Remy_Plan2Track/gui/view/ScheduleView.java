@@ -9,9 +9,25 @@ import javafx.scene.layout.HBox;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.controllers.PlanSchedule;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.algo.PertException;
 
+/**
+ * Définit la vue JavaFX de plannification du montage.
+ */
 public class ScheduleView {
 
     private final PlanSchedule controller;
+
+    /**
+     * Initialise la vue et le controleur de plannification du montage.
+     * @param controller le controleur de plannification du montage
+     */
+    public ScheduleView(PlanSchedule controller){
+        this.controller = controller;
+        criticalPathView = new CriticalPathView(controller);
+        scheduleGenerationView = new ScheduleGenerationView(controller);
+        root.setLeft(criticalPathView.getParent());
+        root.setCenter(scheduleGenerationView.getParent());
+        updateNameLabel();
+    }
 
     private final Label nameLabel = new Label();
 
@@ -51,15 +67,10 @@ public class ScheduleView {
         root.setPadding(new Insets(20));
     }
 
-    public ScheduleView(PlanSchedule controller){
-        this.controller = controller;
-        criticalPathView = new CriticalPathView(controller);
-        scheduleGenerationView = new ScheduleGenerationView(controller);
-        root.setLeft(criticalPathView.getParent());
-        root.setCenter(scheduleGenerationView.getParent());
-        updateNameLabel();
-    }
-
+    /**
+     * Retourne la racine de la vue.
+     * @return la racine de la vue
+     */
     public Parent getParent(){
         return root;
     }

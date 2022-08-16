@@ -9,12 +9,21 @@ import javafx.scene.layout.VBox;
 import javafx.util.converter.NumberStringConverter;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.controllers.AddJob;
 
+/**
+ * Définit la vue JavaFX d'ajout d'une tâche.
+ */
 public class AddJobView {
 
     private final ObservableList<String> jobList;
     private final ManageJobsView manageJobsView;
     private final AddJob controller;
 
+    /**
+     * Initialise la vue, la liste des tâches, le controleur d'ajout de tâches et la vue de gestion de montage parent.
+     * @param jobList la liste des tâches
+     * @param controller le controleur d'ajout de tâches
+     * @param manageJobsView la vue de gestion de montage parent
+     */
     public AddJobView(ObservableList<String> jobList, AddJob controller, ManageJobsView manageJobsView){
         this.manageJobsView = manageJobsView;
         this.jobList = jobList;
@@ -93,10 +102,17 @@ public class AddJobView {
         root.setCollapsible(false);
     }
 
+    /**
+     * Retourne la racine de la vue
+     * @return la racine de la vue
+     */
     public Parent getParent(){
         return root;
     }
 
+    /**
+     * Ajoute une tâche antérieure à la liste des tâches antérieures.
+     */
     private void addPriorJobToList(){
         String jobName = priorJobInput.getText().trim();
         if(!jobName.isBlank()){
@@ -106,6 +122,9 @@ public class AddJobView {
         }
     }
 
+    /**
+     * Ajoute la tâche en création au montage.
+     */
     private void addJob(){
         String name = nameInput.getText().trim();
         String description = descriptionInput.getText().trim();
@@ -114,10 +133,14 @@ public class AddJobView {
 
         if(!name.isBlank() && duration > 0){
             controller.addJobToPlanning(name, description, duration, priorJobs);
-            manageJobsView.jobAdded();
+            manageJobsView.onJobAdded();
         }
     }
 
+    /**
+     * Retourne la durée encodée par l'utilisateur.
+     * @return la durée encodée par l'utilisateur
+     */
     private int getDuration(){
         try{
             return Integer.parseInt(durationInput.getText().trim());
@@ -126,6 +149,10 @@ public class AddJobView {
         }
     }
 
+    /**
+     * Retourne les tâches antérieures sélectionnées.
+     * @return les tâches antérieures sélectionnées
+     */
     private Iterable<String> getSelectedJobs(){
         return priorJobsListView.getSelectionModel().getSelectedItems();
     }

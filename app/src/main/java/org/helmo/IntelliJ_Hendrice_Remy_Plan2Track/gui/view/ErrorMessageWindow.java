@@ -9,7 +9,21 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
+/**
+ * Définit une fenêtre JavaFX d'affichage de message d'erreur.
+ */
 public class ErrorMessageWindow {
+
+    /**
+     * Initialise la fenêtre et son message.
+     * @param message le message
+     */
+    public ErrorMessageWindow(String message){
+        if(message != null){
+            this.messageLabel.setText(message);
+            showView();
+        }
+    }
 
     private final Stage stage = new Stage();
     private final Label messageLabel = new Label();
@@ -30,13 +44,9 @@ public class ErrorMessageWindow {
         root.setSpacing(8);
     }
 
-    public ErrorMessageWindow(String message){
-        if(message != null){
-            this.messageLabel.setText(message);
-            showView();
-        }
-    }
-
+    /**
+     * Affichage la fenêtre.
+     */
     private void showView(){
         stage.initStyle(StageStyle.UTILITY);
         stage.setWidth(400);

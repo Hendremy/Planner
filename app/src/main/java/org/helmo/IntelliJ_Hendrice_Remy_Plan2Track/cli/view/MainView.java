@@ -9,7 +9,7 @@ import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.Planning;
 import java.io.IOException;
 
 /**
- * Définit la vue principale de l'application. Gère la création du montage.
+ * Définit la vue CLI principale de l'application. Gère la création du montage.
  */
 public class MainView extends CliView {
     private final int exitNum = 0;

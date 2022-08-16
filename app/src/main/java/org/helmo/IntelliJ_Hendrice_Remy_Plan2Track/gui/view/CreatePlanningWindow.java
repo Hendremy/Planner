@@ -12,10 +12,26 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.controllers.ManagePlanning;
 
+/**
+ * Définit la fenêtre JavaFX de création d'un montage.
+ */
 public class CreatePlanningWindow {
 
     private final ManagePlanning mainController;
     private final MainWindow mainWindow;
+
+    /**
+     * Initialise la fenêtre, le contrôleur de gestion du planning, la fenêtre principale parent et le message éventuel.
+     * @param mainController le controleur de gestion du planning
+     * @param mainWindow la fenêtre principale parent
+     * @param message le message éventuel
+     */
+    public CreatePlanningWindow(ManagePlanning mainController, MainWindow mainWindow, String message){
+        this.mainController = mainController;
+        this.mainWindow = mainWindow;
+        if(message != null) this.messageLabel.setText(message);
+        showView();
+    }
 
     private final Stage stage = new Stage();
     private final Label messageLabel = new Label();
@@ -55,13 +71,10 @@ public class CreatePlanningWindow {
         root.setSpacing(8);
     }
 
-    public CreatePlanningWindow(ManagePlanning mainController, MainWindow mainWindow, String message){
-        this.mainController = mainController;
-        this.mainWindow = mainWindow;
-        if(message != null) this.messageLabel.setText(message);
-        showView();
-    }
 
+    /**
+     * Montre la fenêtre.
+     */
     private void showView(){
         stage.initStyle(StageStyle.UTILITY);
         stage.setOnCloseRequest(e -> cancel());
@@ -74,6 +87,9 @@ public class CreatePlanningWindow {
         stage.show();
     }
 
+    /**
+     * Crée le montage et rétablit la fenêtre principale.
+     */
     private void createPlanning(){
         String name = nameInput.getText().trim();
         if(!name.isBlank()){
@@ -84,6 +100,9 @@ public class CreatePlanningWindow {
         }
     }
 
+    /**
+     * Annule la création de montage et rétablit la fenêtre principale.
+     */
     private void cancel(){
         stage.hide();
         mainWindow.enable();

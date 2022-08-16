@@ -7,7 +7,7 @@ import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.viewmodels.PertTaskViewModel;
 import java.util.List;
 
 /**
- * Définit la vue des tâches critiques du montage.
+ * Définit la vue CLI des tâches critiques du montage.
  */
 public class CriticalJobsView extends CliView{
 

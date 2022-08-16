@@ -6,7 +6,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Définit la vue d'ajout d'une tâche au planning
+ * Définit la vue CLI d'ajout d'une tâche au planning
  */
 public class AddJobView extends CliView{
 

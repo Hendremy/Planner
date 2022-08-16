@@ -14,12 +14,28 @@ import javafx.scene.layout.VBox;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.controllers.SupervisePlanning;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.PlanningProgress;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.viewmodels.JobProgressViewModel;
-import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.viewmodels.ScheduleRowViewModel;
 
+/**
+ * Définit la vue JavaFX de consultation d'avancement de montage.
+ */
 public class SuperviseView {
     private final SupervisePlanning supervisePlanning;
     private final PlanningProgress planningProgress;
     private final ObservableList<JobProgressViewModel> jobPVMs;
+
+    /**
+     * Initialise la vue, l'avancement de montage et le controleur de consultation d'avancement de montage.
+     * @param supervisePlanning le controleur de consultation d'avancement de montage
+     * @param planningProgress l'avancement de montage
+     */
+    public SuperviseView(SupervisePlanning supervisePlanning, PlanningProgress planningProgress){
+        this.supervisePlanning = supervisePlanning;
+        this.planningProgress = planningProgress;
+        jobPVMs = supervisePlanning.getJobProgressViewModels(planningProgress);
+        jobsProgressTableView.setItems(jobPVMs);
+        planningName.setText(planningProgress.getName());
+        delay.setText(String.format("%d jour(s) de retard", planningProgress.getDelay()));
+    }
 
     private final Label planningName = new Label();
     {
@@ -27,14 +43,14 @@ public class SuperviseView {
         planningName.setStyle("-fx-font-size: 1.5em");
     }
     private final Label delay = new Label();
-    private HBox title = new HBox(planningName, delay);
+    private final HBox title = new HBox(planningName, delay);
     {
         title.setPadding(new Insets(10));
         title.setSpacing(10);
         title.setAlignment(Pos.CENTER);
     }
 
-    private Label jobsTableLabel = new Label("Avancement des tâches");
+    private final Label jobsTableLabel = new Label("Avancement des tâches");
 
     private final TableView<JobProgressViewModel> jobsProgressTableView = new TableView<>();
 
@@ -85,17 +101,11 @@ public class SuperviseView {
         root.setCenter(jobsBox);
     }
 
+    /**
+     * Retourne la racine de la vue.
+     * @return la racine de la vue
+     */
     public Parent getParent(){
         return root;
     }
-
-    public SuperviseView(SupervisePlanning supervisePlanning, PlanningProgress planningProgress){
-        this.supervisePlanning = supervisePlanning;
-        this.planningProgress = planningProgress;
-        jobPVMs = supervisePlanning.getJobProgressViewModels(planningProgress);
-        jobsProgressTableView.setItems(jobPVMs);
-        planningName.setText(planningProgress.getName());
-        delay.setText(String.format("%d jour(s) de retard", planningProgress.getDelay()));
-    }
-
 }

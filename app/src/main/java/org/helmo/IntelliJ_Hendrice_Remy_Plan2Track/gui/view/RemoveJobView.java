@@ -82,7 +82,7 @@ public class RemoveJobView {
     private void removeJob(){
         try{
             controller.removeJob(jobName);
-            parentView.jobRemoved(jobName);
+            parentView.onJobRemoved(jobName);
         }catch(JobNotFoundException ex){
             new ErrorMessageWindow(String.format("La tâche à supprimer \"%s\" n'a pas été trouvée", jobName));
         }

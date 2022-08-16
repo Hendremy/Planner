@@ -18,8 +18,16 @@ import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.algo.PertTimeCalculat
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.datas.*;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.gui.view.MainWindow;
 
+/**
+ * Définit la classe du lancement de l'application JavaFx
+ */
 public class App extends Application {
 
+    /**
+     * Initialise les objets services, les controleurs de gestion & de consulation de montage et la fenêtre principale.
+     * @param primaryStage la scène principale
+     * @throws Exception
+     */
     @Override
     public void start(Stage primaryStage) throws Exception {
         UserParser userParser = new JSONUserParser();

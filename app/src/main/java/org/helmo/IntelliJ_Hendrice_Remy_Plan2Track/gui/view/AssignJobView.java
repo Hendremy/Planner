@@ -15,11 +15,19 @@ import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.viewmodels.TechnicianViewMode
 
 import java.util.Collection;
 
+/**
+ * Définit la vue JavaFX d'assignation d'une tâche.
+ */
 public class AssignJobView {
 
     private final AssignJobs controller;
     private final JobViewModel jobViewModel;
 
+    /**
+     * Initialise la vue, le modèle de vue de la tâche et le controleur d'assignation des tâches.
+     * @param jobVM le modèle de vue de la tâche
+     * @param controller le controleur d'assignation des tâches
+     */
     public AssignJobView(JobViewModel jobVM, AssignJobs controller){
         this.controller = controller;
         this.jobViewModel = jobVM;
@@ -28,6 +36,9 @@ public class AssignJobView {
         trySetTechListView();
     }
 
+    /**
+     * Définit le textes des éléments de la vue.
+     */
     private void setTexts(){
         nameText.setText(jobViewModel.getName());
         descriptionText.setText(jobViewModel.getDescription());
@@ -35,12 +46,18 @@ public class AssignJobView {
         root.setText(String.format("%s - Assigner la tâche", jobViewModel.getName()));
     }
 
+    /**
+     * Définit les modèles de vues des tâches antérieures.
+     */
     private void setPriorListView(){
         Collection<JobViewModel> priorJobVMs = jobViewModel.getPriorJobs();
         ObservableList<JobViewModel> priorJobList = FXCollections.observableArrayList(priorJobVMs);
         priorJobListView.setItems(priorJobList);
     }
 
+    /**
+     * Définit la liste des chefs d'équipe assignables.
+     */
     private void trySetTechListView(){
         try{
             setTechListView();
@@ -144,10 +161,17 @@ public class AssignJobView {
         root.setCollapsible(false);
     }
 
+    /**
+     * Retourne la racine de la vue.
+     * @return la racine de la vue
+     */
     public Parent getParent(){
         return root;
     }
 
+    /**
+     * Assigne la tâche à un chef d'équipe
+     */
     private void assignJob(){
         TechnicianViewModel selected = techListView.getSelectionModel().getSelectedItem();
         if(selected != null){
@@ -162,12 +186,18 @@ public class AssignJobView {
         }
     }
 
+    /**
+     * Affiche le message de succès d'assignation.
+     */
     private void showMessageSuccess(){
         resultMsg.setText("Modification enregistrée !");
         resultMsg.setStyle("-fx-text-fill: green");
         resultMsg.setVisible(true);
     }
 
+    /**
+     * Affiche le message d'échec d'assignation.
+     */
     private void showMessageError(){
         resultMsg.setText("Sélectionnez un chef d'équipe pour l'assigner à la tâche");
         resultMsg.setStyle("-fx-text-fill: red");

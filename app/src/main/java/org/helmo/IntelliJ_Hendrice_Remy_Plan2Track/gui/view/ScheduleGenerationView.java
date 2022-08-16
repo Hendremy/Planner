@@ -18,10 +18,17 @@ import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.util.List;
 
+/**
+ * Définit la vue JavaFX de la génération de programme d'un montage
+ */
 public class ScheduleGenerationView {
 
     private final PlanSchedule controller;
 
+    /**
+     * Initialise la vue et le controleur de plannification de montage.
+     * @param controller le controleur de plannification de montage
+     */
     public ScheduleGenerationView(PlanSchedule controller){
         this.controller = controller;
     }
@@ -100,10 +107,17 @@ public class ScheduleGenerationView {
         root.setCollapsible(false);
     }
 
+    /**
+     * Retourne la racine de la vue.
+     * @return la racine de la vue
+     */
     public Parent getParent(){
         return root;
     }
 
+    /**
+     * Génère le programme du montage si possible ou affiche un message d'erreur.
+     */
     private void generateSchedule(){
         if(controller.planningIsEmpty()){
             showError("Aucune tâche à planifier");
@@ -114,6 +128,9 @@ public class ScheduleGenerationView {
         }
     }
 
+    /**
+     * Génère le programme du montage.
+     */
     private void getSchedule(){
         try{
             resetSuccess();
@@ -125,6 +142,9 @@ public class ScheduleGenerationView {
         }
     }
 
+    /**
+     * Met à jour le tableau du programme de montage.
+     */
     private void updateTableView(){
         LocalDate startDate = getDatePickerValue();
         List<ScheduleRowViewModel> scheduleRows = controller.generateSchedule(startDate);
@@ -133,20 +153,34 @@ public class ScheduleGenerationView {
         scheduleTableView.getSortOrder().add(startDateCol);
     }
 
+    /**
+     * Montre le message d'erreur.
+     * @param message message d'erreur
+     */
     private void showError(String message){
         errorMessage.setText(message);
         errorMessage.setVisible(true);
     }
 
+    /**
+     * Cache le message d'erreur.
+     */
     private void resetError(){
         errorMessage.setVisible(false);
     }
 
+    /**
+     * Retourne la date du choisisseur de date.
+     * @return la date du choisisseur de date
+     */
     private LocalDate getDatePickerValue(){
         String dateString = startDatePicker.getEditor().getText();
         return startDatePicker.getConverter().fromString(dateString);
     }
 
+    /**
+     * Demande au controleur de sauvegarder le programme et affiche la fenêtre d'erreur si il y en a une.
+     */
     private void saveSchedule(){
         try{
             controller.saveSchedule();
@@ -156,11 +190,17 @@ public class ScheduleGenerationView {
         }
     }
 
+    /**
+     * Cache le message de succès de sauvegarde.
+     */
     private void resetSuccess(){
         saveSuccess.setText("");
         saveSuccess.setVisible(false);
     }
 
+    /**
+     * Montre le message de succès de sauvegarde.
+     */
     private void showSaveSuccess(){
         saveSuccess.setText("Planning enregistré !");
         saveSuccess.setVisible(true);

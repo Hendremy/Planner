@@ -8,11 +8,18 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.controllers.EditPlanning;
 
+/**
+ * Définit la vue JavaFX de modification du montage.
+ */
 public class EditView {
 
     private final EditPlanning controller;
     private final EditJobsView editJobsView;
 
+    /**
+     * Initialise la vue et son controleur de modification de montage.
+     * @param controller le controleur de modification de montage
+     */
     public EditView(EditPlanning controller){
         this.controller = controller;
         String planName = controller.getPlanning().getName();
@@ -44,6 +51,10 @@ public class EditView {
         root.setPadding(new Insets(20));
     }
 
+    /**
+     * Retourne la racine de la vue.
+     * @return la racine de la vue
+     */
     public Parent getParent(){
         return root;
     }

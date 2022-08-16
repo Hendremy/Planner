@@ -4,7 +4,7 @@ import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.controllers.PlanSchedule;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.algo.PertException;
 
 /**
- * Définit la vue de la date de fin au plus tôt du montage
+ * Définit la vue CLI de la date de fin au plus tôt du montage
  */
 public class EarliestEndTimeView extends CliView {
 

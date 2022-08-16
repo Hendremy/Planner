@@ -6,7 +6,7 @@ import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.datas.PlanningReposit
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.gui.view.ErrorMessageWindow;
 
 /**
- * Définit la vue de modification du montage et de plannification du montage.
+ * Définit la vue CLI de modification du montage et de plannification du montage.
  */
 public class EditView extends CliView{
 

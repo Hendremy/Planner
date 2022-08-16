@@ -14,15 +14,25 @@ import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.controllers.PlanSchedule;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.algo.PertException;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.viewmodels.PertTaskViewModel;
 
+/**
+ * Définit la vue JavaFX du chemin critique d'un montage.
+ */
 public class CriticalPathView {
 
     private final PlanSchedule controller;
 
+    /**
+     * Initialise la vue, le controleur de plannification de montage.
+     * @param controller le controleur de plannification de montage.
+     */
     public CriticalPathView(PlanSchedule controller) {
         this.controller = controller;
         setCriticalPathItems();
     }
 
+    /**
+     * Définit les éléments de la liste du chemin critique.
+     */
     private void setCriticalPathItems(){
         try{
             ObservableList<PertTaskViewModel> taskObservableList = FXCollections.observableArrayList(controller.getCriticalPath());
@@ -63,6 +73,10 @@ public class CriticalPathView {
         root.setCollapsible(false);
     }
 
+    /**
+     * Retourne la racine de la vue.
+     * @return la racine de la vue
+     */
     public Parent getParent(){
         return root;
     }

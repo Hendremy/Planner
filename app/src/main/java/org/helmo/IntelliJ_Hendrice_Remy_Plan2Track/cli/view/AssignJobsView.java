@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Définit la vue d'assignation des tâches aux chefs d'équipes.
+ * Définit la vue CLI d'assignation des tâches aux chefs d'équipes.
  */
 public class AssignJobsView extends CliView{
 

@@ -4,7 +4,7 @@ import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.controllers.RemoveJob;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.JobNotFoundException;
 
 /**
- * Définit la vue de suppression d'une tâche du montage.
+ * Définit la vue CLI de suppression d'une tâche du montage.
  */
 public class RemoveJobView extends CliView{
 
