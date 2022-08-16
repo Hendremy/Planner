@@ -16,18 +16,6 @@ public class EditView {
     private final EditPlanning controller;
     private final EditJobsView editJobsView;
 
-    /**
-     * Initialise la vue et son controleur de modification de montage.
-     * @param controller le controleur de modification de montage
-     */
-    public EditView(EditPlanning controller){
-        this.controller = controller;
-        String planName = controller.getPlanning().getName();
-        editJobsView = new EditJobsView(controller);
-        nameInput.setText(planName);
-        root.setCenter(editJobsView.getParent());
-    }
-
     private final Label nameLabel = new Label("Nom du planning");
     private final TextField nameInput = new TextField();
     private final Button changeNameBtn = new Button("Changer le nom");
@@ -50,6 +38,19 @@ public class EditView {
         root.setTop(nameArea);
         root.setPadding(new Insets(20));
     }
+
+    /**
+     * Initialise la vue et son controleur de modification de montage.
+     * @param controller le controleur de modification de montage
+     */
+    public EditView(EditPlanning controller){
+        this.controller = controller;
+        String planName = controller.getPlanning().getName();
+        editJobsView = new EditJobsView(controller);
+        nameInput.setText(planName);
+        root.setCenter(editJobsView.getParent());
+    }
+
 
     /**
      * Retourne la racine de la vue.

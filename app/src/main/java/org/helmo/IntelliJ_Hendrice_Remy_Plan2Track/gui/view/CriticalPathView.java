@@ -21,32 +21,6 @@ public class CriticalPathView {
 
     private final PlanSchedule controller;
 
-    /**
-     * Initialise la vue, le controleur de plannification de montage.
-     * @param controller le controleur de plannification de montage.
-     */
-    public CriticalPathView(PlanSchedule controller) {
-        this.controller = controller;
-        setCriticalPathItems();
-    }
-
-    /**
-     * Définit les éléments de la liste du chemin critique.
-     */
-    private void setCriticalPathItems(){
-        try{
-            ObservableList<PertTaskViewModel> taskObservableList = FXCollections.observableArrayList(controller.getCriticalPath());
-            if(!taskObservableList.isEmpty()){
-                critTasksListView.setItems(taskObservableList);
-                content.getChildren().add(critTasksListView);
-            }else{
-                content.getChildren().add(emptyPathMessage);
-            }
-        }catch(PertException ex){
-            content.getChildren().add(errorMessage);
-        }
-    }
-
     private final Label errorMessage = new Label("Une erreur est survenue lors du calcul du chemin critique");
     private final Label emptyPathMessage = new Label("Aucune tâche critique");
     {
@@ -71,6 +45,32 @@ public class CriticalPathView {
     private final TitledPane root = new TitledPane("Tâches critique", content);
     {
         root.setCollapsible(false);
+    }
+
+    /**
+     * Initialise la vue, le controleur de plannification de montage.
+     * @param controller le controleur de plannification de montage.
+     */
+    public CriticalPathView(PlanSchedule controller) {
+        this.controller = controller;
+        setCriticalPathItems();
+    }
+
+    /**
+     * Définit les éléments de la liste du chemin critique.
+     */
+    private void setCriticalPathItems(){
+        try{
+            ObservableList<PertTaskViewModel> taskObservableList = FXCollections.observableArrayList(controller.getCriticalPath());
+            if(!taskObservableList.isEmpty()){
+                critTasksListView.setItems(taskObservableList);
+                content.getChildren().add(critTasksListView);
+            }else{
+                content.getChildren().add(emptyPathMessage);
+            }
+        }catch(PertException ex){
+            content.getChildren().add(errorMessage);
+        }
     }
 
     /**

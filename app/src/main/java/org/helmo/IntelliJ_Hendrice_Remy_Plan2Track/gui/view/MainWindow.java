@@ -26,18 +26,6 @@ public class MainWindow {
     private final Stage primaryStage;
 
     /**
-     * Initialise la scène, le controleur de gestion de montage et le controleur de consultation de montage.
-     * @param primaryStage la scène
-     * @param manageController le controleur de gestion de montage
-     * @param superviseController le controleur de consultation de montage
-     */
-    public MainWindow(Stage primaryStage, ManagePlanning manageController, SupervisePlanning superviseController){
-        this.mainController = manageController;
-        this.primaryStage = primaryStage;
-        this.superviseController = superviseController;
-    }
-
-    /**
      * Affiche la fenêtre
      */
     public void show(){
@@ -82,6 +70,18 @@ public class MainWindow {
     private final StackPane content = new StackPane(messageBox, tabs);
 
     private final VBox root = new VBox(toolBar, content);
+
+    /**
+     * Initialise la scène, le controleur de gestion de montage et le controleur de consultation de montage.
+     * @param primaryStage la scène
+     * @param manageController le controleur de gestion de montage
+     * @param superviseController le controleur de consultation de montage
+     */
+    public MainWindow(Stage primaryStage, ManagePlanning manageController, SupervisePlanning superviseController){
+        this.mainController = manageController;
+        this.primaryStage = primaryStage;
+        this.superviseController = superviseController;
+    }
 
     /**
      * Retourne la racine de la vue

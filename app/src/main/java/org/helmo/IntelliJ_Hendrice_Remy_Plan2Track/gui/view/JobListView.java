@@ -19,17 +19,6 @@ public class JobListView {
     private final ObservableList<JobViewModel> jobList;
     private final ManageJobsView manageJobsView;
 
-    /**
-     * Initialise la vue, les modèles de vues des tâches du montage et la vue parent de gestion des tâches.
-     * @param jobList les modèles de vues des tâches
-     * @param manageJobsView les modèles des vues des tâches
-     */
-    public JobListView(ObservableList<JobViewModel> jobList, ManageJobsView manageJobsView){
-        this.manageJobsView = manageJobsView;
-        this.jobList = jobList;
-        jobListView.setItems(jobList);
-    }
-
     private final Button addButon = new Button("Ajouter +");
     {
         addButon.setOnAction(e -> addJob());
@@ -66,6 +55,18 @@ public class JobListView {
         root.setAlignment(Pos.CENTER_LEFT);
         root.setCollapsible(false);
     }
+
+    /**
+     * Initialise la vue, les modèles de vues des tâches du montage et la vue parent de gestion des tâches.
+     * @param jobList les modèles de vues des tâches
+     * @param manageJobsView les modèles des vues des tâches
+     */
+    public JobListView(ObservableList<JobViewModel> jobList, ManageJobsView manageJobsView){
+        this.manageJobsView = manageJobsView;
+        this.jobList = jobList;
+        jobListView.setItems(jobList);
+    }
+
 
     /**
      * Retourne la racine de la vue.

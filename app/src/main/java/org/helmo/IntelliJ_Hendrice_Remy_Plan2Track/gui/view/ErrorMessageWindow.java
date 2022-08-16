@@ -14,17 +14,6 @@ import javafx.stage.StageStyle;
  */
 public class ErrorMessageWindow {
 
-    /**
-     * Initialise la fenêtre et son message.
-     * @param message le message
-     */
-    public ErrorMessageWindow(String message){
-        if(message != null){
-            this.messageLabel.setText(message);
-            showView();
-        }
-    }
-
     private final Stage stage = new Stage();
     private final Label messageLabel = new Label();
     {
@@ -42,6 +31,17 @@ public class ErrorMessageWindow {
         root.setAlignment(Pos.CENTER);
         root.setPadding(new Insets(20));
         root.setSpacing(8);
+    }
+
+    /**
+     * Initialise la fenêtre et son message.
+     * @param message le message
+     */
+    public ErrorMessageWindow(String message){
+        if(message != null){
+            this.messageLabel.setText(message);
+            showView();
+        }
     }
 
     /**

@@ -18,27 +18,6 @@ public class RemoveJobView {
     private final String jobName;
     private final ManageJobsView parentView;
 
-    public RemoveJobView(RemoveJob controller, String jobName, ManageJobsView parentView){
-        this.controller = controller;
-        this.jobName = jobName;
-        this.parentView = parentView;
-        stage.setTitle(String.format("%s - Supprimer la tâche", jobName));
-        setMessage();
-        showView();
-    }
-
-    private void setMessage(){
-        try{
-            int occ = controller.findJobOccurences(jobName);
-            String message = String.format("La tâche \"%s\" est requise pour %d autre(s) tâche(s)\nConfirmez-vous sa suppression ?", jobName, occ);
-            messageLabel.setText(message);
-        }catch(JobNotFoundException ex){
-            new ErrorMessageWindow(String.format("La tâche à supprimer \"%s\" n'a pas été trouvée", jobName));
-        }
-        stage.close();
-
-    }
-
     private final Stage stage = new Stage();
     private final Label messageLabel = new Label();
     {
@@ -68,6 +47,27 @@ public class RemoveJobView {
         root.setPadding(new Insets(20));
         root.setSpacing(8);
     }
+
+    public RemoveJobView(RemoveJob controller, String jobName, ManageJobsView parentView){
+        this.controller = controller;
+        this.jobName = jobName;
+        this.parentView = parentView;
+        stage.setTitle(String.format("%s - Supprimer la tâche", jobName));
+        setMessage();
+        showView();
+    }
+
+    private void setMessage(){
+        try{
+            int occ = controller.findJobOccurences(jobName);
+            String message = String.format("La tâche \"%s\" est requise pour %d autre(s) tâche(s)\nConfirmez-vous sa suppression ?", jobName, occ);
+            messageLabel.setText(message);
+        }catch(JobNotFoundException ex){
+            new ErrorMessageWindow(String.format("La tâche à supprimer \"%s\" n'a pas été trouvée", jobName));
+        }
+        stage.close();
+    }
+
 
     private void showView(){
         stage.initStyle(StageStyle.UTILITY);

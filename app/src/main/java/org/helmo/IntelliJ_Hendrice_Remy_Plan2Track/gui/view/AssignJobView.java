@@ -24,19 +24,6 @@ public class AssignJobView {
     private final JobViewModel jobViewModel;
 
     /**
-     * Initialise la vue, le modèle de vue de la tâche et le controleur d'assignation des tâches.
-     * @param jobVM le modèle de vue de la tâche
-     * @param controller le controleur d'assignation des tâches
-     */
-    public AssignJobView(JobViewModel jobVM, AssignJobs controller){
-        this.controller = controller;
-        this.jobViewModel = jobVM;
-        setTexts();
-        setPriorListView();
-        trySetTechListView();
-    }
-
-    /**
      * Définit le textes des éléments de la vue.
      */
     private void setTexts(){
@@ -159,6 +146,19 @@ public class AssignJobView {
     {
         root.setMinHeight(500);
         root.setCollapsible(false);
+    }
+
+    /**
+     * Initialise la vue, le modèle de vue de la tâche et le controleur d'assignation des tâches.
+     * @param jobVM le modèle de vue de la tâche
+     * @param controller le controleur d'assignation des tâches
+     */
+    public AssignJobView(JobViewModel jobVM, AssignJobs controller){
+        this.controller = controller;
+        this.jobViewModel = jobVM;
+        setTexts();
+        setPriorListView();
+        trySetTechListView();
     }
 
     /**

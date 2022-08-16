@@ -16,19 +16,6 @@ public class ScheduleView {
 
     private final PlanSchedule controller;
 
-    /**
-     * Initialise la vue et le controleur de plannification du montage.
-     * @param controller le controleur de plannification du montage
-     */
-    public ScheduleView(PlanSchedule controller){
-        this.controller = controller;
-        criticalPathView = new CriticalPathView(controller);
-        scheduleGenerationView = new ScheduleGenerationView(controller);
-        root.setLeft(criticalPathView.getParent());
-        root.setCenter(scheduleGenerationView.getParent());
-        updateNameLabel();
-    }
-
     private final Label nameLabel = new Label();
 
     private final HBox nameArea = new HBox();
@@ -41,6 +28,25 @@ public class ScheduleView {
 
     private final CriticalPathView criticalPathView;
     private final ScheduleGenerationView scheduleGenerationView;
+
+    public BorderPane root = new BorderPane();
+    {
+        root.setTop(nameArea);
+        root.setPadding(new Insets(20));
+    }
+
+    /**
+     * Initialise la vue et le controleur de plannification du montage.
+     * @param controller le controleur de plannification du montage
+     */
+    public ScheduleView(PlanSchedule controller){
+        this.controller = controller;
+        criticalPathView = new CriticalPathView(controller);
+        scheduleGenerationView = new ScheduleGenerationView(controller);
+        root.setLeft(criticalPathView.getParent());
+        root.setCenter(scheduleGenerationView.getParent());
+        updateNameLabel();
+    }
 
     private void updateNameLabel(){
         String name = controller.getPlanningName();
@@ -59,12 +65,6 @@ public class ScheduleView {
             durationText = String.format("Fin au plus tôt : %d jours après la date de début", duration);
         }
         nameLabel.setText(String.format("%s - %s", name, durationText));
-    }
-
-    public BorderPane root = new BorderPane();
-    {
-        root.setTop(nameArea);
-        root.setPadding(new Insets(20));
     }
 
     /**

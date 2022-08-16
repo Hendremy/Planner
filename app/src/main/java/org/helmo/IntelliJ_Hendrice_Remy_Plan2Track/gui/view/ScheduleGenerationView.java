@@ -25,14 +25,6 @@ public class ScheduleGenerationView {
 
     private final PlanSchedule controller;
 
-    /**
-     * Initialise la vue et le controleur de plannification de montage.
-     * @param controller le controleur de plannification de montage
-     */
-    public ScheduleGenerationView(PlanSchedule controller){
-        this.controller = controller;
-    }
-
     private final Label startDateLabel = new Label("Date de début du montage :");
     private final DatePicker startDatePicker = new DatePicker(LocalDate.now());
     private final Button generateBtn = new Button("Générer le planning");
@@ -63,27 +55,6 @@ public class ScheduleGenerationView {
         addColumns();
     }
 
-    private void setColumnsCellValueFactories(){
-        taskNameCol.setCellValueFactory(new PropertyValueFactory<>("taskName"));
-        taskNameCol.setResizable(false);
-        startDateCol.setCellValueFactory(new PropertyValueFactory<>("startDate"));
-        startDateCol.setResizable(false);
-        techNameCol.setCellValueFactory(new PropertyValueFactory<>("techName"));
-        techNameCol.setResizable(false);
-    }
-
-    private void bindColumnWidths(){
-        taskNameCol.prefWidthProperty().bind(scheduleTableView.widthProperty().multiply(0.5));
-        startDateCol.prefWidthProperty().bind(scheduleTableView.widthProperty().multiply(0.2));
-        techNameCol.prefWidthProperty().bind(scheduleTableView.widthProperty().multiply(0.3));
-    }
-
-    private void addColumns(){
-        scheduleTableView.getColumns().add(taskNameCol);
-        scheduleTableView.getColumns().add(startDateCol);
-        scheduleTableView.getColumns().add(techNameCol);
-    }
-
     private final Button saveScheduleBtn = new Button("Sauvegarder le planning");
     {
         saveScheduleBtn.setDisable(true);
@@ -106,6 +77,15 @@ public class ScheduleGenerationView {
     {
         root.setCollapsible(false);
     }
+
+    /**
+     * Initialise la vue et le controleur de plannification de montage.
+     * @param controller le controleur de plannification de montage
+     */
+    public ScheduleGenerationView(PlanSchedule controller){
+        this.controller = controller;
+    }
+
 
     /**
      * Retourne la racine de la vue.
@@ -204,5 +184,26 @@ public class ScheduleGenerationView {
     private void showSaveSuccess(){
         saveSuccess.setText("Planning enregistré !");
         saveSuccess.setVisible(true);
+    }
+
+    private void setColumnsCellValueFactories(){
+        taskNameCol.setCellValueFactory(new PropertyValueFactory<>("taskName"));
+        taskNameCol.setResizable(false);
+        startDateCol.setCellValueFactory(new PropertyValueFactory<>("startDate"));
+        startDateCol.setResizable(false);
+        techNameCol.setCellValueFactory(new PropertyValueFactory<>("techName"));
+        techNameCol.setResizable(false);
+    }
+
+    private void bindColumnWidths(){
+        taskNameCol.prefWidthProperty().bind(scheduleTableView.widthProperty().multiply(0.5));
+        startDateCol.prefWidthProperty().bind(scheduleTableView.widthProperty().multiply(0.2));
+        techNameCol.prefWidthProperty().bind(scheduleTableView.widthProperty().multiply(0.3));
+    }
+
+    private void addColumns(){
+        scheduleTableView.getColumns().add(taskNameCol);
+        scheduleTableView.getColumns().add(startDateCol);
+        scheduleTableView.getColumns().add(techNameCol);
     }
 }

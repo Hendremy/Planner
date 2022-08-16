@@ -23,20 +23,6 @@ public class SuperviseView {
     private final PlanningProgress planningProgress;
     private final ObservableList<JobProgressViewModel> jobPVMs;
 
-    /**
-     * Initialise la vue, l'avancement de montage et le controleur de consultation d'avancement de montage.
-     * @param supervisePlanning le controleur de consultation d'avancement de montage
-     * @param planningProgress l'avancement de montage
-     */
-    public SuperviseView(SupervisePlanning supervisePlanning, PlanningProgress planningProgress){
-        this.supervisePlanning = supervisePlanning;
-        this.planningProgress = planningProgress;
-        jobPVMs = supervisePlanning.getJobProgressViewModels(planningProgress);
-        jobsProgressTableView.setItems(jobPVMs);
-        planningName.setText(planningProgress.getName());
-        delay.setText(String.format("%d jour(s) de retard", planningProgress.getDelay()));
-    }
-
     private final Label planningName = new Label();
     {
         planningName.setStyle("-fx-font-weight: bold");
@@ -99,6 +85,20 @@ public class SuperviseView {
     {
         root.setTop(title);
         root.setCenter(jobsBox);
+    }
+
+    /**
+     * Initialise la vue, l'avancement de montage et le controleur de consultation d'avancement de montage.
+     * @param supervisePlanning le controleur de consultation d'avancement de montage
+     * @param planningProgress l'avancement de montage
+     */
+    public SuperviseView(SupervisePlanning supervisePlanning, PlanningProgress planningProgress){
+        this.supervisePlanning = supervisePlanning;
+        this.planningProgress = planningProgress;
+        jobPVMs = supervisePlanning.getJobProgressViewModels(planningProgress);
+        jobsProgressTableView.setItems(jobPVMs);
+        planningName.setText(planningProgress.getName());
+        delay.setText(String.format("%d jour(s) de retard", planningProgress.getDelay()));
     }
 
     /**

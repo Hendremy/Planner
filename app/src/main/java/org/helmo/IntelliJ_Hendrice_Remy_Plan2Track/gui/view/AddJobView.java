@@ -18,19 +18,6 @@ public class AddJobView {
     private final ManageJobsView manageJobsView;
     private final AddJob controller;
 
-    /**
-     * Initialise la vue, la liste des tâches, le controleur d'ajout de tâches et la vue de gestion de montage parent.
-     * @param jobList la liste des tâches
-     * @param controller le controleur d'ajout de tâches
-     * @param manageJobsView la vue de gestion de montage parent
-     */
-    public AddJobView(ObservableList<String> jobList, AddJob controller, ManageJobsView manageJobsView){
-        this.manageJobsView = manageJobsView;
-        this.jobList = jobList;
-        this.controller = controller;
-        priorJobsListView.setItems(this.jobList);
-    }
-
     private final Label jobInfoLabel = new Label("Détails de la tâche");
     {
         jobInfoLabel.setUnderline(true);
@@ -100,6 +87,19 @@ public class AddJobView {
     {
         root.minHeight(500);
         root.setCollapsible(false);
+    }
+
+    /**
+     * Initialise la vue, la liste des tâches, le controleur d'ajout de tâches et la vue de gestion de montage parent.
+     * @param jobList la liste des tâches
+     * @param controller le controleur d'ajout de tâches
+     * @param manageJobsView la vue de gestion de montage parent
+     */
+    public AddJobView(ObservableList<String> jobList, AddJob controller, ManageJobsView manageJobsView){
+        this.manageJobsView = manageJobsView;
+        this.jobList = jobList;
+        this.controller = controller;
+        priorJobsListView.setItems(this.jobList);
     }
 
     /**

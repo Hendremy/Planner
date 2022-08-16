@@ -20,19 +20,6 @@ public class CreatePlanningWindow {
     private final ManagePlanning mainController;
     private final MainWindow mainWindow;
 
-    /**
-     * Initialise la fenêtre, le contrôleur de gestion du planning, la fenêtre principale parent et le message éventuel.
-     * @param mainController le controleur de gestion du planning
-     * @param mainWindow la fenêtre principale parent
-     * @param message le message éventuel
-     */
-    public CreatePlanningWindow(ManagePlanning mainController, MainWindow mainWindow, String message){
-        this.mainController = mainController;
-        this.mainWindow = mainWindow;
-        if(message != null) this.messageLabel.setText(message);
-        showView();
-    }
-
     private final Stage stage = new Stage();
     private final Label messageLabel = new Label();
     {
@@ -69,6 +56,19 @@ public class CreatePlanningWindow {
         root.setAlignment(Pos.CENTER);
         root.setPadding(new Insets(20));
         root.setSpacing(8);
+    }
+
+    /**
+     * Initialise la fenêtre, le contrôleur de gestion du planning, la fenêtre principale parent et le message éventuel.
+     * @param mainController le controleur de gestion du planning
+     * @param mainWindow la fenêtre principale parent
+     * @param message le message éventuel
+     */
+    public CreatePlanningWindow(ManagePlanning mainController, MainWindow mainWindow, String message){
+        this.mainController = mainController;
+        this.mainWindow = mainWindow;
+        if(message != null) this.messageLabel.setText(message);
+        showView();
     }
 
 

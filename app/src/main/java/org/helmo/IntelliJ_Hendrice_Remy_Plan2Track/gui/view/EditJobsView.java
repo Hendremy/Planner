@@ -18,6 +18,11 @@ public class EditJobsView implements ManageJobsView {
     private final ObservableList<JobViewModel> jobsObservable;
     private ObservableList<String> priorJobsObservable;
 
+    private final BorderPane root = new BorderPane();
+    {
+        root.setPadding(new Insets(10));
+    }
+
     /**
      * Initialise la vue, le controleur de modification de montage.
      * @param controller le controleur de modification de montage
@@ -29,11 +34,6 @@ public class EditJobsView implements ManageJobsView {
         this.jobListView = new JobListView(jobsObservable, this);
         root.setLeft(jobListView.getParent());
         showAddJob();
-    }
-
-    private final BorderPane root = new BorderPane();
-    {
-        root.setPadding(new Insets(10));
     }
 
     /**
