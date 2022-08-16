@@ -14,11 +14,12 @@ public class PertGraph {
      *      - Je veux pouvoir accéder aux étapes d'un graphe sur base de leur numéro
      *          => List pourrait convenir mais l'élaguage des arêtes fictives pourrait supprimer des étapes
      *              et donc les numéros des étapes seraient chamboulés
-     *
+     *          => Set ne convient pas
      *
      * => Implémentation : HashMap
      *      - Je n'ai pas besoin d'avoir mes éléments triés, j'accède directement à une étape
      *        grâce à son numéro, donc TreeMap pas utile
+     *      - Accès, ajout et suppression d'un élément en O(1)
      *
      */
 

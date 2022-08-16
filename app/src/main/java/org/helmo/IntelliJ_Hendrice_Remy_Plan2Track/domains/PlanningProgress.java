@@ -40,6 +40,27 @@ public class PlanningProgress {
         return name;
     }
 
+    /*
+     * CTT de la méthode getDelay() - US 10 calculer le nombre de jours de retard du montage
+     *
+     * Etapes :
+     *          Dans la méthode getLatestExpectedEnd()
+     *      - Assignation de la variable date -> O(1)
+     *      - Parcours des N tâches dans le Set :
+     *          -> appel de job.IsOnTime() qui ne fait que des comparaisons de dates -> O(1)
+     *          -> appel de la méthode maxDate() qui ne fait que de comparer les deux dates -> O(1)
+     *          -> assignation de la valeur obtenue par maxDate() -> O(1)
+     *      => CTT de la méthode = O(1) + O(N) * O(1) = O(N), N étant le nombre de tâche dans le montage
+     *
+     *          Dans le reste de la méthode:
+     *      - Comparaison de deux dates avec isEquals() -> O(1)
+     *      - Calcul de la différence entre deux dates -> O(1)
+     *
+     *      => CTT de la méthode getDelay() = O(N) + O(1) + O(1) = O(N), N étant le nombre de tâches dans le montage
+     *
+     * => Réponse finale - CTT = O(N)
+     */
+
     /**
      * Retourne le retard du montage en jours.
      * @return le retard du montage en jours

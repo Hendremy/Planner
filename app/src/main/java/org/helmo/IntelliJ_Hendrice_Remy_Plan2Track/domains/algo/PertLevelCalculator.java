@@ -34,6 +34,7 @@ public class PertLevelCalculator {
      *   => Implémentation HashSet:
      *      - Je n'ai pas besoin d'avoir mes éléments triés donc TreeSet pas pertinent
      *      - Ajout dans le HashSet en un temps constant
+     *      - méthode contains() pour savoir si un élément s'y trouve en temps constant
      *
      */
 
