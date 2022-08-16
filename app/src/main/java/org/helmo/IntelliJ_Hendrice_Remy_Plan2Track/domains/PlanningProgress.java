@@ -70,7 +70,8 @@ public class PlanningProgress {
         if(latestExpectedEnd.isEqual(LocalDate.MIN)){
             return 0;
         }else{
-            return ChronoUnit.DAYS.between(latestExpectedEnd, LocalDate.now());
+            long delay = ChronoUnit.DAYS.between(LocalDate.now(),latestExpectedEnd);
+            return Math.abs(delay);
         }
     }
 
