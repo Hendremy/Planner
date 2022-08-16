@@ -13,6 +13,21 @@ public class Planning implements PertNetwork {
     private String name;
     private final Map<String,Job> jobs;
 
+    /*
+     * Choix de la collection pour les tâches d'un montage - Map :
+     * Raisons:
+     *
+     *  - L'ordre des tâches n'a pas d'importance donc List pas nécessaire
+     *  - Je ne veux pas avoir de doublons dans ma collection
+     *  - Je veux pouvoir accéder à facilement un objet Job grâce à son nom, donc Set ne conviendrait pas
+     *
+     * => Implémentation HashMap
+     *
+     * - Je n'ai pas besoin d'avoir mes éléments triés par une TreeMap
+     * - la HashMap propose des méthodes de récupération, d'ajout et de suppression d'objets en un temps constant (O(1))
+     *
+     */
+
     /**
      * Initialise le nom du montage.
      * @param name le nom du montage

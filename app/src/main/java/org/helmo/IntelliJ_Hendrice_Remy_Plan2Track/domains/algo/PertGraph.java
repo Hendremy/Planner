@@ -9,6 +9,19 @@ public class PertGraph {
     private final Map<Integer, PertNode> nodes;
     private final Map<PertTask, PertEdge> edges;
 
+    /*
+     * Choix de la collection pour les étapes du graphe: Map
+     *      - Je veux pouvoir accéder aux étapes d'un graphe sur base de leur numéro
+     *          => List pourrait convenir mais l'élaguage des arêtes fictives pourrait supprimer des étapes
+     *              et donc les numéros des étapes seraient chamboulés
+     *
+     *
+     * => Implémentation : HashMap
+     *      - Je n'ai pas besoin d'avoir mes éléments triés, j'accède directement à une étape
+     *        grâce à son numéro, donc TreeMap pas utile
+     *
+     */
+
     /**
      * Initialise sa collection d'arêtes et d'étapes et initialise l'étape 1.
      */

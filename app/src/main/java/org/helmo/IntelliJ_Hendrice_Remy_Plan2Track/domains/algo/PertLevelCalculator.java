@@ -7,6 +7,37 @@ import java.util.*;
  */
 public class PertLevelCalculator {
 
+    /*
+     * Choix de l'implémentation des tâches par niveau - List de Set:
+     *
+     * Choix de List:
+     * Raisons :
+     *  - Je veux avoir des éléments dans un certain ordre (niveau 0,1,2,3,...)
+     *  - Je veux pouvoir accéder à un élément sur base de sa position
+     *  - Ajout d'un élément en temps constant
+     *
+     *  => Implémentation ArrayList:
+     *      - Accès à un élément sur base de son index en temps constant
+     *      - Ajout d'un élément en temps constant pour autant que la taille ne dépasse pas la taille du tableau initial(10)
+     *        au cas où il faudrait réécrire les éléments dans un tableau plus grand
+     *        À moins d'avoir un graphe gigantesque, celà devrait peu arriver, le nombre de niveaux est beaucoup plus petit
+     *        que le nombre de tâches
+     *
+     * Choix de Set:
+     * Raisons:
+     *   - L'ordre des tâches dans un niveau n'est pas important, donc List pas pertinente
+     *   - Je ne veux pas avoir de doublons dans un même niveau
+     *   - Je n'ai pas besoin d'avoir accès à un élément à partir d'une clé, donc Map pas pertinente
+     *   - Pour construire le graphe après et trouver le prédéceseur de plus haut niveau, je veux pouvoir
+     *      savoir si une tâche est compris dans le niveau en un temps constant
+     *
+     *   => Implémentation HashSet:
+     *      - Je n'ai pas besoin d'avoir mes éléments triés donc TreeSet pas pertinent
+     *      - Ajout dans le HashSet en un temps constant
+     *
+     */
+
+
     /**
      * Répartit le réseau de tâches en niveaux d'antériorité
      * @param tasks le réseau de tâches
