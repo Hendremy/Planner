@@ -14,7 +14,7 @@ public class PertSchedulePlanner {
         this.marginCalculator = marginCalculator;
     }
 
-    public PertGraph planSchedule(PertPlanning planning) throws PertException {
+    public PertGraph planSchedule(PertNetwork planning) throws PertException {
         PertGraph graph = builder.getGraph(planning.getTasks());
         timeCalculator.calcEarliestLatestTimes(graph);
         marginCalculator.calcTaskMargins(graph);

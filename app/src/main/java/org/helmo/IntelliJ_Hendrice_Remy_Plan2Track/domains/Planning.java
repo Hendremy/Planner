@@ -1,11 +1,11 @@
 package org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains;
 
-import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.algo.PertPlanning;
+import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.algo.PertNetwork;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.algo.PertTask;
 
 import java.util.*;
 
-public class Planning implements PertPlanning {
+public class Planning implements PertNetwork {
     //TODO : Isoler collection de Job dans une classe avec les méthodes associées
 
     private String name;
