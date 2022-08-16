@@ -17,6 +17,9 @@ import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+/**
+ * Définit l'objet de stockage des montages au format JSON.
+ */
 public class JSONPlanningRepository implements PlanningRepository{
 
     private final UserParser userParser;
@@ -26,10 +29,18 @@ public class JSONPlanningRepository implements PlanningRepository{
     private final String planningDir;
     private List<Technician> technicianList;
 
-    public JSONPlanningRepository(UserParser userParser, PlanningSerializer planningParser,
+    /**
+     * Initialise les sérialiseur JSON et les chemins vers les fichiers JSON.
+     * @param userParser le sérialiseur de chef d'équipe
+     * @param planningSerializer le sérialiseur de montage
+     * @param jsonDir le répertoire JSON
+     * @param usersFile le fichier JSON des chefs d'équipe
+     * @param planningDir le répertoire des montages JSON
+     */
+    public JSONPlanningRepository(UserParser userParser, PlanningSerializer planningSerializer,
                                   String jsonDir, String usersFile, String planningDir) {
         this.userParser = userParser;
-        this.planningSerializer = planningParser;
+        this.planningSerializer = planningSerializer;
         this.jsonDir = jsonDir;
         this.usersFile = usersFile;
         this.planningDir = planningDir;
@@ -71,17 +82,32 @@ public class JSONPlanningRepository implements PlanningRepository{
         }
     }
 
+    /**
+     * Ecrit le montage JSON dans le fichier spécifié.
+     * @param filePath le chemin vers le fichier
+     * @param planningJson le montage JSON
+     * @throws IOException survient lorsque le fichier spécifié n'est pas accessible
+     */
     private void writeFile(Path filePath, String planningJson) throws IOException {
         Stream<String> jsonLines = planningJson.lines();
         Iterable<String> iterableJsonLines = jsonLines.collect(Collectors.toUnmodifiableList());
         Files.write(filePath, iterableJsonLines, StandardCharsets.UTF_8, StandardOpenOption.CREATE);
     }
 
+    /**
+     * Formatte le nom du montage en un nom de fichier valide.
+     * @param name le nom du montage
+     * @return un nom de fichier valide pour le montage
+     */
     private String formatFileName(String name){
         name = name.replaceAll("[^a-zA-Z0-9]","");
         return String.format("%s-%d.json",name, getRandomNum());
     }
 
+    /**
+     * Retourne un nombre aléatoire de 5 chiffres.
+     * @return un nombre aléatoire de 5 chiffres
+     */
     private int getRandomNum(){
         Random random = new Random();
         return (int) (random.nextDouble() * 100000);
@@ -97,6 +123,11 @@ public class JSONPlanningRepository implements PlanningRepository{
         return technicianList;
     }
 
+    /**
+     * Charge les chefs d'équipes depuis le fichiers JSON spécifié.
+     * @return les chefs d'équipes
+     * @throws PlanningRepositoryException survient quand une erreur intervient lors de l'accès au fichier ou lors de la sérialization.
+     */
     private Iterable<Technician> loadTechnicians() throws PlanningRepositoryException {
         String userFileLocation = getPathInJsonDir(usersFile);
         try{
@@ -114,13 +145,29 @@ public class JSONPlanningRepository implements PlanningRepository{
         }
     }
 
+    /**
+     * Retourne le chemin relatif d'un fichier ou répertoire dans le répertoire des montages.
+     * @param name le nom du fichier ou répertoire
+     * @return le chemin relatif d'un fichier ou répertoire dans le répertoire des montages
+     */
     private String getPathInPlanningDir(String name){
         return getPathInJsonDir(String.format("%s/%s", planningDir, name));
     }
+
+    /**
+     * Retourne le chemin relatif d'un fichier ou répertoire dans le répertoire JSON.
+     * @param name le nom du fichier ou répertoire
+     * @return le chemin relatif d'un fichier ou répertoire dans le répertoire JSON
+     */
     private String getPathInJsonDir(String name){
         return String.format("%s/%s", jsonDir, name);
     }
 
+    /**
+     * Retourne le chemin absolu du répertoire des montages.
+     * @return le chemin absolu du répertoire des montages
+     */
+    @Override
     public File getPlanningFilesDirectory(){
         Path jsonDirPath = Paths.get(getPathInPlanningDir("")).toAbsolutePath();
         return new File(jsonDirPath.toUri());
