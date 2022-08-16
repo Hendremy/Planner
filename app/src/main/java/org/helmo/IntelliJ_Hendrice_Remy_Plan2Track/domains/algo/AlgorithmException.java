@@ -5,6 +5,10 @@ package org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.algo;
  */
 public class AlgorithmException extends PertException{
 
+    /**
+     * Initialise le message d'exception.
+     * @param message le message d'exception
+     */
     AlgorithmException(String message) {
         super(message);
     }

@@ -5,6 +5,10 @@ package org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.datas;
  */
 public class PlanningRepositoryException extends Exception{
 
+    /**
+     * Initialise le message d'exception.
+     * @param message le message d'exception
+     */
     public PlanningRepositoryException(String message){
         super(message);
     }

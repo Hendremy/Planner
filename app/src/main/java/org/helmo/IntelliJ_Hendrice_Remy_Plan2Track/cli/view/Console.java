@@ -11,9 +11,6 @@ public class Console implements Closeable {
     private static Console singleton;
     private final PrintStream out = System.out;
     private final Scanner in;
-    private final String yesNo = "\n(O)ui/(N)on";
-    private final String ANSI_RESET = "\u001B[0m";
-    private final String ANSI_RED = "\u001B[31m";
 
     /**
      * Récupère l'unique instance de cet objet ou le crée si elle n'est pas encore crée.
@@ -54,7 +51,9 @@ public class Console implements Closeable {
      * @param message le message d'erreur à afficher
      */
     public void error(String message){
-        out.println("\nErreur: " + ANSI_RED + message + ANSI_RESET);
+        String ansiReset = "\u001B[0m";
+        String ansiRed = "\u001B[31m";
+        out.println("\nErreur: " + ansiRed + message + ansiReset);
     }
 
     /**
@@ -88,6 +87,7 @@ public class Console implements Closeable {
     public boolean askYesNo(String question){
         String response = "";
         while(!response.equalsIgnoreCase("O") && !response.equalsIgnoreCase("N")){
+            String yesNo = "\n(O)ui/(N)on";
             response = askString(String.format("%s%s", question, yesNo));
         }
         return response.equalsIgnoreCase("O");
