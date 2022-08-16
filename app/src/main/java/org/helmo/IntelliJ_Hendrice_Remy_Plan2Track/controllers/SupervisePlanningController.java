@@ -12,10 +12,18 @@ import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.viewmodels.JobProgressViewMod
 
 import java.io.File;
 
+/**
+ * Définit le contrôleur de consultation d'avancement de montage.
+ */
 public class SupervisePlanningController implements SupervisePlanning{
     private final PlanningRepository repository;
     private final ConvertPlanningDTO converter;
 
+    /**
+     * Initialise le controleur de consultation d'avancement de montage
+     * @param repository l'objet de stockage de montage
+     * @param converter le convertisseur d'objet de transfert de données
+     */
     public SupervisePlanningController(PlanningRepository repository, ConvertPlanningDTO converter){
         this.repository = repository;
         this.converter = converter;

@@ -6,7 +6,9 @@ import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.algo.PertSchedulePlan
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.datas.PlanningRepository;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.Planning;
 
-//TODO: créer un object 'créateur de controlleur' plutôt que de charger le maincontroller de ça
+/**
+ * Définit le contrôleur de gestion de montage.
+ */
 public class ManagePlanningController implements ManagePlanning {
 
     private final PlanningCreator creator;
@@ -15,6 +17,14 @@ public class ManagePlanningController implements ManagePlanning {
     private final ScheduleGenerator scheduleGenerator;
     private Planning planning;
 
+    /**
+     * Initialise le controleur de gestion de montage avec l'objet de stockage de montage, le créateur de montage,
+     * le plannificateur de montage et le générateur de programme de montage.
+     * @param repository l'objet de stockage de montage
+     * @param creator le créateur de montage
+     * @param schedulePlanner le plannificateur de montage et le générateur
+     * @param scheduleGenerator le générateur de programme de montage
+     */
     public ManagePlanningController(PlanningRepository repository, PlanningCreator creator,
                                     PertSchedulePlanner schedulePlanner, ScheduleGenerator scheduleGenerator){
         this.repository = repository;

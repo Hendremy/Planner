@@ -15,19 +15,30 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * Définit le contrôleur de plannification du montage.
+ */
 public class PlanScheduleController implements PlanSchedule{
 
     private final ManagePlanning manageController;
     private PertGraph graph;
     private Schedule schedule;
 
+    /**
+     * Initialise le contrôleur de plannification du montage avec le controleur de gestion de montage.
+     * @param manageController le controleur de gestion du montage
+     */
     public PlanScheduleController(ManagePlanning manageController) {
         this.manageController = manageController;
     }
 
+    /**
+     * Construit le graphe PERT du montage.
+     * @throws PertException survient lors d'une erreur dans la création du graphe PERT
+     */
     private void buildGraph() throws PertException {
-        PertSchedulePlanner planner = manageController.getSchedulePlanner();
-        graph = planner.planSchedule(manageController.getPlanning());
+        PertSchedulePlanner planner = getSchedulePlanner();
+        graph = planner.planSchedule(getPlanning());
     }
 
     @Override
@@ -47,7 +58,7 @@ public class PlanScheduleController implements PlanSchedule{
 
     @Override
     public String getPlanningName() {
-        return manageController.getPlanning().getName();
+        return getPlanning().getName();
     }
 
     @Override
@@ -77,14 +88,30 @@ public class PlanScheduleController implements PlanSchedule{
         }
     }
 
+    /**
+     * Retourne le plannificateur de montage.
+     * @return le plannificateur de montage
+     */
     private PertSchedulePlanner getSchedulePlanner(){
         return manageController.getSchedulePlanner();
     }
 
+    /**
+     * Retourne le générateur de programme de montage.
+     * @return le générateur de programme de montage
+     */
     private ScheduleGenerator getScheduleGenerator(){return manageController.getScheduleGenerator();}
 
+    /**
+     * Retourne le planning en cours.
+     * @return le planning en cours
+     */
     private Planning getPlanning(){ return manageController.getPlanning();}
 
+    /**
+     * Retourne l'objet de stockage de montage.
+     * @return l'objet de stockage de montage.
+     */
     private PlanningRepository getRepository(){
         return manageController.getRepository();
     }

@@ -1,13 +1,18 @@
 package org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.algo;
 
-import java.util.Collection;
-import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * Définit une tâche factice.
+ */
 public class FakeTask implements PertTask{
 
-    private PertTask originalTask;
+    private final PertTask originalTask;
 
+    /**
+     * Initialise la tâche factice à partir de la tâche originelle
+     * @param task la tâche originelle
+     */
     public FakeTask(PertTask task){
         this.originalTask = task;
     }

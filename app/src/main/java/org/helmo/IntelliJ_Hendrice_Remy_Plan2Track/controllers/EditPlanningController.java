@@ -8,10 +8,17 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * Définit le contrôleur de modification du montage.
+ */
 public class EditPlanningController implements EditPlanning {
 
     private final ManagePlanning manageController;
 
+    /**
+     * Initialise le contrôleur de modification du montage avec le contrleur de gestion de montage.
+     * @param manageController le controleur de gestion de montage
+     */
     public EditPlanningController(ManagePlanning manageController) {
         this.manageController = manageController;
     }

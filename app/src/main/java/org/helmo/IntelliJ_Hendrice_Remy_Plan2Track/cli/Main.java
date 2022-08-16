@@ -11,12 +11,22 @@ import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.algo.PertSchedulePlan
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.algo.PertTimeCalculator;
 import org.helmo.IntelliJ_Hendrice_Remy_Plan2Track.domains.datas.*;
 
+/**
+ * Définit la classe principale de l'application CLI
+ */
 public class Main {
 
+    /**
+     * Démarre l'application.
+     * @param args paramètres éventuels
+     */
     public static void main(String[] args) {
         launch();
     }
 
+    /**
+     * Initialise les différents objets services, le contrôleur principal et la vue principale et démarre l'application.
+     */
     private static void launch(){
         UserParser userParser = new JSONUserParser();
         PlanningSerializer planningParser = new JSONPlanningSerializer();
