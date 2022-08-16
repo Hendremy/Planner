@@ -46,6 +46,12 @@ public class JSONPlanningRepository implements PlanningRepository{
         this.planningDir = planningDir;
     }
 
+    /**
+     * Charge fichier de montage JSON depuis le chemin spécifié.
+     * @param filePathString le chemin spécifié
+     * @return le montage objet transfert de données
+     * @throws PlanningRepositoryException survient lorsque le chargement du fichier ou la désérialisation JSON échoue.
+     */
     @Override
     public PlanningDTO loadSchedule(String filePathString) throws PlanningRepositoryException{
         if(!filePathString.endsWith(".json")) throw new PlanningRepositoryException("Fichier invalide : fichier .json seulement accepté");
@@ -64,6 +70,11 @@ public class JSONPlanningRepository implements PlanningRepository{
         }
     }
 
+    /**
+     * Ecrit le programme de montage en format JSON dans le répertoire des montages JSON.
+     * @param schedule le programme de montage
+     * @throws PlanningRepositoryException survient lorsque l'écriture du fichier ou la ssérialisation JSON échoue.
+     */
     @Override
     public void writeSchedule(Schedule schedule) throws PlanningRepositoryException{
         String planningsDirLocation = getPathInJsonDir(planningDir);
@@ -113,6 +124,11 @@ public class JSONPlanningRepository implements PlanningRepository{
         return (int) (random.nextDouble() * 100000);
     }
 
+    /**
+     * Retourne et charge au besoin les chefs d'équipes contenus dans le fichier JSON des chefs d'équipe.
+     * @return les chefs d'équipes contenus dans le fichier JSON des chefs d'équipe
+     * @throws PlanningRepositoryException
+     */
     @Override
     public Iterable<Technician> getTechnicians() throws PlanningRepositoryException {
         if(technicianList == null){

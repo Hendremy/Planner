@@ -9,12 +9,15 @@ import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * Définit le sérialiseur/désérialiseur de montage JSON.
+ */
 public class JSONPlanningSerializer implements PlanningSerializer {
 
 
     @Override
-    public PlanningDTO deserialize(String planningJson) {
-        JSONObject jsonPlanning = new JSONObject(planningJson);
+    public PlanningDTO deserialize(String planningString) {
+        JSONObject jsonPlanning = new JSONObject(planningString);
         String name = jsonPlanning.getString("Name");
         JSONArray jsonJobs = jsonPlanning.getJSONArray("Jobs");
         Set<JobDTO> jobsDTO = new HashSet<>();
